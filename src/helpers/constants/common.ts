@@ -1,4 +1,5 @@
 const COMMON_CONSTANT = {
+  // HTTP status
   HTTP_STATUS: {
     SUCCESS: {
       OK: 200,
@@ -14,8 +15,30 @@ const COMMON_CONSTANT = {
       INTERNAL_SERVER_ERROR: 500,
     },
   },
-  ROLE_PERMISSION_ADMIN: "ADMIN",
-  ROLE_PERMISSION_USERS: "USER",
+
+  TOAST_STATUS: {
+    ERROR: "error",
+    SUCCESS: "success",
+    WARNING: "warning",
+    INFO: "info",
+  },
+
+  HTTP_METHOD: {
+    GET: "GET",
+    POST: "POST",
+    PUT: "PUT",
+    DELETE: "DELETE",
+    PATCH: "PATCH",
+  },
+
+  CONDITION: {
+    TRUE: true,
+    FALSE: false,
+  },
+
+  SYSTEM_ERROR: {
+    SERVER_ERROR: "Lỗi hệ thống. Vui lòng thử lại sau",
+  },
 };
 
 export { COMMON_CONSTANT };
