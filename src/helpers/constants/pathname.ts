@@ -1,20 +1,13 @@
 const PATH_NAME = {
   COMMON: {
-    ERROR_PAGE: "*",
-    FORBIDDEN_PAGE: "/403",
+    ERROR_PAGE: "/not-found",
   },
   AUTH: {
     REGISTER: "/login",
   },
   DASHBOARD: {
-    STATISTIC: "/dashboard",
     USER: "/user",
-  },
-  EMPLOYEE: {
-    EMPLOYEE_LIST: "/employee",
-    EMPLOYEE_DETAIL: "/employee/:id",
-    EMPLOYEE_CREATE: "/employee/create",
-    EMPLOYEE_UPDATE: "/employee/:id/update",
+    ADMIN: "/admin",
   },
 };
 
