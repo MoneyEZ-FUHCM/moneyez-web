@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "@/helpers/lib/utils";
+import { cn } from "@/helpers/libs/utils";
 import { useState } from "react";
 import { EyeIcon } from "lucide-react";
 import { EyeClosedIcon } from "@radix-ui/react-icons";
@@ -24,7 +24,7 @@ const InputCustom = React.forwardRef<HTMLInputElement, InputProps>(
       <div className="relative w-full">
         <label
           className={cn(
-            "absolute left-3 top-1/2 -translate-y-1/2 transform text-sm text-muted-foreground transition-all duration-500",
+            "text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 transform text-sm transition-all duration-500",
             isFocused || props.value
               ? "left-2 top-0 bg-white px-1 text-xs text-primary"
               : "text-gray-500",
