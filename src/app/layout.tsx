@@ -1,23 +1,15 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "sonner";
-import "./globals.css";
+import { LoadingWrapper, NextProgressBar } from "@/components";
 import { Providers } from "@/redux/provider";
+import { Roboto_Slab } from "next/font/google";
+import { Toaster } from "sonner";
+import ClientLayout from "./auth/layout";
+import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  variable: "--font-robotoSlab",
 });
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "EzMoney",
-  description: "",
-};
 
 export default function RootLayout({
   children,
@@ -26,11 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers>{children}</Providers>
-        <Toaster position="top-right" richColors />
+      <body className={`${robotoSlab.variable}`}>
+        <LoadingWrapper>
+          <NextProgressBar />
+          <Providers>
+            <ClientLayout>{children}</ClientLayout>
+          </Providers>
+          <Toaster position="top-right" richColors />
+        </LoadingWrapper>
       </body>
     </html>
   );

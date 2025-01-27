@@ -1,14 +1,8 @@
 const PATH_NAME = {
-  COMMON: {
-    ERROR_PAGE: "/not-found",
-  },
-  AUTH: {
-    REGISTER: "/login",
-  },
-  DASHBOARD: {
-    USER: "/user",
-    ADMIN: "/admin",
-  },
+  HOME: "/",
+  ADMIN: "/admin",
+  USER: "/user",
+  NOT_FOUND: "/notfound",
 };
 
 export { PATH_NAME };
