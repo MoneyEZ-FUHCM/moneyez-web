@@ -29,7 +29,7 @@ const useRegisterPage = (form: FormInstance) => {
   const [otpCode, setOtpCode] = useState<string>("");
   const [isResending, setIsResending] = useState<boolean>(false);
   // constant
-  const { ERROR_CODE, FORM_NAME } = AUTH_CONSTANT;
+  const { ERROR_CODE, FORM_NAME, MAX_LENGTH_OTP } = AUTH_CONSTANT;
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE } = TEXT_TRANSLATE;
   const { HTTP_STATUS, SYSTEM_ERROR } = COMMON_CONSTANT;
 
@@ -57,14 +57,14 @@ const useRegisterPage = (form: FormInstance) => {
 
   const handleOTPSubmit = async () => {
     const email = form.getFieldValue(FORM_NAME.EMAIL);
-    let information = { email, otpCode };
-    if (otpCode.length < 5) {
+    let payload = { email, otpCode };
+    if (otpCode.length < MAX_LENGTH_OTP) {
       showToast(TOAST_STATUS.WARNING, MESSAGE_VALIDATE.OTP_5_DIGITS);
       return;
     }
     try {
-      const res = await verify(information).unwrap();
-      if (res && res.status === 200) {
+      const res = await verify(payload).unwrap();
+      if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
           Cookies.set("accessToken", res.data.accessToken);
