@@ -34,7 +34,7 @@ interface IRegisterProps {
 
 const RegisterForm = (props: IRegisterProps) => {
   const [form] = Form.useForm();
-  const { FORM_NAME } = AUTH_CONSTANT;
+  const { FORM_NAME, MAX_LENGTH_OTP } = AUTH_CONSTANT;
   const { MESSAGE_VALIDATE, TITLE, BUTTON, LABEL } = TEXT_TRANSLATE;
   const { handler, state } = useRegisterPage(form);
 
@@ -286,7 +286,7 @@ const RegisterForm = (props: IRegisterProps) => {
                       <div className="pb-0">
                         <div className="flex items-center justify-center space-x-2 px-5">
                           <InputOTP
-                            maxLength={5}
+                            maxLength={MAX_LENGTH_OTP}
                             className="px-5"
                             onChange={(value) => handler.setOtpCode(value)}
                           >

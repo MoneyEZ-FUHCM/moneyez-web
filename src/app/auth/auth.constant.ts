@@ -21,4 +21,6 @@ export const AUTH_CONSTANT = {
     ACCOUNT_BLOCKED: "AccountWasBlocked",
     DUPLICATE_PHONE_NUMBER: "DuplicatePhoneNumber",
   },
+
+  MAX_LENGTH_OTP: 5,
 };

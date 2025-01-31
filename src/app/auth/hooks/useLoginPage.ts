@@ -38,7 +38,7 @@ const useLoginPage = (form: FormInstance) => {
   const [otpCode, setOtpCode] = useState<string>("");
   const [isDrawerVisible, setIsDrawerVisible] = useState<boolean>(false);
   // constants
-  const { ERROR_CODE } = AUTH_CONSTANT;
+  const { ERROR_CODE, FORM_NAME, MAX_LENGTH_OTP } = AUTH_CONSTANT;
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE } = TEXT_TRANSLATE;
   const { HTTP_STATUS, SYSTEM_ERROR } = COMMON_CONSTANT;
 
@@ -124,9 +124,9 @@ const useLoginPage = (form: FormInstance) => {
   };
 
   const handleOTPSubmit = async () => {
-    const email = form.getFieldValue("email");
+    const email = form.getFieldValue(FORM_NAME.EMAIL);
     let information = { email, otpCode };
-    if (otpCode.length < 5) {
+    if (otpCode.length < MAX_LENGTH_OTP) {
       showToast(TOAST_STATUS.WARNING, MESSAGE_VALIDATE.OTP_5_DIGITS);
       return;
     }
