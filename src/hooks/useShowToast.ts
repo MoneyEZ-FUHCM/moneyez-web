@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 
-type ToastType = "success" | "error" | "warning";
+type ToastType = "success" | "error" | "warning" | "info";
 
 const showToast = (
   type: ToastType,
@@ -11,6 +11,7 @@ const showToast = (
     success: "Thành công",
     error: "Lỗi",
     warning: "Cảnh báo",
+    info: "Thông báo",
   };
 
   const toastMessage = `${titles[type]}`;

@@ -252,7 +252,7 @@ const RegisterForm = (props: IRegisterProps) => {
                   <Form.Item noStyle>
                     <ButtonCustom
                       disabled={state.isSigningUp}
-                      className="mx-auto flex h-11 w-full items-center rounded-[5px] bg-primary text-lg tracking-wider text-white hover:bg-primary/80"
+                      className="mx-auto flex h-11 w-full items-center rounded-[5px] bg-primary text-lg tracking-wider text-superlight hover:bg-primary/80"
                     >
                       {state.isSigningUp ? (
                         <Spin
@@ -303,7 +303,7 @@ const RegisterForm = (props: IRegisterProps) => {
                       <DrawerFooter>
                         <ButtonCustom
                           disabled={state.isVerifyingEmail}
-                          className="mx-auto flex h-11 w-full items-center rounded-[5px] bg-primary text-sm tracking-wider text-white hover:bg-primary/80"
+                          className="mx-auto flex h-11 w-full items-center rounded-[5px] bg-primary text-sm tracking-wider text-superlight hover:bg-primary/80"
                           onClick={handler.handleOTPSubmit}
                         >
                           {state.isVerifyingEmail ? (
@@ -337,7 +337,7 @@ const RegisterForm = (props: IRegisterProps) => {
                 </DrawerContent>
               </Drawer>
               <div className="mt-3 text-center text-sm">
-                <span className="text-black">{TITLE.HAD_ACCOUNT}</span>{" "}
+                <span className="text-[#4d4d4d]">{TITLE.HAD_ACCOUNT}</span>{" "}
                 <Link
                   href="#"
                   className="login-form-forgot group relative cursor-pointer font-semibold text-primary hover:text-primary"
