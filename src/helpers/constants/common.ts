@@ -34,6 +34,11 @@ const COMMON_CONSTANT = {
   CONDITION: {
     TRUE: true,
     FALSE: false,
+    NULL: null,
+  },
+
+  SYSTEM_SUCCESS: {
+    LOGOUT: "Đăng xuất thành công",
   },
 
   SYSTEM_ERROR: {

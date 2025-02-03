@@ -1,7 +1,14 @@
-import React from "react";
+"use client";
+
+import { useLogout } from "@/hooks/useLogout";
 
 const AdminPage = () => {
-  return <p>Admin page</p>;
+  const { logout } = useLogout();
+  return (
+    <section>
+      <button onClick={logout}>Đăng xuất</button>
+    </section>
+  );
 };
 
 export default AdminPage;

@@ -16,7 +16,8 @@ const config: Config = {
         sm: "640px",
         md: "768px",
         lg: "992px",
-        xl: "1200px",
+        xl: "1280px",
+        xxl: "1450px",
       },
     },
     fontFamily: {
@@ -28,6 +29,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        "soft-green": "0px 10px 50px #E1EACD",
+      },
       colors: {
         primary: "#609084",
         secondary: "#BAD8B6",
@@ -35,7 +39,7 @@ const config: Config = {
         light: "#EBEFD6",
         red: "#CC0000",
         green: "#00A010",
-        superlight: "#F6F9F4",
+        superlight: "white",
       },
       keyframes: {
         motion: {

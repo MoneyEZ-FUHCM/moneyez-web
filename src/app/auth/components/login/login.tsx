@@ -180,11 +180,13 @@ const LoginForm = () => {
                   <Form.Item noStyle>
                     <ButtonCustom
                       disabled={state.isLoggingIn}
-                      className="mx-auto mt-5 flex h-11 w-full items-center rounded-[5px] bg-primary text-lg tracking-wider text-white hover:bg-primary/80"
+                      className="mx-auto mt-5 flex h-11 w-full items-center rounded-[5px] bg-primary text-lg tracking-wider text-superlight hover:bg-primary/80"
                     >
                       {state.isLoggingIn ? (
                         <Spin
-                          indicator={<LoadingOutlined className="text-white" />}
+                          indicator={
+                            <LoadingOutlined className="text-superlight" />
+                          }
                         />
                       ) : (
                         `${BUTTON.LOGIN}`
@@ -229,7 +231,7 @@ const LoginForm = () => {
                       <DrawerFooter>
                         <ButtonCustom
                           disabled={state.isVerifyingEmail}
-                          className="mx-auto flex h-11 w-full items-center rounded-[5px] bg-primary text-sm tracking-wider text-white hover:bg-primary/80"
+                          className="mx-auto flex h-11 w-full items-center rounded-[5px] bg-primary text-sm tracking-wider text-superlight hover:bg-primary/80"
                           onClick={handler.handleOTPSubmit}
                         >
                           {state.isVerifyingEmail ? (
@@ -289,7 +291,7 @@ const LoginForm = () => {
               )}
             </ButtonCustom>
             <div className="mt-3 text-center text-sm">
-              <span className="text-black">{TITLE.DONOT_HAVE_ACCOUNT}</span>{" "}
+              <span className="text-[#4d4d4d]">{TITLE.DONOT_HAVE_ACCOUNT}</span>{" "}
               <Link
                 href="#"
                 className="login-form-forgot group relative cursor-pointer font-semibold text-primary hover:text-primary"

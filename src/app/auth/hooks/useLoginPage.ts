@@ -68,7 +68,7 @@ const useLoginPage = (form: FormInstance) => {
               Cookies.set("email", encryptedEmail);
               Cookies.set("password", encryptedPassword);
             }
-            router.replace(PATH_NAME.HOME);
+            router.replace(PATH_NAME.USER);
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
           }
         }
@@ -113,10 +113,23 @@ const useLoginPage = (form: FormInstance) => {
       const accessToken = credentials.token;
       const res = await loginGoogle(JSON.stringify(accessToken)).unwrap();
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
-        Cookies.set("accessToken", res.data.accessToken);
-        Cookies.set("refreshToken", res.data.refreshToken);
-        router.replace(PATH_NAME.HOME);
-        showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
+        const accessToken = res.data.accessToken;
+        if (accessToken) {
+          Cookies.set("accessToken", res.data.accessToken);
+          Cookies.set("refreshToken", res.data.refreshToken);
+          const decoded: any = jwtDecode(accessToken);
+          const role =
+            decoded[
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ];
+          if (role !== VALID_ROLE.USER) {
+            router.replace(PATH_NAME.ADMIN);
+            return;
+          } else {
+            router.replace(PATH_NAME.USER);
+            showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
+          }
+        }
       }
     } catch (err) {
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);

@@ -36,6 +36,7 @@
     "redux-persist": "^6.0.0",
     "sonner": "^1.7.1",
     "swiper": "^11.2.1",
+    "typewriter-effect": "^2.21.0",
     "vaul": "^1.1.2"
   },
   "devDependencies": {

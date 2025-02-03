@@ -69,14 +69,6 @@ const PageNotFound = () => {
         <div className="text_4042">0</div>
         <div className="text_4043">4</div>
       </div>
-      <div className="absolute bottom-10">
-        <Link
-          href={"/"}
-          className="border border-primary bg-primary p-2 text-[12px] text-white transition-all duration-500 hover:bg-white hover:text-primary"
-        >
-          Quay về trang chủ
-        </Link>
-      </div>
     </div>
   );
 };
