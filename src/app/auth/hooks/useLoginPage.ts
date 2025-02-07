@@ -168,6 +168,10 @@ const useLoginPage = (form: FormInstance) => {
     setIsDrawerVisible(false);
   }, []);
 
+  const handleBackToHome = useCallback(() => {
+    router.push(PATH_NAME.HOME);
+  }, []);
+
   return {
     state: {
       isShowRegister,
@@ -192,6 +196,7 @@ const useLoginPage = (form: FormInstance) => {
       handleGoogleSignIn,
       handleOTPSubmit,
       handleDrawerClose,
+      handleBackToHome,
     },
   };
 };
