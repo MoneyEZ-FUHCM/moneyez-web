@@ -1,21 +1,9 @@
 const PATH_NAME = {
-  COMMON: {
-    ERROR_PAGE: "*",
-    FORBIDDEN_PAGE: "/403",
-  },
-  AUTH: {
-    REGISTER: "/login",
-  },
-  DASHBOARD: {
-    STATISTIC: "/dashboard",
-    USER: "/user",
-  },
-  EMPLOYEE: {
-    EMPLOYEE_LIST: "/employee",
-    EMPLOYEE_DETAIL: "/employee/:id",
-    EMPLOYEE_CREATE: "/employee/create",
-    EMPLOYEE_UPDATE: "/employee/:id/update",
-  },
+  HOME: "/",
+  ADMIN: "/admin",
+  USER: "/user",
+  NOT_FOUND: "/notfound",
+  AUTH: "/auth",
 };
 
 export { PATH_NAME };

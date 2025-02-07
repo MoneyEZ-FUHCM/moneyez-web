@@ -26,7 +26,7 @@ const InputCustom = React.forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             "text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 transform text-sm transition-all duration-500",
             isFocused || props.value
-              ? "left-2 top-0 bg-white px-1 text-xs text-primary"
+              ? "left-2 top-0 bg-superlight px-1 text-xs text-primary"
               : "text-gray-500",
           )}
         >
@@ -35,7 +35,7 @@ const InputCustom = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           type={isPasswordVisible ? "password" : "text"}
           className={cn(
-            "flex h-10 w-full rounded-[6px] border !bg-white bg-transparent px-3 text-sm placeholder-transparent shadow-sm outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-[6px] border !bg-superlight bg-transparent px-3 text-sm placeholder-transparent shadow-sm outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-50",
             error
               ? "border-red-500"
               : isFocused || props.value
