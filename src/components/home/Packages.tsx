@@ -61,7 +61,7 @@ const Packages = () => {
         {packagesData.map((pkg) => (
           <div
             key={pkg.id}
-            className="group flex flex-col items-start justify-between rounded-3xl p-7 text-[#4d4d4d] shadow-soft-green transition-colors duration-300 hover:bg-primary hover:text-superlight"
+            className="group flex flex-col items-start rounded-3xl p-7 text-[#4d4d4d] shadow-soft-green transition-colors duration-300 hover:bg-primary hover:text-superlight"
           >
             <h3 className="mb-1 text-left text-gray-500 transition-all duration-300 group-hover:text-superlight">
               {pkg.name}
