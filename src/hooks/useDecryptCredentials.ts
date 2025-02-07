@@ -7,8 +7,8 @@ export function useDecryptCredentials() {
   const encryptedPassword = Cookies.get("password");
 
   if (encryptedEmail !== null && encryptedPassword !== null) {
-    const email = decryptData(encryptedEmail, secretKey);
-    const password = decryptData(encryptedPassword, secretKey);
+    const email = decryptData(encryptedEmail, secretKey as string);
+    const password = decryptData(encryptedPassword, secretKey as string);
     return { email, password, secretKey };
   } else {
     console.warn("Email and password are not set in Cookies");
