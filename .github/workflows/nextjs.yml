@@ -33,9 +33,6 @@ jobs:
       - name: Build Next.js site
         run: yarn build
 
-      - name: Export static files
-        run: yarn next export
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
