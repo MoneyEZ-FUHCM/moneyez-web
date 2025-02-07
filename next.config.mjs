@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  basePath: "/moneyez-web",
   images: {
+    unoptimized: true,
+
     remotePatterns: [
       {
         protocol: "https",
