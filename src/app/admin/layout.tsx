@@ -4,7 +4,7 @@ import Admin from "@/assets/images/logo/avatar_admin.jpg";
 import LogoWeb from "@/assets/images/logo/logo_web.png";
 import { useLogout } from "@/hooks/useLogout";
 import { PieChartOutlined, PushpinOutlined } from "@ant-design/icons";
-import { FloatButton, Layout, LayoutProps, Menu } from "antd";
+import { FloatButton, Layout, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuItem } from "./admin.constant";
@@ -39,7 +39,11 @@ const items: MenuItem[] = [
   ),
 ];
 
-const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { collapsed, setCollapsed, selectedKeys, storeDefaultSelectedKeys } =
     useSidebar(items);
   const { logout } = useLogout();
@@ -143,6 +147,4 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
       </Layout>
     </Layout>
   );
-};
-
-export default DashboardLayout;
+}
