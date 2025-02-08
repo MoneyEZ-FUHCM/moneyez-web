@@ -168,9 +168,9 @@ const useLoginPage = (form: FormInstance) => {
     setIsDrawerVisible(false);
   }, []);
 
-  const handleBackToHome = useCallback(() => {
+  const handleBackToHome = () => {
     router.push(PATH_NAME.HOME);
-  }, []);
+  };
 
   return {
     state: {
