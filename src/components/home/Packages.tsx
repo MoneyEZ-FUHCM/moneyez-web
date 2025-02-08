@@ -27,8 +27,7 @@ const packagesData = [
     name: "Premium",
     price: "199.000đ",
     period: "/ Tháng",
-    description:
-      "Mở khóa tất cả các tính năng nâng cao để có trải nghiệm tuyệt vời nhất với ứng dụng",
+    description: "Mở khóa các tính năng nâng cao để có trải nghiệm tuyệt vời",
     features: [
       "Truy cập toàn bộ tính năng ứng dụng",
       "Hỗ trợ khách hàng VIP",
