@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Star from "@/assets/images/icons/star.png";
 import { TOAST_STATUS } from "@/enums/globals";
 import { PATH_NAME } from "@/helpers/constants/pathname";
 import { showToast } from "@/hooks/useShowToast";
 import { ArrowRightOutlined, CheckOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 
 const packagesData = [
   {
@@ -38,10 +38,7 @@ const packagesData = [
 ];
 
 const Packages = () => {
-  const router = useRouter();
-
   const handleUpGradePackage = () => {
-    router.push(PATH_NAME.AUTH);
     showToast(TOAST_STATUS.INFO, "Vui lòng đăng nhập để sử dụng dịch vụ");
   };
 
@@ -78,13 +75,14 @@ const Packages = () => {
                   <p className="text-left font-medium">{feature}</p>
                 </div>
               ))}
-              <button
+              <Link
+                href={PATH_NAME.AUTH}
                 onClick={handleUpGradePackage}
                 className="relative mt-5 flex w-full transform items-center justify-center gap-2 rounded-xl bg-[#e5f4f2] px-6 py-3 text-sm font-semibold text-[#009379] transition-all duration-300 hover:bg-superlight hover:text-primary active:scale-95 group-hover:bg-superlight"
               >
                 {pkg.buttonText}
                 <ArrowRightOutlined className="ml-1 translate-x-[-10px] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-              </button>
+              </Link>
             </div>
           </div>
         ))}
