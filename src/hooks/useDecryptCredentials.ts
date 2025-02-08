@@ -1,10 +1,10 @@
 import { decryptData } from "@/utils";
-import Cookies from "js-cookie";
+import { getCookie } from "cookies-next";
 
 export function useDecryptCredentials() {
   const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
-  const encryptedEmail = Cookies.get("email");
-  const encryptedPassword = Cookies.get("password");
+  const encryptedEmail = getCookie("email");
+  const encryptedPassword = getCookie("password");
 
   if (encryptedEmail !== null && encryptedPassword !== null) {
     const email = decryptData(encryptedEmail, secretKey as string);

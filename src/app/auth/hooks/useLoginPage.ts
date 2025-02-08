@@ -12,8 +12,8 @@ import {
 import { ApiResponse } from "@/types/login.type";
 import { encryptData } from "@/utils";
 import { FormInstance } from "antd";
+import { setCookie } from "cookies-next";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -50,24 +50,27 @@ const useLoginPage = (form: FormInstance) => {
       }).unwrap();
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
+        const refreshToken = res.data.refreshToken;
         if (accessToken) {
+          setCookie("accessToken", accessToken, { maxAge: 1 * 24 * 60 * 60 });
+          setCookie("refreshToken", refreshToken, { maxAge: 7 * 24 * 60 * 60 });
           const decoded: any = jwtDecode(accessToken);
           const role =
             decoded[
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
+          if (rememberMe) {
+            const encryptedEmail = encryptData(values.email, secretKey);
+            const encryptedPassword = encryptData(values.password, secretKey);
+            setCookie("email", encryptedEmail, { maxAge: 1 * 24 * 60 * 60 });
+            setCookie("password", encryptedPassword, {
+              maxAge: 7 * 24 * 60 * 60,
+            });
+          }
           if (role !== VALID_ROLE.USER) {
             router.replace(PATH_NAME.ADMIN);
             return;
           } else {
-            Cookies.set("accessToken", res.data.accessToken);
-            Cookies.set("refreshToken", res.data.refreshToken);
-            if (rememberMe) {
-              const encryptedEmail = encryptData(values.email, secretKey);
-              const encryptedPassword = encryptData(values.password, secretKey);
-              Cookies.set("email", encryptedEmail);
-              Cookies.set("password", encryptedPassword);
-            }
             router.replace(PATH_NAME.USER);
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
           }
@@ -115,8 +118,8 @@ const useLoginPage = (form: FormInstance) => {
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
-          Cookies.set("refreshToken", res.data.refreshToken);
+          setCookie("accessToken", accessToken, { maxAge: 1 * 24 * 60 * 60 });
+          setCookie("refreshToken", accessToken, { maxAge: 7 * 24 * 60 * 60 });
           const decoded: any = jwtDecode(accessToken);
           const role =
             decoded[
@@ -148,8 +151,8 @@ const useLoginPage = (form: FormInstance) => {
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
-          Cookies.set("refreshToken", res.data.refreshToken);
+          setCookie("accessToken", accessToken, { maxAge: 1 * 24 * 60 * 60 });
+          setCookie("refreshToken", accessToken, { maxAge: 7 * 24 * 60 * 60 });
           router.replace(PATH_NAME.HOME);
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
         }

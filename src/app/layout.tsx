@@ -1,4 +1,4 @@
-import { LoadingWrapper, NextProgressBar, ProgressBar } from "@/components";
+import { NextProgressBar, ProgressBar } from "@/components";
 import NavbarWrapper from "@/components/NavbarWrapper";
 import { Providers } from "@/redux/provider";
 import { Metadata } from "next";
@@ -25,14 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${robotoSlab.variable}`}>
-        <LoadingWrapper>
-          <NextProgressBar />
-          <Providers>
-            <NavbarWrapper>{children}</NavbarWrapper>
-            <ProgressBar />
-          </Providers>
-          <Toaster position="top-right" richColors />
-        </LoadingWrapper>
+        {/* <LoadingWrapper> */}
+        <NextProgressBar />
+        <Providers>
+          <NavbarWrapper>{children}</NavbarWrapper>
+          <ProgressBar />
+        </Providers>
+        <Toaster position="top-right" richColors />
+        {/* </LoadingWrapper> */}
       </body>
     </html>
   );

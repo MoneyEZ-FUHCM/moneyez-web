@@ -1,7 +1,20 @@
-import React from "react";
+"use client";
+
+import { useLogout } from "@/hooks/useLogout";
+
+const allowedRoles = ["USER"];
+const rolePaths = {
+  admin: "/user",
+};
 
 const UserPages = () => {
-  return <p>User page</p>;
+  const { logout } = useLogout();
+
+  return (
+    <section>
+      <button onClick={logout}>Đăng xuất USER</button>
+    </section>
+  );
 };
 
 export default UserPages;

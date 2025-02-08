@@ -46,4 +46,5 @@ const COMMON_CONSTANT = {
   },
 };
 
+// Export tất cả
 export { COMMON_CONSTANT };

@@ -5,7 +5,7 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import Cookies from "js-cookie";
+import { getCookie, setCookie } from "cookies-next";
 
 interface RefreshResultData {
   accessToken: string;
@@ -16,7 +16,8 @@ const axiosBaseQuery = async (
   api: BaseQueryApi,
   extraOptions: object,
 ) => {
-  let token = Cookies.get("accessToken");
+  let token = getCookie("accessToken");
+
   const { HTTP_METHOD, HTTP_STATUS } = COMMON_CONSTANT;
 
   const baseQuery = fetchBaseQuery({
@@ -36,7 +37,7 @@ const axiosBaseQuery = async (
     result.error &&
     result.error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED
   ) {
-    const refreshToken = Cookies.get("refreshToken");
+    const refreshToken = getCookie("refreshToken");
     const rfToken = JSON.stringify(refreshToken);
 
     if (rfToken) {
@@ -54,7 +55,7 @@ const axiosBaseQuery = async (
 
       if (refreshData) {
         const newAccessToken = refreshData.accessToken;
-        Cookies.set("accessToken", newAccessToken);
+        setCookie("accessToken", newAccessToken, { maxAge: 1 * 24 * 60 * 60 });
         token = newAccessToken;
 
         if (typeof args === "object") {

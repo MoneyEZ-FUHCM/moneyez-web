@@ -1,9 +1,6 @@
-"use client";
-
 import {
   BackgroundIntro,
   Comments,
-  FormContact,
   Functions,
   Packages,
   Reasons,
@@ -12,7 +9,7 @@ import {
   Supporter,
 } from "@/components";
 
-export default function Home() {
+const Home = () => {
   return (
     <main className="container mx-auto select-none transition-all duration-500">
       <Supporter />
@@ -39,4 +36,6 @@ export default function Home() {
       </ScrollReveal> */}
     </main>
   );
-}
+};
+
+export default Home;

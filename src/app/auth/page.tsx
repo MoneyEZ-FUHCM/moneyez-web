@@ -17,5 +17,4 @@ const AuthPage = () => {
     </main>
   );
 };
-
 export default AuthPage;
