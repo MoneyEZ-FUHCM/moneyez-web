@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "@/helpers/libs/utils";
 import { useState } from "react";
-import { EyeIcon } from "lucide-react";
+import { EyeOpenIcon } from "@radix-ui/react-icons";
 import { EyeClosedIcon } from "@radix-ui/react-icons";
 
 export interface InputProps
@@ -61,8 +61,8 @@ const InputCustom = React.forwardRef<HTMLInputElement, InputProps>(
                 className={`outline-none ${isFocused ? "text-primary" : "text-gray-500"}`}
               />
             ) : (
-              <EyeIcon
-                size={20}
+              <EyeOpenIcon
+                fontSize={20}
                 className={`outline-none ${isFocused ? "text-primary" : "text-gray-500"}`}
               />
             )}

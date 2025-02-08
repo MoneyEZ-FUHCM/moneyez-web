@@ -125,6 +125,12 @@ const ForgotPasswordForm = (props: IForgotPassProps) => {
                               maxLength={5}
                               className="px-5"
                               onChange={(value) => handler.setOtpCode(value)}
+                              onInput={(e: any) =>
+                                (e.target.value = e.target.value.replace(
+                                  /\D/g,
+                                  "",
+                                ))
+                              }
                             >
                               <InputOTPGroup>
                                 <InputOTPSlot index={0} />

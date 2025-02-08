@@ -7,7 +7,6 @@ import { PieChartOutlined, PushpinOutlined } from "@ant-design/icons";
 import { FloatButton, Layout, LayoutProps, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { memo } from "react";
 import { MenuItem } from "./admin.constant";
 import { useSidebar } from "./hooks/useSidebar";
 
@@ -79,7 +78,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Layout className="min-h-screen">
       <Sider
-        width={250}
+        width={230}
         breakpoint="lg"
         collapsedWidth="60"
         collapsed={collapsed}
@@ -146,4 +145,4 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   );
 };
 
-export default memo(DashboardLayout);
+export default DashboardLayout;

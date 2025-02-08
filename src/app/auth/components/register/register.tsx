@@ -289,6 +289,12 @@ const RegisterForm = (props: IRegisterProps) => {
                             maxLength={MAX_LENGTH_OTP}
                             className="px-5"
                             onChange={(value) => handler.setOtpCode(value)}
+                            onInput={(e: any) =>
+                              (e.target.value = e.target.value.replace(
+                                /\D/g,
+                                "",
+                              ))
+                            }
                           >
                             <InputOTPGroup>
                               <InputOTPSlot index={0} />
