@@ -17,10 +17,15 @@ const VALID_PATHS = new Set([
   `/user`,
   `/auth`,
   `/admin/statistic`,
+  `/admin/manage-user`,
   `/user/chart`,
 ]);
 
-const ADMIN_PATHS = new Set([`/admin`, `/admin/statistic`]);
+const ADMIN_PATHS = new Set([
+  `/admin`,
+  `/admin/statistic`,
+  `/admin/manage-user`,
+]);
 
 const USER_PATHS = new Set([`/user`, `/user/chart`]);
 
