@@ -22,10 +22,6 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!token) {
-    return NextResponse.redirect(new URL("/auth", req.url));
-  }
-
   try {
     const decoded: any = jwtDecode(token as any);
     const userRole =
