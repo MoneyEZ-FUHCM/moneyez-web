@@ -10,19 +10,19 @@ import { useEffect, useState } from "react";
 
 const BASE_PATH = "/moneyez-web";
 
-const validPaths = new Set([
-  `${BASE_PATH}`,
-  `${BASE_PATH}/notfound`,
-  `${BASE_PATH}/admin`,
-  `${BASE_PATH}/user`,
-  `${BASE_PATH}/auth`,
-  `${BASE_PATH}/admin/statistic`,
+const VALID_PATHS = new Set([
+  "/",
+  `/notfound`,
+  `/admin`,
+  `/user`,
+  `/auth`,
+  `/admin/statistic`,
+  `/user/chart`,
 ]);
 
-const adminAllowedPaths = new Set([
-  `${BASE_PATH}/admin`,
-  `${BASE_PATH}/admin/statistic`,
-]);
+const ADMIN_PATHS = new Set([`/admin`, `/admin/statistic`]);
+
+const USER_PATHS = new Set([`/user`, `/user/chart`]);
 
 export function LoadingWrapper({
   children,
@@ -35,14 +35,9 @@ export function LoadingWrapper({
   const token = Cookies.get("accessToken");
 
   useEffect(() => {
-    const fullPath = window.location.pathname;
-    console.log("check fullPath", fullPath);
-
-    if (typeof window !== "undefined") {
-      if (!validPaths.has(fullPath)) {
-        router.replace(PATH_NAME.NOT_FOUND);
-        return;
-      }
+    if (!VALID_PATHS.has(pathname)) {
+      router.replace(PATH_NAME.NOT_FOUND);
+      return;
     }
 
     if (!token) {
@@ -60,18 +55,22 @@ export function LoadingWrapper({
       ? decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
       : COMMON_CONSTANT.CONDITION.NULL;
 
-    if (pathname === PATH_NAME.HOME || pathname.startsWith(PATH_NAME.AUTH)) {
+    if (
+      pathname === BASE_PATH ||
+      pathname === PATH_NAME.HOME ||
+      pathname.startsWith(PATH_NAME.AUTH)
+    ) {
       router.replace(PATH_NAME.USER);
     } else if (role === VALID_ROLE.ADMIN) {
-      if (!adminAllowedPaths.has(fullPath)) {
+      if (!ADMIN_PATHS.has(pathname)) {
         router.replace(PATH_NAME.NOT_FOUND);
       }
     } else if (role === VALID_ROLE.USER) {
-      if (fullPath !== `${BASE_PATH}/chart`) {
+      if (!USER_PATHS.has(pathname)) {
         router.replace(PATH_NAME.NOT_FOUND);
       }
     }
-  }, [token, pathname, router]);
+  }, [token, pathname]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 300);
