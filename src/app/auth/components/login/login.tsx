@@ -56,17 +56,15 @@ const LoginForm = () => {
             </h1>
             <p className="text-sms mx-4 mb-5 mt-3 text-center text-[#a3a1a1] transition-all duration-500 lg:mx-9 lg:text-[15px]">
               {TITLE.SUB_GREETING}{" "}
-              <span>
-                <Link
-                  href={PATH_NAME.HOME}
-                  // onClick={() => handler.handleBackToHome}
-                  className="group relative cursor-pointer text-sm font-bold text-primary"
-                >
-                  {TITLE.WEB_NAME}
-                  <span className="absolute bottom-[-3px] left-0 h-0.5 w-full scale-x-0 transform bg-primary transition-transform duration-300 group-hover:scale-x-100" />
-                </Link>
-                <span>.</span>
-              </span>{" "}
+              <Link
+                href={PATH_NAME.HOME}
+                // onClick={() => handler.handleBackToHome}
+                className="group relative cursor-pointer text-base font-bold text-primary"
+              >
+                {TITLE.WEB_NAME}
+                <span className="absolute bottom-[-3px] left-0 h-0.5 w-full scale-x-0 transform bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+              </Link>
+              <span>. </span>
               {TITLE.START}
             </p>
           </motion.div>
