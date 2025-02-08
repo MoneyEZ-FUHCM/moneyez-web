@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import LogoWeb from "@/assets/images/logo/logo_web.png";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { PATH_NAME } from "@/helpers/constants/pathname";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-  const router = useRouter();
   const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -35,12 +34,12 @@ const Navbar = () => {
           quality={100}
         />
         <div className="items-center gap-5 lg:flex">
-          <button
-            onClick={() => router.push(PATH_NAME.AUTH)}
+          <Link
+            href={PATH_NAME.AUTH}
             className="translate transform rounded-xl bg-[#e5f4f2] px-10 py-4 text-sm font-semibold text-[#009379] transition-all duration-200 active:scale-95 lg:block"
           >
             Đăng nhập
-          </button>
+          </Link>
           <button className="translate hidden transform rounded-xl bg-[#009379] px-10 py-4 text-sm font-semibold text-white transition-all duration-200 active:scale-95 lg:block">
             🚀 Trải nghiệm ngay
           </button>
