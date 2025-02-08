@@ -49,6 +49,8 @@ const useLoginPage = (form: FormInstance) => {
         password: values.password,
       }).unwrap();
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
+        Cookies.set("accessToken", res.data.accessToken);
+        Cookies.set("refreshToken", res.data.refreshToken);
         const accessToken = res.data.accessToken;
         if (accessToken) {
           const decoded: any = jwtDecode(accessToken);
@@ -60,8 +62,6 @@ const useLoginPage = (form: FormInstance) => {
             router.replace(PATH_NAME.ADMIN);
             return;
           } else {
-            Cookies.set("accessToken", res.data.accessToken);
-            Cookies.set("refreshToken", res.data.refreshToken);
             if (rememberMe) {
               const encryptedEmail = encryptData(values.email, secretKey);
               const encryptedPassword = encryptData(values.password, secretKey);
