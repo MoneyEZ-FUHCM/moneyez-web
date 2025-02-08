@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
+  trailingSlash: true,
   // basePath: "/moneyez-web",
   env: {
     NEXT_PUBLIC_API_KEY: "AIzaSyBjF8jvekmTSJ4us7PiI0GTJbNzR06z5lY",
