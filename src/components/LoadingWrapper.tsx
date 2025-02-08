@@ -8,6 +8,22 @@ import { jwtDecode } from "jwt-decode";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const BASE_PATH = "/moneyez-web";
+
+const validPaths = new Set([
+  `${BASE_PATH}`,
+  `${BASE_PATH}/notfound`,
+  `${BASE_PATH}/admin`,
+  `${BASE_PATH}/user`,
+  `${BASE_PATH}/auth`,
+  `${BASE_PATH}/admin/statistic`,
+]);
+
+const adminAllowedPaths = new Set([
+  `${BASE_PATH}/admin`,
+  `${BASE_PATH}/admin/statistic`,
+]);
+
 export function LoadingWrapper({
   children,
 }: {
@@ -19,6 +35,16 @@ export function LoadingWrapper({
   const token = Cookies.get("accessToken");
 
   useEffect(() => {
+    const fullPath = window.location.pathname;
+    console.log("check fullPath", fullPath);
+
+    if (typeof window !== "undefined") {
+      if (!validPaths.has(fullPath)) {
+        router.replace(PATH_NAME.NOT_FOUND);
+        return;
+      }
+    }
+
     if (!token) {
       if (
         pathname.startsWith(PATH_NAME.USER) ||
@@ -34,15 +60,14 @@ export function LoadingWrapper({
       ? decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
       : COMMON_CONSTANT.CONDITION.NULL;
 
-    if (pathname === "/" || pathname.startsWith(PATH_NAME.AUTH)) {
+    if (pathname === PATH_NAME.HOME || pathname.startsWith(PATH_NAME.AUTH)) {
       router.replace(PATH_NAME.USER);
     } else if (role === VALID_ROLE.ADMIN) {
-      const adminAllowedPaths = [PATH_NAME.ADMIN, "/admin/statistic"];
-      if (!adminAllowedPaths.includes(pathname)) {
+      if (!adminAllowedPaths.has(fullPath)) {
         router.replace(PATH_NAME.NOT_FOUND);
       }
     } else if (role === VALID_ROLE.USER) {
-      if (pathname !== "/chart") {
+      if (fullPath !== `${BASE_PATH}/chart`) {
         router.replace(PATH_NAME.NOT_FOUND);
       }
     }

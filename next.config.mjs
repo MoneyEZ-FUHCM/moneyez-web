@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  trailingSlash: true,
-  // basePath: "/moneyez-web",
+  // trailingSlash: true,
+  basePath: "/moneyez-web",
   env: {
     NEXT_PUBLIC_API_KEY: "AIzaSyBjF8jvekmTSJ4us7PiI0GTJbNzR06z5lY",
     NEXT_PUBLIC_AUTH_DOMAIN: "exe201-9459a.firebaseapp.com",
