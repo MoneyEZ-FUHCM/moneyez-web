@@ -59,7 +59,7 @@ const useLoginPage = (form: FormInstance) => {
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
           if (role !== VALID_ROLE.USER) {
-            router.replace(PATH_NAME.ADMIN);
+            router.replace(PATH_NAME.STATISTIC);
             return;
           } else {
             if (rememberMe) {
@@ -68,7 +68,7 @@ const useLoginPage = (form: FormInstance) => {
               Cookies.set("email", encryptedEmail);
               Cookies.set("password", encryptedPassword);
             }
-            router.replace(PATH_NAME.USER);
+            router.replace(PATH_NAME.CHART);
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
           }
         }
@@ -123,10 +123,10 @@ const useLoginPage = (form: FormInstance) => {
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
           if (role !== VALID_ROLE.USER) {
-            router.replace(PATH_NAME.ADMIN);
+            router.replace(PATH_NAME.STATISTIC);
             return;
           } else {
-            router.replace(PATH_NAME.USER);
+            router.replace(PATH_NAME.CHART);
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
           }
         }
