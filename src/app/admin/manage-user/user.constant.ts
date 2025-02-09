@@ -23,5 +23,6 @@ export const MANAGE_USER_CONSTANT = {
     USER_MUST_16: "AccountMust16Age",
     ACCOUNT_VERIFIED: "AccountVerified",
     DUPLICATE_PHONE_NUMBER: "DuplicatePhoneNumber",
+    ACCOUNT_NOT_EXIST: "AccountNotExist",
   },
 };

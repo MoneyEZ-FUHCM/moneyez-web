@@ -11,10 +11,10 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { DatePicker, Input, Modal, Select } from "antd";
-import { useAddUserModal } from "../hooks/useAddUserModal";
+import { useUserManagementPage } from "../hooks/useUserManagementPage";
 
 const AddUserModal = () => {
-  const { handler, state } = useAddUserModal();
+  const { handler, state } = useUserManagementPage();
 
   const userFields = [
     {
@@ -126,7 +126,7 @@ const AddUserModal = () => {
         <p className="text-lg font-bold text-primary">{state.TITLE.ADD_USER}</p>
       }
       open={state.isOpen}
-      onOk={handler.handleOk}
+      onOk={handler.handleAddUser}
       confirmLoading={state.isCreatingUser}
       onCancel={handler.handleCancel}
       okText={state.BUTTON.CONFIRM}

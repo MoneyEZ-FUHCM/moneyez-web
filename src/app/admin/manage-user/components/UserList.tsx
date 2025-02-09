@@ -1,14 +1,14 @@
 "use client";
 
+import Avatar from "@/assets/images/logo/avatar_user.jpg";
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { VALID_ROLE } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/utils";
-import { Button, Popconfirm, Tag } from "antd";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, Tag } from "antd";
 import Image from "next/image";
 import { useMemo } from "react";
-import { FaBan } from "react-icons/fa";
-import Avatar from "@/assets/images/logo/avatar_user.jpg";
 import { useUserManagementPage } from "../hooks/useUserManagementPage";
 import { AddUserModal } from "./AddUserModal";
 
@@ -106,21 +106,34 @@ const UserList = () => {
           let tagColor = status ? "green" : "red";
           return <Tag color={tagColor}>{statusText}</Tag>;
         },
-        width: "10%",
+        width: "2%",
       },
       {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
-        render: () => (
-          <Popconfirm
-            title={state.TITLE.BAN_USER}
-            okText={state.TITLE.YES}
-            cancelText={state.TITLE.NO}
-          >
-            <Button danger size="small" className="border-none">
-              <FaBan />
+        render: (record: any) => (
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              size="small"
+              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+            >
+              <EyeOutlined color="blue" className="text-primary" />
             </Button>
-          </Popconfirm>
+            <Button
+              size="small"
+              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+            >
+              <EditOutlined color="blue" className="text-primary" />
+            </Button>
+            <Button
+              onClick={() => handler.handleDeleteUser(record.id)}
+              danger
+              size="small"
+              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+            >
+              <DeleteOutlined />
+            </Button>
+          </div>
         ),
       },
     ],

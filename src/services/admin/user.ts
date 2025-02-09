@@ -22,9 +22,20 @@ const userManagementApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    deleteUser: builder.mutation({
+      query: (payload) => ({
+        url: `/users/${payload}`,
+        method: HTTP_METHOD.DELETE,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserListQuery, useCreateUserMutation } = userManagementApi;
+export const {
+  useGetUserListQuery,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+} = userManagementApi;
 
 export default userManagementApi;

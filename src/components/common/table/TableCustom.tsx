@@ -9,7 +9,7 @@ const TableCustom = ({ title, ...props }: CommonTableProps) => {
   return (
     <section>
       {title && <p className="mb-2 text-sm font-medium">{title}</p>}
-      <Table {...props} />
+      <Table className="pagination" id="myTable" {...props} />
     </section>
   );
 };

@@ -22,6 +22,12 @@ export const TEXT_TRANSLATE = {
     ADD_USER: "Thêm người dùng",
     CHOOSE_ROLE: "Chọn vai trò",
     MANAGE_USER: "Quản lý người dùng",
+    TITLE: "Xóa người dùng",
+    CONTENT:
+      "Bạn có muốn xóa người này không? Người dùng này không thể được khôi phục.",
+    OK_TEXT: "Có",
+    OK_TYPE: "danger",
+    CANCEL_TEXT: "Không",
   },
   BUTTON: {
     ADD_USER: "Thêm người dùng",
@@ -56,9 +62,11 @@ export const TEXT_TRANSLATE = {
     OTP_INVALID: "Mã OTP đã hết hạn hoặc không hợp lệ",
     ACCOUNT_DOES_NOT_EXIST: "Tài khoản không tồn tại",
     MUST_BE_16: "Người dùng phải từ 16 tuổi trở lên mới dược vào hệ thống",
+    ACCOUNT_NOT_EXISTS: "Tài khoản không tồn tài",
   },
 
   MESSAGE_SUCCESS: {
     CREATE_SUCCESSFUL: "Tạo người dùng thành công",
+    DELETE_SUCCESSFUL: "Xóa người dùng thành công",
   },
 };

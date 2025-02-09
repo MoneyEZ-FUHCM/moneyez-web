@@ -16,7 +16,6 @@ export { Functions } from "./home/Functions";
 export { Reasons } from "./home/Reasons";
 export { Comments } from "./home/Comments";
 export { Packages } from "./home/Packages";
-export { FormContact } from "./home/FormContact";
 export { BackgroundIntro } from "./home/BackgroundIntro";
 export { Statistic } from "./home/Statistic";
 export { TableListLayout } from "./layouts/TableListLayout";
