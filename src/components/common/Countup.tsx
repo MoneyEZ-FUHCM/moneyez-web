@@ -22,4 +22,4 @@ const CountupCustom = ({ value }: { value: number }) => {
   );
 };
 
-export default CountupCustom;
+export { CountupCustom };

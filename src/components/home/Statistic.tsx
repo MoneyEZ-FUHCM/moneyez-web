@@ -2,7 +2,7 @@
 
 import Star from "@/assets/images/icons/star.png";
 import Image from "next/image";
-import CountupCustom from "../common/Countup";
+import { CountupCustom } from "../common/Countup";
 
 const Statistic = () => {
   const stats = [

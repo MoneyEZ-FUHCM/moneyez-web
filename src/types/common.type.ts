@@ -4,3 +4,22 @@ export interface BaseResponse<T> {
   message: string;
   data: T;
 }
+
+export interface MetaData {
+  totalCount: number;
+  totalPages: number;
+}
+
+export interface CommonResponse<T> {
+  items: T[];
+  totalCount: number;
+  totalPages: number;
+}
+
+export const transformCommonResponse = <T>(
+  response: any,
+): CommonResponse<T> => ({
+  items: response.data?.data || [],
+  totalCount: response.data?.metaData?.totalCount || 0,
+  totalPages: response.data?.metaData?.totalPages || 0,
+});

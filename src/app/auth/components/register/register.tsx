@@ -135,7 +135,7 @@ const RegisterForm = (props: IRegisterProps) => {
                     message: MESSAGE_VALIDATE.PHONE_NUMBER_REQUIRED,
                   },
                   {
-                    pattern: /^[0-9]{10,11}$/,
+                    pattern: /^[0-9]{10}$/,
                     message: MESSAGE_VALIDATE.INPUT_PHONE_NUMBER,
                   },
                 ]}

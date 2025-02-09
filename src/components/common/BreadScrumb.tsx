@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { Breadcrumb } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 import Link from "next/link";
@@ -13,7 +13,7 @@ interface BreadScrumbProps {
   items: BreadcrumbItem[];
 }
 
-const BreadScrumb: React.FC<BreadScrumbProps> = ({ items }) => {
+const BreadScrumb = memo(({ items }: BreadScrumbProps) => {
   const breadcrumbItems = [
     {
       href: "/",
@@ -31,6 +31,6 @@ const BreadScrumb: React.FC<BreadScrumbProps> = ({ items }) => {
       ))}
     </Breadcrumb>
   );
-};
+});
 
-export default React.memo(BreadScrumb);
+export { BreadScrumb };

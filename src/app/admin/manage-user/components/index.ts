@@ -1,1 +1,2 @@
-export { UserList } from "./user-list";
+export { UserList } from "./UserList";
+export { AddUserModal } from "./AddUserModal";

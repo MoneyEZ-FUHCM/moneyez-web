@@ -14,6 +14,14 @@ export const MANAGE_USER_CONSTANT = {
     ID: "id",
     UNSIGN_NAME: "unsignFullName",
     CONFIRM_EMAIL: "confirmEmail",
-    FULL_NAME: "fullName",
+    FULLNAME: "fullName",
+    INDEX: "index",
+  },
+
+  // Error code
+  ERROR_CODE: {
+    USER_MUST_16: "AccountMust16Age",
+    ACCOUNT_VERIFIED: "AccountVerified",
+    DUPLICATE_PHONE_NUMBER: "DuplicatePhoneNumber",
   },
 };

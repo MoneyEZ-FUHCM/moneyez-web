@@ -131,6 +131,50 @@ body {
   color: var(--c-primary) !important;
 }
 
+.custom-ok-button {
+  background-color: var(--c-primary) !important;
+  border-color: var(--c-primary) !important;
+  color: white !important;
+}
+
+.custom-ok-button:hover {
+  background-color: var(--c-primary) !important;
+}
+
+.ant-form-item .ant-form-item-label {
+  padding-bottom: 2px !important;
+  > label {
+    font-size: 12px !important;
+  }
+}
+
+.ant-form-item-explain-error {
+  font-size: 12px !important;
+}
+
+.ant-select-single {
+  min-height: 37px !important;
+}
+
+.ant-input-affix-wrapper {
+  line-height: 2 !important;
+  &:hover {
+    border-color: var(--c-primary);
+  }
+
+  &:focus-within {
+    border-color: var(--c-primary);
+  }
+}
+
+.ant-select-selector:hover {
+  border-color: var(--c-primary) !important;
+}
+
+.ant-select-selector:focus-within {
+  border-color: var(--c-primary) !important;
+}
+
 /* page-not-found */
 .main_wrapper {
   display: flex;
