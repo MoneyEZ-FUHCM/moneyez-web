@@ -83,6 +83,7 @@ const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery,
   endpoints: () => ({}),
+  tagTypes: ["User"],
 });
 
 export default apiSlice;

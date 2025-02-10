@@ -3,7 +3,6 @@
 import {
   BackgroundIntro,
   Comments,
-  FormContact,
   Functions,
   Packages,
   Reasons,
