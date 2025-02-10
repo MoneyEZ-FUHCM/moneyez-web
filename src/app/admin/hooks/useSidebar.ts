@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { MenuItem } from "../admin.constant";
 
 const useSidebar = (items: MenuItem[]) => {
@@ -10,6 +10,10 @@ const useSidebar = (items: MenuItem[]) => {
   const storeDefaultSelectedKeys = (key: string) => {
     sessionStorage.setItem("keys", key);
   };
+
+  useEffect(() => {
+    setCollapsed(true);
+  }, []);
 
   useEffect(() => {
     const currentPath = pathname;

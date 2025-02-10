@@ -44,6 +44,9 @@ const COMMON_CONSTANT = {
   SYSTEM_ERROR: {
     SERVER_ERROR: "Lỗi hệ thống. Vui lòng thử lại sau",
   },
+
+  EMPTY_STRING: "",
+  NUMBER_ZERO: 0,
 };
 
 export { COMMON_CONSTANT };

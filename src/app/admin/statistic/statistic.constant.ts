@@ -24,3 +24,37 @@ export const MAIN_CHART_DATA = [
   { date: "2025-02-06", orderCount: 19, revenue: 190 },
   { date: "2025-02-07", orderCount: 25, revenue: 250 },
 ];
+
+export const lineOptions = {
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+  },
+  elements: {
+    point: {
+      radius: 2,
+      backgroundColor: "currentColor",
+      hoverRadius: 4,
+      hitRadius: 6,
+    },
+  },
+  scales: {
+    y: {
+      type: "linear",
+      display: true,
+      position: "left",
+    },
+    y1: {
+      type: "linear",
+      display: true,
+      position: "right",
+      grid: {
+        drawOnChartArea: false,
+      },
+    },
+  },
+  responsive: true,
+};
+
+export const CHART_COLORS = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"];
