@@ -18,6 +18,9 @@ const VALID_PATHS = new Set([
   `/auth`,
   `/admin/statistic`,
   `/admin/manage-user`,
+  `/admin/manage-model`,
+  `/admin/manage-category`,
+  `/admin/manage-category/:id`,
   `/user/chart`,
 ]);
 
@@ -25,6 +28,10 @@ const ADMIN_PATHS = new Set([
   `/admin`,
   `/admin/statistic`,
   `/admin/manage-user`,
+  `/admin/manage-model`,
+  `/admin/manage-category`,
+  `/admin/manage-category/:id`,
+
 ]);
 
 const USER_PATHS = new Set([`/user`, `/user/chart`]);

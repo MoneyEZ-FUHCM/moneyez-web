@@ -1,4 +1,6 @@
-export interface User {
+import { BaseEntity } from "./common.type";
+
+export interface User extends BaseEntity {
   email: string;
   confirmEmail: string | null;
   avatar: string | null;
@@ -9,10 +11,4 @@ export interface User {
   dob: string | null;
   gender: number;
   role: "ADMIN" | "USER" | "OTHER";
-  id: string;
-  createdDate: string;
-  createdBy: string;
-  updatedDate: string;
-  updatedBy: string | null;
-  isDeleted: boolean;
 }

@@ -4,6 +4,8 @@ const PATH_NAME = {
   ADMIN: "/admin",
   MANAGE_USER: "/admin/manage-user",
   STATISTIC: "/admin/statistic",
+  MANAGE_SPENDING_MODEL: "/admin/manage-model",
+  MANAGE_CATEGORY: "/admin/manage-category",
 
   //USER
   USER: "/user",

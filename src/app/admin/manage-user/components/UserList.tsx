@@ -15,16 +15,10 @@ import { AddUserModal } from "./AddUserModal";
 const UserList = () => {
   const { state, handler } = useUserManagementPage();
 
-  // nếu có xài thì tương tự (thay [] = items)
-  // const items = [
-  //   {
-  //     href: "/store/product",
-  //     title: "Trang chủ",
-  //   },
-  //   {
-  //     title: "Đơn hàng",
-  //   },
-  // ];
+  const filteredUsers = useMemo(() => {
+    if (!state?.data?.items) return [];
+    return state.data.items.filter(user => !user.isDeleted);
+  }, [state?.data?.items]);
 
   const columns = useMemo(
     () => [
@@ -37,7 +31,7 @@ const UserList = () => {
       {
         title: state.TITLE.EMAIL,
         dataIndex: state.FORM_NAME.EMAIL,
-        width: "20%",
+        width: "15%",
       },
       {
         title: state.TITLE.AVATAR,
@@ -56,7 +50,12 @@ const UserList = () => {
       {
         title: state.TITLE.FULLNAME,
         dataIndex: state.FORM_NAME.FULLNAME,
-        width: "14%",
+        width: "15%",
+      },
+      {
+        title: state.TITLE.PHONE_NUMBER,
+        dataIndex: state.FORM_NAME.PHONE_NUMBER,
+        width: "10%",
       },
       {
         title: state.TITLE.DOB,
@@ -70,11 +69,6 @@ const UserList = () => {
         dataIndex: state.FORM_NAME.ADDERSS,
         width: "13%",
         render: (address: string) => address || COMMON_CONSTANT.EMPTY_STRING,
-      },
-      {
-        title: state.TITLE.PHONE_NUMBER,
-        dataIndex: state.FORM_NAME.PHONE_NUMBER,
-        width: "10%",
       },
       {
         title: state.TITLE.ROLE,
@@ -100,9 +94,9 @@ const UserList = () => {
       },
       {
         title: state.TITLE.STATUS,
-        dataIndex: state.FORM_NAME.IS_DELETED,
+        dataIndex: state.FORM_NAME.STATUS,
         render: (status: boolean) => {
-          let statusText = status ? state.TITLE.ACTIVE : state.TITLE.INACTIVE;
+          let statusText = status ? state.TITLE.ACTIVE : state.TITLE.BLOCKED;
           let tagColor = status ? "green" : "red";
           return <Tag color={tagColor}>{statusText}</Tag>;
         },
@@ -151,10 +145,10 @@ const UserList = () => {
       <TableCustom
         title={state.TITLE.USER_LIST}
         columns={columns}
-        dataSource={state?.data?.items}
+        dataSource={filteredUsers}
         pagination={{
           current: state.pageIndex,
-          total: state.data?.totalCount,
+          total: filteredUsers.length,
           pageSize: state.pageSize,
         }}
         onChange={handler.handlePageChange}
