@@ -25,14 +25,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${robotoSlab.variable}`}>
+        {/* <LoadingWrapper> */}
+        <NextProgressBar />
         <Providers>
-          <LoadingWrapper>
-            <NextProgressBar />
-            <NavbarWrapper>{children}</NavbarWrapper>
-            <ProgressBar />
-            <Toaster position="top-right" richColors />
-          </LoadingWrapper>
+          <NavbarWrapper>{children}</NavbarWrapper>
+          <ProgressBar />
         </Providers>
+        <Toaster position="top-right" richColors />
+        {/* </LoadingWrapper> */}
       </body>
     </html>
   );

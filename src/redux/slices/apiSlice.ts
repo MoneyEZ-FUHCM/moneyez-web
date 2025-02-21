@@ -6,8 +6,8 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 interface RefreshResultData {
   accessToken: string;
@@ -27,7 +27,7 @@ const axiosBaseQuery = async (
   extraOptions: {},
 ) => {
   const { HTTP_STATUS, HTTP_METHOD } = COMMON_CONSTANT;
-  let token = Cookies.get("accessToken");
+  let token = getCookie("accessToken");
 
   const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
@@ -46,7 +46,7 @@ const axiosBaseQuery = async (
     result.error &&
     result.error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED
   ) {
-    const refreshToken = Cookies.get("refreshToken");
+    const refreshToken = getCookie("refreshToken");
 
     if (refreshToken) {
       const res = (await baseQuery(
@@ -63,8 +63,10 @@ const axiosBaseQuery = async (
 
       if (refreshData) {
         const { accessToken, refreshToken: newRefreshToken } = refreshData;
-        Cookies.set("accessToken", accessToken);
-        Cookies.set("refreshToken", newRefreshToken);
+        setCookie("accessToken", accessToken, { maxAge: 1 * 24 * 60 * 60 });
+        setCookie("refreshToken", newRefreshToken, {
+          maxAge: 1 * 24 * 60 * 60,
+        });
         token = accessToken;
 
         if (typeof args === "object") {
@@ -81,8 +83,9 @@ const axiosBaseQuery = async (
           );
         }
       } else {
-        Cookies.remove("accessToken");
-        Cookies.remove("refreshToken");
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
+
         window.location.replace("/moneyez-web/auth");
       }
     }

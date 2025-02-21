@@ -16,7 +16,7 @@ const BackgroundIntro = () => {
           <div className="flex min-h-[400px] flex-col lg:flex-row">
             <div className="flex w-full flex-1 flex-col items-center justify-center lg:items-start">
               <div className="flex flex-col justify-center gap-5">
-                <h1 className="text-center text-4xl lg:text-left lg:text-[40px] xl:text-5xl 2xl:text-6xl">
+                <div className="text-center text-4xl lg:text-left lg:text-[40px] xl:text-5xl 2xl:text-6xl">
                   <div className="mb-3 flex justify-center lg:w-fit">
                     <div className="flex max-w-[500px] items-center justify-center gap-2 rounded-3xl bg-[#FFF9F1] px-5 py-2 lg:justify-start">
                       <Image
@@ -33,10 +33,11 @@ const BackgroundIntro = () => {
                   <h1 className="mb-5 text-3xl font-bold text-[#4d4d4d] transition-all duration-500 lg:text-4xl xl:text-[40px] 2xl:text-5xl">
                     Giải Pháp Tiết Kiệm
                   </h1>
-                  <h1 className="mb-2 text-3xl font-bold text-primary transition-all duration-500 lg:text-4xl xl:text-[40px] 2xl:text-5xl">
+                  <h2 className="mb-2 text-3xl font-bold text-primary transition-all duration-500 lg:text-4xl xl:text-[40px] 2xl:text-5xl">
                     Thông Minh Cho Mọi Gia Đình
-                  </h1>
-                </h1>
+                  </h2>
+                </div>
+
                 <div className="flex justify-center transition-all duration-500 lg:justify-start">
                   <button className="group relative flex h-[2.8em] cursor-pointer items-center overflow-hidden rounded-3xl border border-solid bg-primary p-[0.35em] pl-[1em] pr-[3.3em] text-[17px] font-medium tracking-wider text-[#4d4d4d]">
                     <span className="text-sm text-superlight">

@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const PageNotFound = () => {
   return (
     <div className="main_wrapper relative">

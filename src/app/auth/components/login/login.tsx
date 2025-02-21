@@ -16,6 +16,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { PATH_NAME } from "@/helpers/constants/pathname";
 import { useDecryptCredentials } from "@/hooks/useDecryptCredentials";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Checkbox, Form, Spin } from "antd";
@@ -28,7 +29,6 @@ import { TEXT_TRANSLATE } from "../../auth.translate";
 import { useLoginPage } from "../../hooks/useLoginPage";
 import { ForgotPasswordForm } from "../forgot-pass/forgot-password";
 import { RegisterForm } from "../register/register";
-import { PATH_NAME } from "@/helpers/constants/pathname";
 
 const LoginForm = () => {
   const [form] = Form.useForm();

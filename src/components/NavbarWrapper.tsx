@@ -29,7 +29,7 @@ const NavbarWrapper = ({ children }: { children: React.ReactNode }) => {
             <section className="flex min-h-[400px] flex-col justify-between lg:flex-row">
               <div className="mb-5 flex flex-1 flex-col items-center justify-center lg:items-start">
                 <div className="flex flex-col justify-center gap-5">
-                  <h1 className="text-center text-4xl text-[#4d4d4d] lg:text-left lg:text-[40px] xl:text-5xl 2xl:text-6xl">
+                  <div className="text-center text-4xl text-[#4d4d4d] lg:text-left lg:text-[40px] xl:text-5xl 2xl:text-6xl">
                     <div className="mb-3 flex justify-center lg:w-fit">
                       <div className="flex max-w-[500px] items-center justify-center gap-2 rounded-3xl bg-[#FFF9F1] px-5 py-2 lg:justify-start">
                         <Image
@@ -43,20 +43,21 @@ const NavbarWrapper = ({ children }: { children: React.ReactNode }) => {
                         </p>
                       </div>
                     </div>
-                    <h1 className="mb-5 text-3xl font-bold text-primary transition-all duration-500 lg:text-4xl xl:text-[40px] 2xl:text-5xl">
-                      Ez<span className="text-secondary">Money</span>
-                    </h1>
-                    <Typewriter
-                      options={{
-                        strings: [
-                          '<span class="font-semibold transition-all duration-500">Quản Lý Tài Chính</span>',
-                          '<span class="font-semibold transition-all duration-500">Tiết Kiệm Thông Minh</span>',
-                        ],
-                        autoStart: true,
-                        loop: true,
-                      }}
-                    />
-                  </h1>
+                  </div>
+                  <p className="mb-5 text-3xl font-bold text-primary transition-all duration-500 lg:text-4xl xl:text-[40px] 2xl:text-5xl">
+                    Ez<span className="text-secondary">Money</span>
+                  </p>
+                  <Typewriter
+                    options={{
+                      strings: [
+                        '<span class="font-semibold text-4xl text-[#4d4d4d] lg:text-left lg:text-[40px] xl:text-5xl 2xl:text-6xl transition-all duration-500">Quản Lý Tài Chính</span>',
+                        '<span class="font-semibold text-4xl text-[#4d4d4d] lg:text-left lg:text-[40px] xl:text-5xl 2xl:text-6xl transition-all duration-500">Tiết Kiệm Thông Minh</span>',
+                      ],
+                      autoStart: true,
+                      loop: true,
+                    }}
+                  />
+                  {/* </div> */}
                   <h5 className="mx-10 text-center text-sm leading-7 text-gray-500 transition-all duration-500 md:mx-12 lg:mx-0 lg:text-left lg:text-[14px] xl:text-[16px]">
                     Ứng dụng giúp bạn dễ dàng quản lý tài chính, theo dõi và tối
                     ưu hóa hũ tiết kiệm mỗi ngày, từ đó giúp bạn đạt được mục

@@ -13,12 +13,12 @@ import { ApiResponse } from "@/types/login.type";
 import { encryptData } from "@/utils";
 import { FormInstance } from "antd";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { AUTH_CONSTANT } from "../auth.constant";
 import { TEXT_TRANSLATE } from "../auth.translate";
+import { setCookie } from "cookies-next";
 
 const useLoginPage = (form: FormInstance) => {
   // mutation & provider
@@ -49,8 +49,12 @@ const useLoginPage = (form: FormInstance) => {
         password: values.password,
       }).unwrap();
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
-        Cookies.set("accessToken", res.data.accessToken);
-        Cookies.set("refreshToken", res.data.refreshToken);
+        setCookie("accessToken", res.data.accessToken, {
+          maxAge: 1 * 24 * 60 * 60,
+        });
+        setCookie("refreshToken", res.data.refreshToken, {
+          maxAge: 1 * 24 * 60 * 60,
+        });
         const accessToken = res.data.accessToken;
         if (accessToken) {
           const decoded: any = jwtDecode(accessToken);
@@ -65,8 +69,12 @@ const useLoginPage = (form: FormInstance) => {
             if (rememberMe) {
               const encryptedEmail = encryptData(values.email, secretKey);
               const encryptedPassword = encryptData(values.password, secretKey);
-              Cookies.set("email", encryptedEmail);
-              Cookies.set("password", encryptedPassword);
+              setCookie("email", encryptedEmail, {
+                maxAge: 1 * 24 * 60 * 60,
+              });
+              setCookie("password", encryptedPassword, {
+                maxAge: 1 * 24 * 60 * 60,
+              });
             }
             router.replace(PATH_NAME.CHART);
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
@@ -115,8 +123,12 @@ const useLoginPage = (form: FormInstance) => {
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
-          Cookies.set("refreshToken", res.data.refreshToken);
+          setCookie("accessToken", res.data.accessToken, {
+            maxAge: 1 * 24 * 60 * 60,
+          });
+          setCookie("refreshToken", res.data.refreshToken, {
+            maxAge: 1 * 24 * 60 * 60,
+          });
           const decoded: any = jwtDecode(accessToken);
           const role =
             decoded[
@@ -148,8 +160,12 @@ const useLoginPage = (form: FormInstance) => {
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
-          Cookies.set("refreshToken", res.data.refreshToken);
+          setCookie("accessToken", res.data.accessToken, {
+            maxAge: 1 * 24 * 60 * 60,
+          });
+          setCookie("refreshToken", res.data.refreshToken, {
+            maxAge: 1 * 24 * 60 * 60,
+          });
           router.replace(PATH_NAME.HOME);
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
         }

@@ -8,11 +8,11 @@ import {
   useVerifyMutation,
 } from "@/services/auth";
 import { FormInstance } from "antd";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { AUTH_CONSTANT } from "../auth.constant";
 import { TEXT_TRANSLATE } from "../auth.translate";
+import { setCookie } from "cookies-next";
 
 const useRegisterPage = (form: FormInstance) => {
   // router
@@ -67,8 +67,12 @@ const useRegisterPage = (form: FormInstance) => {
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
-          Cookies.set("refreshToken", res.data.refreshToken);
+          setCookie("accessToken", res.data.accessToken, {
+            maxAge: 1 * 24 * 60 * 60,
+          });
+          setCookie("refreshToken", res.data.refreshToken, {
+            maxAge: 1 * 24 * 60 * 60,
+          });
           router.replace(PATH_NAME.HOME);
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
         }
