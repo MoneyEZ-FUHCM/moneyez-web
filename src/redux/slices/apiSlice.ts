@@ -1,4 +1,5 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { PATH_NAME } from "@/helpers/constants/pathname";
 import {
   BaseQueryApi,
   createApi,
@@ -6,6 +7,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 interface RefreshResultData {
   accessToken: string;
@@ -79,8 +81,9 @@ const axiosBaseQuery = async (
           );
         }
       } else {
-        // await AsyncStorage.clear();
-        // router.replace(PATH_NAME.AUTH as any);
+        Cookies.remove("accessToken");
+        Cookies.remove("refreshToken");
+        window.location.replace("/moneyez-web/auth");
       }
     }
   }
