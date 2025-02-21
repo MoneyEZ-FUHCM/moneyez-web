@@ -53,6 +53,12 @@ const authApi = apiSlice.injectEndpoints({
         body: payload,
       }),
     }),
+    getInfoUser: builder.query({
+      query: () => ({
+        url: "/users/current",
+        method: HTTP_METHOD.GET,
+      }),
+    }),
   }),
 });
 
@@ -64,6 +70,7 @@ export const {
   useResetPasswordMutation,
   useConfirmOtpMutation,
   useConfirmNewPasswordMutation,
+  useGetInfoUserQuery,
 } = authApi;
 
 export default authApi;

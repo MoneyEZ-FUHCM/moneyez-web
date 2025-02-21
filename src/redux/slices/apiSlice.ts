@@ -9,15 +9,23 @@ import Cookies from "js-cookie";
 
 interface RefreshResultData {
   accessToken: string;
+  refreshToken: string;
+}
+
+interface RefreshResponse {
+  data?: {
+    data?: RefreshResultData;
+  };
+  error?: unknown;
 }
 
 const axiosBaseQuery = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
-  extraOptions: object,
+  extraOptions: {},
 ) => {
+  const { HTTP_STATUS, HTTP_METHOD } = COMMON_CONSTANT;
   let token = Cookies.get("accessToken");
-  const { HTTP_METHOD, HTTP_STATUS } = COMMON_CONSTANT;
 
   const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
@@ -37,25 +45,25 @@ const axiosBaseQuery = async (
     result.error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED
   ) {
     const refreshToken = Cookies.get("refreshToken");
-    const rfToken = JSON.stringify(refreshToken);
 
-    if (rfToken) {
-      const res = await baseQuery(
+    if (refreshToken) {
+      const res = (await baseQuery(
         {
-          url: "/authen/refresh-token",
+          url: "/auth/refresh-token",
           method: HTTP_METHOD.POST,
-          body: rfToken,
+          body: JSON.stringify(refreshToken),
         },
         api,
         extraOptions,
-      );
+      )) as RefreshResponse;
 
-      const refreshData = res.data as RefreshResultData | undefined;
+      const refreshData = res?.data?.data;
 
       if (refreshData) {
-        const newAccessToken = refreshData.accessToken;
-        Cookies.set("accessToken", newAccessToken);
-        token = newAccessToken;
+        const { accessToken, refreshToken: newRefreshToken } = refreshData;
+        Cookies.set("accessToken", accessToken);
+        Cookies.set("refreshToken", newRefreshToken);
+        token = accessToken;
 
         if (typeof args === "object") {
           result = await baseQuery(
@@ -63,7 +71,7 @@ const axiosBaseQuery = async (
               ...args,
               headers: {
                 ...args.headers,
-                Authorization: `Bearer ${newAccessToken}`,
+                Authorization: `Bearer ${accessToken}`,
               },
             },
             api,
@@ -71,7 +79,8 @@ const axiosBaseQuery = async (
           );
         }
       } else {
-        //
+        // await AsyncStorage.clear();
+        // router.replace(PATH_NAME.AUTH as any);
       }
     }
   }
