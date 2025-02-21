@@ -16,6 +16,7 @@ export const MANAGE_USER_CONSTANT = {
     CONFIRM_EMAIL: "confirmEmail",
     FULLNAME: "fullName",
     INDEX: "index",
+    STATUS: "status"
   },
 
   // Error code
