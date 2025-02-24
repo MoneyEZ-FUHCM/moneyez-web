@@ -91,6 +91,13 @@ const useLoginPage = (form: FormInstance) => {
       }
       if (
         error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error.errorCode === ERROR_CODE.ACCOUNT_BLOCKED
+      ) {
+        showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_BLOCKED);
+        return;
+      }
+      if (
+        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
         error.errorCode === ERROR_CODE.ACCOUNT_NEED_CONFIRM_EMAIL
       ) {
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.DOEST_NOT_VERIFY_EMAIL);
@@ -131,7 +138,15 @@ const useLoginPage = (form: FormInstance) => {
           }
         }
       }
-    } catch (err) {
+    } catch (err: any) {
+      const error = err.data;
+      if (
+        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error.errorCode === ERROR_CODE.ACCOUNT_BLOCKED
+      ) {
+        showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_BLOCKED);
+        return;
+      }
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     }
   };
@@ -150,8 +165,18 @@ const useLoginPage = (form: FormInstance) => {
         if (accessToken) {
           Cookies.set("accessToken", res.data.accessToken);
           Cookies.set("refreshToken", res.data.refreshToken);
-          router.replace(PATH_NAME.HOME);
-          showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
+          const decoded: any = jwtDecode(accessToken);
+          const role =
+            decoded[
+              "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+            ];
+          if (role !== VALID_ROLE.USER) {
+            router.replace(PATH_NAME.STATISTIC);
+            return;
+          } else {
+            router.replace(PATH_NAME.CHART);
+            showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
+          }
         }
       }
     } catch (err: any) {

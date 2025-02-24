@@ -80,10 +80,14 @@ export const TEXT_TRANSLATE = {
 
   MESSAGE_ERROR: {
     INVALID_INFO: "Tài khoản hoặc mật khẩu không chính xác",
+    ACCOUNT_BLOCKED:
+      "Tài khoản đã bị khóa. Vui lòng liên hệ quản lý để kích hoạt",
     ACCOUNT_ALREADY_EXISTED: "Tài khoản đã tồn tại",
     PHONE_ALREADY_EXISTED: "Số điện thoại đã tồn tại",
     DOEST_NOT_VERIFY_EMAIL:
       "Vui lòng kiểm tra hòm thư (hoặc Thư rác) để lấy mã OTP",
+    OTP_HAS_SENT:
+      "Mã OTP đã được gửi. Vui lòng kiểm tra hòm thư (hoặc Thư rác) để lấy mã OTP",
     OTP_INVALID: "Mã OTP đã hết hạn hoặc không hợp lệ",
     ACCOUNT_DOES_NOT_EXIST: "Tài khoản không tồn tại",
   },
