@@ -69,6 +69,10 @@ const useForgotPasswordPage = (
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_DOES_NOT_EXIST);
         return;
       }
+      if (error.errorCode === ERROR_CODE.OTP_HAS_SENT) {
+        showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.OTP_HAS_SENT);
+        return;
+      }
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     } finally {
       setIsLoadingResetPassword(false);
@@ -93,6 +97,7 @@ const useForgotPasswordPage = (
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.OTP_INVALID);
         return;
       }
+
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     }
   };
@@ -101,7 +106,7 @@ const useForgotPasswordPage = (
     await form.validateFields();
     const email = form.getFieldValue(FORM_NAME.EMAIL);
     const password = form.getFieldValue(FORM_NAME.PASSWORD);
-    const payload = { email, password };
+    const payload = { email, password, otpCode };
     try {
       const res = await confirmNewPassword(payload).unwrap();
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
@@ -134,6 +139,10 @@ const useForgotPasswordPage = (
       const error = err.data;
       if (error.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_DOES_NOT_EXIST);
+        return;
+      }
+      if (error.errorCode === ERROR_CODE.OTP_HAS_SENT) {
+        showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.OTP_HAS_SENT);
         return;
       }
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);

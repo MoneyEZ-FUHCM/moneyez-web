@@ -101,6 +101,10 @@ const useRegisterPage = (form: FormInstance) => {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_DOES_NOT_EXIST);
         return;
       }
+      if (error.errorCode === ERROR_CODE.OTP_HAS_SENT) {
+        showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.OTP_HAS_SENT);
+        return;
+      }
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     } finally {
       setIsResending(false);
