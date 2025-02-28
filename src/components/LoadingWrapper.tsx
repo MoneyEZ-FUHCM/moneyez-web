@@ -1,10 +1,9 @@
 "use client";
 
 import { VALID_ROLE } from "@/enums/globals";
-import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { PATH_NAME } from "@/helpers/constants/pathname";
+import useUserInfo from "@/hooks/useUserInfo";
 import Cookies from "js-cookie";
-import { jwtDecode } from "jwt-decode";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -18,6 +17,8 @@ const VALID_PATHS = new Set([
   `/auth`,
   `/admin/statistic`,
   `/admin/manage-user`,
+  `/admin/manage-model`,
+  `/admin/manage-category`,
   `/user/chart`,
 ]);
 
@@ -25,9 +26,13 @@ const ADMIN_PATHS = new Set([
   `/admin`,
   `/admin/statistic`,
   `/admin/manage-user`,
+  `/admin/manage-model`,
+  `/admin/manage-category`,
 ]);
 
 const USER_PATHS = new Set([`/user`, `/user/chart`]);
+
+const ADMIN_DYNAMIC_PATHS = /^\/admin\/(manage-category)\/[^/]+$/;
 
 export function LoadingWrapper({
   children,
@@ -38,9 +43,13 @@ export function LoadingWrapper({
   const router = useRouter();
   const pathname = usePathname();
   const token = Cookies.get("accessToken");
+  const userInfo = useUserInfo();
 
   useEffect(() => {
-    if (!VALID_PATHS.has(pathname)) {
+    const isValidPath =
+      VALID_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname);
+
+    if (!isValidPath) {
       router.replace(PATH_NAME.NOT_FOUND);
       return;
     }
@@ -55,10 +64,7 @@ export function LoadingWrapper({
       return;
     }
 
-    const decoded: any = jwtDecode(token);
-    const role = decoded
-      ? decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
-      : COMMON_CONSTANT.CONDITION.NULL;
+    const role = userInfo?.userInfo?.data?.role;
 
     if (
       pathname === BASE_PATH ||
@@ -67,7 +73,10 @@ export function LoadingWrapper({
     ) {
       router.replace(PATH_NAME.USER);
     } else if (role === VALID_ROLE.ADMIN) {
-      if (!ADMIN_PATHS.has(pathname)) {
+      const isAdminPathValid =
+        ADMIN_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname);
+
+      if (!isAdminPathValid) {
         router.replace(PATH_NAME.NOT_FOUND);
       }
     } else if (role === VALID_ROLE.USER) {
