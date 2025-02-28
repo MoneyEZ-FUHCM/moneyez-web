@@ -1,7 +1,10 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import apiSlice from "@/redux/slices/apiSlice";
 import { Category } from "@/types/category.types";
-import { transformBaseResponse, transformCommonResponse } from "@/types/common.type";
+import {
+  transformBaseResponse,
+  transformCommonResponse,
+} from "@/types/common.type";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const categoryManagementApi = apiSlice.injectEndpoints({
@@ -11,7 +14,8 @@ const categoryManagementApi = apiSlice.injectEndpoints({
         url: `/categories?PageIndex=${PageIndex}&PageSize=${PageSize}`,
         method: HTTP_METHOD.GET,
       }),
-      transformResponse: (response) => transformCommonResponse<Category>(response),
+      transformResponse: (response) =>
+        transformCommonResponse<Category>(response),
       providesTags: ["Category"],
     }),
     createCategory: builder.mutation({
@@ -30,12 +34,13 @@ const categoryManagementApi = apiSlice.injectEndpoints({
       invalidatesTags: ["Category"],
     }),
     getCategoryById: builder.query({
-        query: (id) => ({
-          url: `/categories/${id}`,
-          method: HTTP_METHOD.GET,
-        }),
-        transformResponse: (response) => transformBaseResponse<Category>(response),
-      }),      
+      query: (id) => ({
+        url: `/categories/${id}`,
+        method: HTTP_METHOD.GET,
+      }),
+      transformResponse: (response) =>
+        transformBaseResponse<Category>(response),
+    }),
   }),
 });
 
@@ -43,7 +48,7 @@ export const {
   useGetCategoryListQuery,
   useCreateCategoryMutation,
   useDeleteCategoryMutation,
-  useGetCategoryByIdQuery,  // Add this
+  useGetCategoryByIdQuery,
 } = categoryManagementApi;
 
 export default categoryManagementApi;

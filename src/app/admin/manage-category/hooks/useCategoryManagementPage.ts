@@ -3,9 +3,13 @@ import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
-import { useCreateCategoryMutation, useDeleteCategoryMutation, useGetCategoryListQuery } from "@/services/admin/category";
+import {
+  useCreateCategoryMutation,
+  useDeleteCategoryMutation,
+  useGetCategoryListQuery,
+} from "@/services/admin/category";
 import { Form, Modal, TablePaginationConfig } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_CATEGORY_CONSTANT } from "../category.constant";
 import { TEXT_TRANSLATE } from "../category.translate";
@@ -15,8 +19,9 @@ const useCategoryManagementPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
-  
-  const [createCategory, { isLoading: isCreatingCategory }] = useCreateCategoryMutation();
+
+  const [createCategory, { isLoading: isCreatingCategory }] =
+    useCreateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
   const [pageIndex, setPageIndex] = useState<number>(1);
@@ -28,17 +33,31 @@ const useCategoryManagementPage = () => {
 
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
   const { ERROR_CODE, FORM_NAME } = MANAGE_CATEGORY_CONSTANT;
-  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } = TEXT_TRANSLATE;
+  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
+    TEXT_TRANSLATE;
+
+  useEffect(() => {
+    if (data) {
+      if (pageIndex > data?.totalPages) {
+        setPageIndex(data?.totalPages);
+      }
+    }
+  }, [data?.totalPages]);
 
   const handleAddCategory = async () => {
     try {
       const values = await form.validateFields();
       try {
-        await createCategory(values).unwrap();
+        await createCategory([values]).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
+        const error = err.data;
+        if (error.errorCode === ERROR_CODE.CATEGORY_ALREADY_EXISTS) {
+          showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.CATEGORY_ALREADY_EXISTS);
+          return;
+        }
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
       }

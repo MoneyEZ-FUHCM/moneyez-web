@@ -4,19 +4,22 @@ import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/utils";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Tag } from "antd";
+import { Button } from "antd";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
-import { useRouter } from "next/navigation";
+import { AddCategoryModal } from "./AddCategoryModal";
 
 const CategoryList = () => {
   const router = useRouter();
   const { state, handler } = useCategoryManagementPage();
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null,
+  );
 
   const filteredCategories = useMemo(() => {
     if (!state?.data?.items) return [];
-    return state.data.items.filter(category => !category.isDeleted);
+    return state.data.items.filter((category) => !category.isDeleted);
   }, [state?.data?.items]);
 
   const handleViewDetail = (record: any) => {
@@ -33,6 +36,16 @@ const CategoryList = () => {
         width: "5%",
       },
       {
+        title: state.TITLE.CODE,
+        dataIndex: state.FORM_NAME.CODE,
+        width: "15%",
+      },
+      {
+        title: state.TITLE.ICON,
+        dataIndex: state.FORM_NAME.ICON,
+        width: "15%",
+      },
+      {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
         width: "20%",
@@ -45,7 +58,7 @@ const CategoryList = () => {
       {
         title: state.TITLE.CREATED_AT,
         dataIndex: state.FORM_NAME.CREATED_DATE,
-        width: "15%",
+        width: "10%",
         render: (date: string) =>
           date ? formatTimestamp(date) : COMMON_CONSTANT.EMPTY_STRING,
       },
@@ -84,29 +97,28 @@ const CategoryList = () => {
   );
 
   return (
-    <>
-      <TableListLayout title={state.TITLE.MANAGE_CATEGORY} breadcrumbItems={[]}>
-        <SearchAndAdd
-          searchPlaceholder={state.TITLE.SEARCH}
-          addButtonText={state.BUTTON.ADD_CATEGORY}
-          onSearch={(value) => console.log("Tìm kiếm...", value)}
-          onAddClick={handler.handleOpenModalAdd}
-        />
-        <TableCustom
-          title={state.TITLE.CATEGORY_LIST}
-          columns={columns}
-          dataSource={filteredCategories}
-          pagination={{
-            current: state.pageIndex,
-            total: filteredCategories.length,
-            pageSize: state.pageSize,
-          }}
-          onChange={handler.handlePageChange}
-          loading={state.isLoadingCategoryList}
-          rowKey={(record: { id: number }) => record.id}
-        />
-      </TableListLayout>
-    </>
+    <TableListLayout title={state.TITLE.MANAGE_CATEGORY} breadcrumbItems={[]}>
+      <SearchAndAdd
+        searchPlaceholder={state.TITLE.SEARCH}
+        addButtonText={state.BUTTON.ADD_CATEGORY}
+        onSearch={(value) => console.log("Tìm kiếm...", value)}
+        onAddClick={handler.handleOpenModalAdd}
+      />
+      <TableCustom
+        title={state.TITLE.CATEGORY_LIST}
+        columns={columns}
+        dataSource={filteredCategories}
+        pagination={{
+          current: state.pageIndex,
+          total: state?.data?.totalCount,
+          pageSize: state.pageSize,
+        }}
+        onChange={handler.handlePageChange}
+        loading={state.isLoadingCategoryList}
+        rowKey={(record: { id: number }) => record.id}
+      />
+      <AddCategoryModal />
+    </TableListLayout>
   );
 };
 

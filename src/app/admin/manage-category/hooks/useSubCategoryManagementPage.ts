@@ -3,10 +3,10 @@ import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
-import { 
-  useCreateSubCategoryMutation, 
-  useDeleteSubCategoryMutation, 
-  useGetSubCategoryListQuery 
+import {
+  useCreateSubCategoryMutation,
+  useDeleteSubCategoryMutation,
+  useGetSubCategoryListQuery,
 } from "@/services/admin/subCategory";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useCallback, useState } from "react";
@@ -19,20 +19,24 @@ const useSubCategoryManagementPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
-  
-  const [createSubCategory, { isLoading: isCreatingCategory }] = useCreateSubCategoryMutation();
+
+  const [createSubCategory, { isLoading: isCreatingCategory }] =
+    useCreateSubCategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
 
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const { data, isLoading: isLoadingCategoryList } = useGetSubCategoryListQuery({
-    PageIndex: pageIndex,
-    PageSize: pageSize,
-  });
+  const { data, isLoading: isLoadingCategoryList } = useGetSubCategoryListQuery(
+    {
+      PageIndex: pageIndex,
+      PageSize: pageSize,
+    },
+  );
 
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
   const { ERROR_CODE, FORM_NAME } = MANAGE_CATEGORY_CONSTANT;
-  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } = TEXT_TRANSLATE;
+  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
+    TEXT_TRANSLATE;
 
   const handleAddCategory = async () => {
     try {

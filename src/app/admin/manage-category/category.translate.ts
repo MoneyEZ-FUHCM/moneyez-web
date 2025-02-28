@@ -13,6 +13,8 @@ export const TEXT_TRANSLATE = {
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
+    CODE: "Mã danh mục",
+    ICON: "Ký hiệu",
     MANAGE_CATEGORY: "Quản lý danh mục chi tiêu",
     CATEGORY_LIST: "Danh sách danh mục chi tiêu",
     INDEX: "STT",
