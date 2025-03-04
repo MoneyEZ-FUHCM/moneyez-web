@@ -15,11 +15,6 @@ import { AddUserModal } from "./AddUserModal";
 const UserList = () => {
   const { state, handler } = useUserManagementPage();
 
-  const filteredUsers = useMemo(() => {
-    if (!state?.data?.items) return [];
-    return state.data.items.filter(user => !user.isDeleted);
-  }, [state?.data?.items]);
-
   const columns = useMemo(
     () => [
       {
@@ -139,16 +134,16 @@ const UserList = () => {
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_USER}
-        onSearch={(value) => console.log("Tìm kiếm...", value)}
+        onSearch={(value) => handler.setSearchQuery(value)}
         onAddClick={handler.handleOpenModalAdd}
       />
       <TableCustom
         title={state.TITLE.USER_LIST}
         columns={columns}
-        dataSource={filteredUsers}
+        dataSource={state?.data?.items}
         pagination={{
           current: state.pageIndex,
-          total: filteredUsers.length,
+          total: state?.data?.totalCount,
           pageSize: state.pageSize,
         }}
         onChange={handler.handlePageChange}

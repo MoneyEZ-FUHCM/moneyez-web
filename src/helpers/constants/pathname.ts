@@ -6,6 +6,7 @@ const PATH_NAME = {
   STATISTIC: "/admin/statistic",
   MANAGE_SPENDING_MODEL: "/admin/manage-model",
   MANAGE_CATEGORY: "/admin/manage-category",
+  MANAGE_SUB_CATEGORY: "/admin/manage-sub-category",
 
   //USER
   USER: "/user",

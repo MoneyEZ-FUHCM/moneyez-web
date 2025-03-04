@@ -1,4 +1,4 @@
-export const MANAGE_CATEGORY_CONSTANT = {
+export const MANAGE_SUB_CATEGORY_CONSTANT = {
   ERROR_CODE: {
     CATEGORY_NOT_EXIST: "CategoryNotFound",
     CATEGORY_ALREADY_EXISTS: "CategoryAlreadyExists",

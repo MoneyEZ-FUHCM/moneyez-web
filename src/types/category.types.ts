@@ -6,8 +6,8 @@ export interface Category extends BaseEntity {
   nameUnsign: string;
   description: string;
   subcategories?: SubCategory[];
+  code: string;
+  icon: string;
 }
 
-export interface SubCategory extends Category {
-
-}
+export interface SubCategory extends Category {}

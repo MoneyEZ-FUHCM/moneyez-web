@@ -12,15 +12,15 @@ interface FieldConfig {
 interface CommonFormProps {
   readonly fields: readonly FieldConfig[];
   readonly initialValues?: Readonly<Record<string, any>>;
-  // readonly onSubmit: (values: any) => void;
   readonly form: any;
+  readonly colSpan?: number;
 }
 
 export function CommonForm({
   fields,
   initialValues,
-  // onSubmit,
   form,
+  colSpan = 12,
 }: CommonFormProps) {
   useEffect(() => {
     if (initialValues) {
@@ -29,20 +29,17 @@ export function CommonForm({
   }, [initialValues, form]);
 
   return (
-    <Form
-      form={form}
-      layout="vertical"
-      // onFinish={(values) => onSubmit(values)}
-      initialValues={initialValues}
-    >
+    <Form form={form} layout="vertical" initialValues={initialValues}>
       <Row gutter={16}>
-        {fields.map(({ name, label, component, rules, colSpan = 12 }) => (
-          <Col span={colSpan} key={name}>
-            <Form.Item name={name} label={label} rules={rules}>
-              {component}
-            </Form.Item>
-          </Col>
-        ))}
+        {fields.map(
+          ({ name, label, component, rules, colSpan: fieldColSpan }) => (
+            <Col span={fieldColSpan ?? colSpan} key={name}>
+              <Form.Item name={name} label={label} rules={rules}>
+                {component}
+              </Form.Item>
+            </Col>
+          ),
+        )}
       </Row>
     </Form>
   );

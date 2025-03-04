@@ -3,42 +3,46 @@ import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
-import { 
-  useCreateSubCategoryMutation, 
-  useDeleteSubCategoryMutation, 
-  useGetSubCategoryListQuery 
+import {
+  useCreateSubCategoryMutation,
+  useDeleteSubCategoryMutation,
+  useGetSubCategoryListQuery,
 } from "@/services/admin/subCategory";
 import { Form, Modal, TablePaginationConfig } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MANAGE_CATEGORY_CONSTANT } from "../category.constant";
-import { TEXT_TRANSLATE } from "../category.translate";
+import { MANAGE_SUB_CATEGORY_CONSTANT } from "../subCategory.constant";
+import { TEXT_TRANSLATE } from "../subCategory.translate";
 
 const useSubCategoryManagementPage = () => {
   const confirm = Modal.confirm;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
-  
-  const [createSubCategory, { isLoading: isCreatingCategory }] = useCreateSubCategoryMutation();
+
+  const [createSubCategory, { isLoading: isCreatingSubCategory }] =
+    useCreateSubCategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
 
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const { data, isLoading: isLoadingCategoryList } = useGetSubCategoryListQuery({
-    PageIndex: pageIndex,
-    PageSize: pageSize,
-  });
+  const { data, isLoading: isLoadingCategoryList } = useGetSubCategoryListQuery(
+    {
+      PageIndex: pageIndex,
+      PageSize: pageSize,
+    },
+  );
 
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
-  const { ERROR_CODE, FORM_NAME } = MANAGE_CATEGORY_CONSTANT;
-  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } = TEXT_TRANSLATE;
+  const { ERROR_CODE, FORM_NAME } = MANAGE_SUB_CATEGORY_CONSTANT;
+  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
+    TEXT_TRANSLATE;
 
-  const handleAddCategory = async () => {
+  const handleAddSubCategory = async () => {
     try {
       const values = await form.validateFields();
       try {
-        await createSubCategory(values).unwrap();
+        await createSubCategory([values]).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
@@ -65,7 +69,7 @@ const useSubCategoryManagementPage = () => {
     setPageSize(pagination.pageSize ?? 10);
   };
 
-  const handleDeleteCategory = (id: string) => {
+  const handleDeleteSubCategory = (id: string) => {
     confirm({
       title: TITLE.TITLE,
       content: TITLE.CONTENT,
@@ -90,7 +94,7 @@ const useSubCategoryManagementPage = () => {
       pageIndex,
       pageSize,
       isOpen,
-      isCreatingCategory,
+      isCreatingSubCategory,
       MESSAGE_VALIDATE,
       form,
       FORM_NAME,
@@ -100,9 +104,9 @@ const useSubCategoryManagementPage = () => {
     handler: {
       handlePageChange,
       handleOpenModalAdd,
-      handleAddCategory,
+      handleAddSubCategory,
       handleCancel,
-      handleDeleteCategory,
+      handleDeleteSubCategory,
     },
   };
 };
