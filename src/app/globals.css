@@ -152,6 +152,11 @@ body {
   color: var(--c-primary) !important;
 }
 
+.ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background-color: rgba(229, 242, 229, 0.774) !important;
+  color: var(--c-primary) !important;
+}
+
 .custom-ok-button {
   background-color: var(--c-primary) !important;
   border-color: var(--c-primary) !important;

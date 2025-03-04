@@ -7,8 +7,8 @@ const { HTTP_METHOD } = COMMON_CONSTANT;
 const userManagementApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUserList: builder.query({
-      query: ({ PageIndex, PageSize }) => ({
-        url: `/users?PageIndex=${PageIndex}&PageSize=${PageSize}`,
+      query: ({ PageIndex, PageSize, search }) => ({
+        url: `/users?PageIndex=${PageIndex}&PageSize=${PageSize}&search=${search}`,
         method: HTTP_METHOD.GET,
       }),
       transformResponse: (response) => transformCommonResponse<User>(response),

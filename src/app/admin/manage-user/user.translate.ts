@@ -13,6 +13,7 @@ export const TEXT_TRANSLATE = {
     ADMIN: "Quản lý",
     ACTIVE: "HOẠT ĐỘNG",
     INACTIVE: "KHÔNG HOẠT ĐỘNG",
+    BLOCKED: "ĐÃ BỊ CẤM",
     BAN_USER: "Bạn có muốn cấm người dùng này không?",
     YES: "Có",
     NO: "Không",

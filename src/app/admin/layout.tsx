@@ -4,7 +4,14 @@ import Admin from "@/assets/images/logo/avatar_admin.jpg";
 import LogoWeb from "@/assets/images/logo/logo_web.png";
 import { PATH_NAME } from "@/helpers/constants/pathname";
 import { useLogout } from "@/hooks/useLogout";
-import { PieChartOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  BarsOutlined,
+  BuildOutlined,
+  FileMarkdownOutlined,
+  FilePptOutlined,
+  PieChartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { FloatButton, Layout, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,6 +56,35 @@ const items: MenuItem[] = [
     <UserOutlined />,
     undefined,
     PATH_NAME.MANAGE_USER,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_SPENDING_MODEL,
+    SIDE_BAR.POSITION_3,
+    <BuildOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_SPENDING_MODEL,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_CATEGORY,
+    SIDE_BAR.POSITION_4,
+    <BarsOutlined />,
+    [
+      getItem(
+        SIDE_BAR.MANAGE_CATEGORY_MANAGE,
+        SIDE_BAR.POSITION_4,
+        <FileMarkdownOutlined />,
+        undefined,
+        PATH_NAME.MANAGE_CATEGORY,
+      ),
+      getItem(
+        SIDE_BAR.MANAGE_SUB_CATEGORY,
+        SIDE_BAR.POSITION_5,
+        <FilePptOutlined />,
+        undefined,
+        PATH_NAME.MANAGE_SUB_CATEGORY,
+      ),
+    ],
+    PATH_NAME.MANAGE_CATEGORY,
   ),
 ];
 

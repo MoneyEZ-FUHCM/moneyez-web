@@ -25,17 +25,28 @@ const useUserManagementPage = () => {
   const [createUser, { isLoading: isCreatingUser }] = useCreateUserMutation();
   const [deleteUser] = useDeleteUserMutation();
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const { data, isLoading: isLoadingUserList } = useGetUserListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
+    search: searchQuery,
   });
 
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
   const { ERROR_CODE, FORM_NAME } = MANAGE_USER_CONSTANT;
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
     TEXT_TRANSLATE;
+
+  useEffect(() => {
+    if (data) {
+      const totalPages = data?.totalPages || 1;
+      if (pageIndex > totalPages) {
+        setPageIndex(totalPages);
+      }
+    }
+  }, [data?.totalPages]);
 
   useEffect(() => {
     form.setFieldsValue({ avatar: fileChange });
@@ -138,6 +149,7 @@ const useUserManagementPage = () => {
       handleAddUser,
       handleCancel,
       handleDeleteUser,
+      setSearchQuery,
     },
   };
 };

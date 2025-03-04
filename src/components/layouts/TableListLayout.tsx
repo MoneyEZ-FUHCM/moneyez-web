@@ -18,7 +18,7 @@ const TableListLayout = ({
   return (
     <main>
       {breadcrumbItems.length > 0 && <BreadScrumb items={breadcrumbItems} />}
-      <div className="mt-3 rounded-t-xl bg-[#fff] p-5">
+      <div className="mt-3 rounded-t-xl bg-[#fff] p-5 transition-all duration-500">
         <p className="text-3xl font-bold">{title}</p>
       </div>
       <div className="bg-[#fff] p-5">{children}</div>
