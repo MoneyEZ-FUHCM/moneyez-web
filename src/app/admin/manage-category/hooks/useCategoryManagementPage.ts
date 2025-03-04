@@ -9,13 +9,15 @@ import {
   useGetCategoryListQuery,
 } from "@/services/admin/category";
 import { Form, Modal, TablePaginationConfig } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_CATEGORY_CONSTANT } from "../category.constant";
 import { TEXT_TRANSLATE } from "../category.translate";
 
 const useCategoryManagementPage = () => {
   const confirm = Modal.confirm;
+  const router = useRouter();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
@@ -43,6 +45,10 @@ const useCategoryManagementPage = () => {
       }
     }
   }, [data?.totalPages]);
+
+  const handleViewDetail = useCallback((record: any) => {
+    router.push(`/admin/manage-category/${record.id}`);
+  }, []);
 
   const handleAddCategory = async () => {
     try {
@@ -118,6 +124,7 @@ const useCategoryManagementPage = () => {
       handleAddCategory,
       handleCancel,
       handleDeleteCategory,
+      handleViewDetail,
     },
   };
 };

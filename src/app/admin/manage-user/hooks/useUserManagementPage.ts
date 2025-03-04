@@ -41,8 +41,9 @@ const useUserManagementPage = () => {
 
   useEffect(() => {
     if (data) {
-      if (pageIndex > data?.totalPages) {
-        setPageIndex(data?.totalPages);
+      const totalPages = data?.totalPages || 1;
+      if (pageIndex > totalPages) {
+        setPageIndex(totalPages);
       }
     }
   }, [data?.totalPages]);

@@ -3,12 +3,12 @@
 import { CommonForm } from "@/components/common/table/CommonForm";
 import { MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Input, Modal } from "antd";
-import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
+import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
 
-const AddCategoryModal = () => {
+const AddSubCategoryModal = () => {
   const { TextArea } = Input;
 
-  const { handler, state } = useCategoryManagementPage();
+  const { handler, state } = useSubCategoryManagementPage();
   const categoryFields = [
     {
       name: state.FORM_NAME.NAME,
@@ -58,13 +58,15 @@ const AddCategoryModal = () => {
 
   return (
     <Modal
-      title={<p className="text-lg font-bold text-primary">Thêm danh mục</p>}
+      title={
+        <p className="text-lg font-bold text-primary">Thêm danh mục phụ</p>
+      }
       open={state.isOpen}
-      onOk={handler.handleAddCategory}
+      onOk={handler.handleAddSubCategory}
       onCancel={handler.handleCancel}
       okText={state.BUTTON.ADD_CATEGORY}
       cancelText={state.BUTTON.CANCEL}
-      confirmLoading={state.isCreatingCategory}
+      confirmLoading={state.isCreatingSubCategory}
       okButtonProps={{ className: "custom-ok-button" }}
     >
       <CommonForm colSpan={24} form={state.form} fields={categoryFields} />
@@ -72,4 +74,4 @@ const AddCategoryModal = () => {
   );
 };
 
-export { AddCategoryModal };
+export { AddSubCategoryModal };

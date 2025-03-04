@@ -4,17 +4,13 @@ import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/utils";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Tag } from "antd";
+import { Button } from "antd";
 import { useMemo } from "react";
 import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
+import { AddSubCategoryModal } from "./AddSubcategoryModal";
 
 const SubCategoryList = () => {
   const { state, handler } = useSubCategoryManagementPage();
-
-  const filteredCategories = useMemo(() => {
-    if (!state?.data?.items) return [];
-    return state.data.items.filter(category => !category.isDeleted);
-  }, [state?.data?.items]);
 
   const columns = useMemo(
     () => [
@@ -61,7 +57,7 @@ const SubCategoryList = () => {
               <EditOutlined color="blue" className="text-primary" />
             </Button>
             <Button
-              onClick={() => handler.handleDeleteCategory(record.id)}
+              onClick={() => handler.handleDeleteSubCategory(record.id)}
               danger
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
@@ -76,7 +72,10 @@ const SubCategoryList = () => {
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_SUB_CATEGORY} breadcrumbItems={[]}>
+    <TableListLayout
+      title={state.TITLE.MANAGE_SUB_CATEGORY}
+      breadcrumbItems={[]}
+    >
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH_SUB}
         addButtonText={state.BUTTON.ADD_SUB_CATEGORY}
@@ -86,16 +85,17 @@ const SubCategoryList = () => {
       <TableCustom
         title={state.TITLE.SUB_CATEGORY_LIST}
         columns={columns}
-        dataSource={filteredCategories}
+        dataSource={state.data?.items}
         pagination={{
           current: state.pageIndex,
-          total: filteredCategories.length,
+          total: state.data?.totalCount,
           pageSize: state.pageSize,
         }}
         onChange={handler.handlePageChange}
         loading={state.isLoadingCategoryList}
         rowKey={(record: { id: number }) => record.id}
       />
+      <AddSubCategoryModal />
     </TableListLayout>
   );
 };

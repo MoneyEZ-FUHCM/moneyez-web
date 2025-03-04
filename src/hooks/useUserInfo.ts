@@ -7,23 +7,23 @@ import { useGetInfoUserQuery } from "@/services/auth";
 const useUserInfo = () => {
   const token = Cookies.get("accessToken");
   const dispatch = useDispatch();
-
   const {
     data: userInfo,
     isLoading,
     isError,
     refetch,
+    isFetching,
   } = useGetInfoUserQuery(undefined, {
     skip: !token,
   });
 
   useEffect(() => {
-    if (userInfo) {
-      dispatch(setUserInfo(userInfo));
+    if (userInfo?.data) {
+      dispatch(setUserInfo(userInfo.data));
     }
-  }, [userInfo, dispatch]);
+  }, [userInfo?.data, dispatch]);
 
-  return { userInfo, isLoading, isError, refetch };
+  return { userInfo, isLoading, isError, refetch, isFetching };
 };
 
 export default useUserInfo;

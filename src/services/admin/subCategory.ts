@@ -17,7 +17,7 @@ const subSubCategoryManagementApi = apiSlice.injectEndpoints({
     }),
     createSubCategory: builder.mutation({
       query: (payload) => ({
-        url: "/subcategories",
+        url: "/subcategories/create",
         method: HTTP_METHOD.POST,
         body: payload,
       }),

@@ -3,57 +3,52 @@
 import { VALID_ROLE } from "@/enums/globals";
 import { PATH_NAME } from "@/helpers/constants/pathname";
 import useUserInfo from "@/hooks/useUserInfo";
+import { selectUserInfo } from "@/redux/slices/userSlice";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const BASE_PATH = "/moneyez-web";
+import { useSelector } from "react-redux";
 
 const VALID_PATHS = new Set([
   "/",
-  `/notfound`,
-  `/admin`,
-  `/user`,
-  `/auth`,
-  `/admin/statistic`,
-  `/admin/manage-user`,
-  `/admin/manage-model`,
-  `/admin/manage-category`,
-  `/user/chart`,
+  "/notfound",
+  "/admin",
+  "/user",
+  "/auth",
+  "/admin/statistic",
+  "/admin/manage-user",
+  "/admin/manage-model",
+  "/admin/manage-category",
+  "/admin/manage-sub-category",
+  "/user/chart",
 ]);
 
 const ADMIN_PATHS = new Set([
-  `/admin`,
-  `/admin/statistic`,
-  `/admin/manage-user`,
-  `/admin/manage-model`,
-  `/admin/manage-category`,
+  "/admin",
+  "/admin/statistic",
+  "/admin/manage-user",
+  "/admin/manage-model",
+  "/admin/manage-category",
+  "/admin/manage-sub-category",
 ]);
 
-const USER_PATHS = new Set([`/user`, `/user/chart`]);
-
-const ADMIN_DYNAMIC_PATHS = /^\/admin\/(manage-category)\/[^/]+$/;
+const USER_PATHS = new Set(["/user", "/user/chart"]);
+const ADMIN_DYNAMIC_PATHS =
+  /^\/admin\/(manage-category|manage-sub-category)\/[^/]+$/;
 
 export function LoadingWrapper({
   children,
 }: {
   readonly children: React.ReactNode;
 }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
   const token = Cookies.get("accessToken");
-  const userInfo = useUserInfo();
+  const { refetch, isLoading: loading } = useUserInfo();
+  const userInfo = useSelector(selectUserInfo);
 
   useEffect(() => {
-    const isValidPath =
-      VALID_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname);
-
-    if (!isValidPath) {
-      router.replace(PATH_NAME.NOT_FOUND);
-      return;
-    }
-
     if (!token) {
       if (
         pathname.startsWith(PATH_NAME.USER) ||
@@ -64,19 +59,24 @@ export function LoadingWrapper({
       return;
     }
 
-    const role = userInfo?.userInfo?.data?.role;
+    if (loading) return;
 
-    if (
-      pathname === BASE_PATH ||
-      pathname === PATH_NAME.HOME ||
-      pathname.startsWith(PATH_NAME.AUTH)
-    ) {
+    const role = userInfo?.role;
+
+    const isValidPath =
+      VALID_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname);
+    if (!isValidPath) {
+      router.replace(PATH_NAME.NOT_FOUND);
+      return;
+    }
+
+    if (pathname === PATH_NAME.HOME || pathname.startsWith(PATH_NAME.AUTH)) {
       router.replace(PATH_NAME.USER);
-    } else if (role === VALID_ROLE.ADMIN) {
-      const isAdminPathValid =
-        ADMIN_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname);
+      return;
+    }
 
-      if (!isAdminPathValid) {
+    if (role === VALID_ROLE.ADMIN) {
+      if (!(ADMIN_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname))) {
         router.replace(PATH_NAME.NOT_FOUND);
       }
     } else if (role === VALID_ROLE.USER) {
@@ -84,14 +84,15 @@ export function LoadingWrapper({
         router.replace(PATH_NAME.NOT_FOUND);
       }
     }
-  }, [token, pathname]);
+  }, [token, pathname, loading]);
 
   useEffect(() => {
+    if (!isLoading) return;
     const timer = setTimeout(() => setIsLoading(false), 300);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoading]); // Kiểm tra trước khi cập nhật state
 
-  if (isLoading) return null;
+  if (isLoading || loading) return null;
 
   return <>{children}</>;
 }

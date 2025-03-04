@@ -1,13 +1,13 @@
 import { Metadata } from "next";
-import { CategoryList } from "./components/CategoryList";
+import { SubCategoryList } from "./components/SubCategoryList";
 
 export const metadata: Metadata = {
   title: "EzMoney | Quản lý danh mục chi tiêu",
   description: "Theo dõi, quản lý danh mục chi tiêu trong hệ thống",
 };
 
-const CategoryManagement = () => {
-  return <CategoryList />;
+const SubCategoryManagement = () => {
+  return <SubCategoryList />;
 };
 
-export default CategoryManagement;
+export default SubCategoryManagement;
