@@ -112,7 +112,7 @@ const useUserManagementPage = () => {
       cancelText: TITLE.CANCEL_TEXT,
       onOk: async () => {
         try {
-          await deleteUser(id);
+          await deleteUser(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
           const error = err.data;

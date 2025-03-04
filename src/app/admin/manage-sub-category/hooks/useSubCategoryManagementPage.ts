@@ -9,7 +9,7 @@ import {
   useGetSubCategoryListQuery,
 } from "@/services/admin/subCategory";
 import { Form, Modal, TablePaginationConfig } from "antd";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_SUB_CATEGORY_CONSTANT } from "../subCategory.constant";
 import { TEXT_TRANSLATE } from "../subCategory.translate";
@@ -78,9 +78,17 @@ const useSubCategoryManagementPage = () => {
       cancelText: TITLE.CANCEL_TEXT,
       onOk: async () => {
         try {
-          await deleteSubCategory(id);
+          await deleteSubCategory(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
+          const error = err.data;
+          if (error.errorCode === ERROR_CODE.SUB_CATEGORY_NOT_EXIST) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              TEXT_TRANSLATE.MESSAGE_ERROR.SUB_CATEGORY_NOT_EXISTS,
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },

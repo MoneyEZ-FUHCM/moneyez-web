@@ -1,22 +1,22 @@
 export const TEXT_TRANSLATE = {
   MESSAGE_ERROR: {
-    CATEGORY_NOT_EXISTS: "Danh mục không tồn tại",
-    CATEGORY_ALREADY_EXISTS: "Danh mục đã tồn tại",
+    SUB_CATEGORY_NOT_EXISTS: "Danh mục phụ không tồn tại",
+    SUB_CATEGORY_ALREADY_EXISTS: "Danh mục phụ đã tồn tại",
   },
   MESSAGE_SUCCESS: {
-    CREATE_SUCCESSFUL: "Tạo danh mục thành công",
-    UPDATE_SUCCESSFUL: "Cập nhật danh mục thành công",
-    DELETE_SUCCESSFUL: "Xóa danh mục thành công",
+    CREATE_SUCCESSFUL: "Tạo danh mục phụ thành công",
+    UPDATE_SUCCESSFUL: "Cập nhật danh mục phụ thành công",
+    DELETE_SUCCESSFUL: "Xóa danh mục phụ thành công",
   },
   MESSAGE_VALIDATE: {
-    NAME_REQUIRED: "Vui lòng nhập tên danh mục",
+    NAME_REQUIRED: "Vui lòng nhập tên danh mục phụ",
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
     CODE: "Mã danh mục",
     ICON: "Ký hiệu",
-    MANAGE_CATEGORY: "Quản lý danh mục chi tiêu",
-    CATEGORY_LIST: "Danh sách danh mục chi tiêu",
+    MANAGE_SUB_CATEGORY: "Quản lý danh mục phụ chi tiêu",
+    SUB_CATEGORY_LIST: "Danh sách danh mục phụ chi tiêu",
     INDEX: "STT",
     NAME: "Tên danh mục phụ",
     DESCRIPTION: "Mô tả",
@@ -33,8 +33,7 @@ export const TEXT_TRANSLATE = {
     SEARCH: "Tìm kiếm danh mục",
     MAIN_CATEGORY_TAB: "Danh mục chính",
     SUB_CATEGORY_TAB: "Danh mục phụ",
-    MANAGE_SUB_CATEGORY: "Quản lý danh mục phụ",
-    SUB_CATEGORY_LIST: "Danh sách danh mục phụ",
+
     MAIN_CATEGORY: "Danh mục chính",
     SEARCH_SUB: "Tìm kiếm danh mục phụ",
     CATEGORY_DETAIL: "Chi tiết danh mục phụ",
