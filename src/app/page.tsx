@@ -33,9 +33,6 @@ export default function Home() {
       <ScrollReveal>
         <BackgroundIntro />
       </ScrollReveal>
-      {/* <ScrollReveal>
-        <FormContact />
-      </ScrollReveal> */}
     </main>
   );
 }

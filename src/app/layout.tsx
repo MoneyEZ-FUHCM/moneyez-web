@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
+import useUserInfo from "@/hooks/useUserInfo";
 
 const robotoSlab = Roboto_Slab({
   subsets: ["latin"],

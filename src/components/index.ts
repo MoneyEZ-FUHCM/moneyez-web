@@ -1,4 +1,3 @@
-export { default as BannerCustom } from "./common/BannerCustom";
 export { BreadScrumb } from "./common/BreadScrumb";
 export { default as RadioCustom } from "./common/CheckboxCustom";
 export { default as ImageSliderCustom } from "./common/ImageSliderCustom";

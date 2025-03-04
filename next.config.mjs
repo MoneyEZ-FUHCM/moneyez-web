@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "export",
-  // trailingSlash: true,
-  basePath: "/moneyez-web",
   env: {
     NEXT_PUBLIC_API_KEY: "AIzaSyBjF8jvekmTSJ4us7PiI0GTJbNzR06z5lY",
     NEXT_PUBLIC_AUTH_DOMAIN: "exe201-9459a.firebaseapp.com",
@@ -24,26 +21,12 @@ const nextConfig = {
         protocol: "https",
         hostname: "firebasestorage.googleapis.com",
       },
-      {
-        protocol: "https",
-        hostname: "drh.vn",
-      },
+
       {
         protocol: "https",
         hostname: "freesvg.org",
       },
-      {
-        protocol: "https",
-        hostname: "cdn.pixabay.com",
-      },
-      {
-        protocol: "https",
-        hostname: "citc.edu.vn",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.discordapp.com",
-      },
+
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
