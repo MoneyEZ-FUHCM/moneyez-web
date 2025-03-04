@@ -59,7 +59,7 @@ export function LoadingWrapper({
       return;
     }
 
-    if (loading) return;
+    if (loading || !userInfo) return;
 
     const role = userInfo?.role;
 
@@ -67,11 +67,6 @@ export function LoadingWrapper({
       VALID_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname);
     if (!isValidPath) {
       router.replace(PATH_NAME.NOT_FOUND);
-      return;
-    }
-
-    if (pathname === PATH_NAME.HOME || pathname.startsWith(PATH_NAME.AUTH)) {
-      router.replace(PATH_NAME.USER);
       return;
     }
 
@@ -84,13 +79,13 @@ export function LoadingWrapper({
         router.replace(PATH_NAME.NOT_FOUND);
       }
     }
-  }, [token, pathname, loading]);
+  }, [token, pathname, loading, userInfo]);
 
   useEffect(() => {
     if (!isLoading) return;
     const timer = setTimeout(() => setIsLoading(false), 300);
     return () => clearTimeout(timer);
-  }, [isLoading]); // Kiểm tra trước khi cập nhật state
+  }, [isLoading]);
 
   if (isLoading || loading) return null;
 
