@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { CategoryList } from "./components/CategoryList";
+import { CategoryList } from "./components";
 
 export const metadata: Metadata = {
   title: "EzMoney | Quản lý danh mục chi tiêu",
