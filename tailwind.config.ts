@@ -54,11 +54,16 @@ const config: Config = {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        bounce: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-15px)" },
+        },
       },
       animation: {
         motion: "motion 1s linear infinite",
         roadAnimation: "roadAnimation 1.4s linear infinite",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        bounce: "bounce 2s infinite",
       },
     },
   },

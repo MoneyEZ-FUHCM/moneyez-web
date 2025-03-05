@@ -10,7 +10,7 @@ import {
 } from "@/services/admin/category";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_CATEGORY_CONSTANT } from "../category.constant";
 import { TEXT_TRANSLATE } from "../category.translate";
@@ -95,9 +95,17 @@ const useCategoryManagementPage = () => {
       cancelText: TITLE.CANCEL_TEXT,
       onOk: async () => {
         try {
-          await deleteCategory(id);
+          await deleteCategory(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
+          const error = err.data;
+          if (error.errorCode === ERROR_CODE.CATEGORY_NOT_EXIST) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              TEXT_TRANSLATE.MESSAGE_ERROR.CATEGORY_NOT_EXISTS,
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },

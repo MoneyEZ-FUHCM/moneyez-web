@@ -2,6 +2,7 @@
 
 import {
   BackgroundIntro,
+  BackToTop,
   Comments,
   Functions,
   Packages,
@@ -33,6 +34,7 @@ export default function Home() {
       <ScrollReveal>
         <BackgroundIntro />
       </ScrollReveal>
+      <BackToTop />
     </main>
   );
 }
