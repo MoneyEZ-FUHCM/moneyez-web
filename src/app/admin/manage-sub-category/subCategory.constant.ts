@@ -2,6 +2,7 @@ export const MANAGE_SUB_CATEGORY_CONSTANT = {
   ERROR_CODE: {
     SUB_CATEGORY_NOT_EXIST: "SubcategoryNotFound",
     SUB_CATEGORY_ALREADY_EXISTS: "SubCategoryAlreadyExists",
+    DUPLICATE_SUB_CATE_NAME: "DuplicateSubcategoryNames",
   },
   FORM_NAME: {
     INDEX: "index",

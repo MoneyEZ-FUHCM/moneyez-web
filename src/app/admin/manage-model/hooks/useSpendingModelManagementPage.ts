@@ -3,7 +3,11 @@ import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
-import { useCreateSpendingModelMutation, useDeleteSpendingModelMutation, useGetSpendingModelListQuery } from "@/services/admin/spendingModel";
+import {
+  useCreateSpendingModelMutation,
+  useDeleteSpendingModelMutation,
+  useGetSpendingModelListQuery,
+} from "@/services/admin/spendingModel";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +19,8 @@ const useSpendingModelManagementPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
-  const [createModel, { isLoading: isCreatingModel }] = useCreateSpendingModelMutation();
+  const [createModel, { isLoading: isCreatingModel }] =
+    useCreateSpendingModelMutation();
   const [deleteModel] = useDeleteSpendingModelMutation();
 
   const [pageIndex, setPageIndex] = useState<number>(1);
@@ -25,7 +30,7 @@ const useSpendingModelManagementPage = () => {
     PageSize: pageSize,
   });
 
-  const { SYSTEM_ERROR } = COMMON_CONSTANT;
+  const { SYSTEM_ERROR, CONDITION } = COMMON_CONSTANT;
   const { ERROR_CODE, FORM_NAME } = MANAGE_MODEL_CONSTANT;
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
     TEXT_TRANSLATE;
@@ -33,14 +38,13 @@ const useSpendingModelManagementPage = () => {
   const handleAddModel = async () => {
     try {
       const values = await form.validateFields();
-      
+      const updateValue = [{ ...values, isTemplate: CONDITION.TRUE }];
       try {
-        await createModel(values).unwrap();
+        await createModel(updateValue).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
-        const error = err.data;
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
       }
@@ -72,9 +76,17 @@ const useSpendingModelManagementPage = () => {
       cancelText: TITLE.CANCEL_TEXT,
       onOk: async () => {
         try {
-          await deleteModel(id);
+          await deleteModel(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
+          const error = err?.data;
+          if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_NOT_EXISTS,
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },

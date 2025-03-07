@@ -9,7 +9,7 @@ import {
   useGetSubCategoryListQuery,
 } from "@/services/admin/subCategory";
 import { Form, Modal, TablePaginationConfig } from "antd";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_SUB_CATEGORY_CONSTANT } from "../subCategory.constant";
 import { TEXT_TRANSLATE } from "../subCategory.translate";
@@ -24,12 +24,14 @@ const useSubCategoryManagementPage = () => {
     useCreateSubCategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const { data, isLoading: isLoadingCategoryList } = useGetSubCategoryListQuery(
     {
       PageIndex: pageIndex,
       PageSize: pageSize,
+      search: searchQuery,
     },
   );
 
@@ -38,15 +40,33 @@ const useSubCategoryManagementPage = () => {
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
     TEXT_TRANSLATE;
 
+  useEffect(() => {
+    if (data) {
+      const totalPages = data?.totalPages || 1;
+      if (pageIndex > totalPages) {
+        setPageIndex(totalPages);
+      }
+    }
+  }, [data?.totalPages]);
+
   const handleAddSubCategory = async () => {
     try {
       const values = await form.validateFields();
+      console.log("check values", values);
       try {
         await createSubCategory([values]).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.DUPLICATE_SUB_CATE_NAME) {
+          showToast(
+            TOAST_STATUS.ERROR,
+            TEXT_TRANSLATE.MESSAGE_ERROR.SUB_CATEGORY_ALREADY_EXISTS,
+          );
+          return;
+        }
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
       }
@@ -81,8 +101,8 @@ const useSubCategoryManagementPage = () => {
           await deleteSubCategory(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
-          const error = err.data;
-          if (error.errorCode === ERROR_CODE.SUB_CATEGORY_NOT_EXIST) {
+          const error = err?.data;
+          if (error?.errorCode === ERROR_CODE.SUB_CATEGORY_NOT_EXIST) {
             showToast(
               TOAST_STATUS.ERROR,
               TEXT_TRANSLATE.MESSAGE_ERROR.SUB_CATEGORY_NOT_EXISTS,
@@ -115,6 +135,7 @@ const useSubCategoryManagementPage = () => {
       handleAddSubCategory,
       handleCancel,
       handleDeleteSubCategory,
+      setSearchQuery,
     },
   };
 };
