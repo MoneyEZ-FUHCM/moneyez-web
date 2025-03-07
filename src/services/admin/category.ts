@@ -10,8 +10,8 @@ const { HTTP_METHOD } = COMMON_CONSTANT;
 const categoryManagementApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCategoryList: builder.query({
-      query: ({ PageIndex, PageSize }) => ({
-        url: `/categories?PageIndex=${PageIndex}&PageSize=${PageSize}`,
+      query: ({ PageIndex, PageSize, search }) => ({
+        url: `/categories?PageIndex=${PageIndex}&PageSize=${PageSize}&search=${search}&is_deleted=false`,
         method: HTTP_METHOD.GET,
       }),
       transformResponse: (response) =>

@@ -11,7 +11,8 @@ const spendingModelManagementApi = apiSlice.injectEndpoints({
         url: `/spending-models?PageIndex=${PageIndex}&PageSize=${PageSize}`,
         method: HTTP_METHOD.GET,
       }),
-      transformResponse: (response) => transformCommonResponse<SpendingModel>(response),
+      transformResponse: (response) =>
+        transformCommonResponse<SpendingModel>(response),
       providesTags: ["SpendingModel"],
     }),
     createSpendingModel: builder.mutation({

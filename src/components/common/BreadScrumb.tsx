@@ -16,7 +16,7 @@ interface BreadScrumbProps {
 const BreadScrumb = memo(({ items }: BreadScrumbProps) => {
   const breadcrumbItems = [
     {
-      href: "/",
+      href: "/admin/statistic",
       title: <HomeOutlined />,
     },
     ...items,

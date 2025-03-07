@@ -26,11 +26,13 @@ const useCategoryManagementPage = () => {
     useCreateCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const { data, isLoading: isLoadingCategoryList } = useGetCategoryListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
+    search: searchQuery,
   });
 
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
@@ -40,8 +42,9 @@ const useCategoryManagementPage = () => {
 
   useEffect(() => {
     if (data) {
-      if (pageIndex > data?.totalPages) {
-        setPageIndex(data?.totalPages);
+      const totalPages = data?.totalPages || 1;
+      if (pageIndex > totalPages) {
+        setPageIndex(totalPages);
       }
     }
   }, [data?.totalPages]);
@@ -59,8 +62,8 @@ const useCategoryManagementPage = () => {
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
-        const error = err.data;
-        if (error.errorCode === ERROR_CODE.CATEGORY_ALREADY_EXISTS) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.CATEGORY_ALREADY_EXISTS) {
           showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.CATEGORY_ALREADY_EXISTS);
           return;
         }
@@ -98,8 +101,8 @@ const useCategoryManagementPage = () => {
           await deleteCategory(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
-          const error = err.data;
-          if (error.errorCode === ERROR_CODE.CATEGORY_NOT_EXIST) {
+          const error = err?.data;
+          if (error?.errorCode === ERROR_CODE.CATEGORY_NOT_EXIST) {
             showToast(
               TOAST_STATUS.ERROR,
               TEXT_TRANSLATE.MESSAGE_ERROR.CATEGORY_NOT_EXISTS,
@@ -133,6 +136,7 @@ const useCategoryManagementPage = () => {
       handleCancel,
       handleDeleteCategory,
       handleViewDetail,
+      setSearchQuery,
     },
   };
 };

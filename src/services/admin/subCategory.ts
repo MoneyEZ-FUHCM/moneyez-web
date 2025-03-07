@@ -7,8 +7,8 @@ const { HTTP_METHOD } = COMMON_CONSTANT;
 const subSubCategoryManagementApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getSubCategoryList: builder.query({
-      query: ({ PageIndex, PageSize }) => ({
-        url: `/subcategories?PageIndex=${PageIndex}&PageSize=${PageSize}`,
+      query: ({ PageIndex, PageSize, search }) => ({
+        url: `/subcategories?PageIndex=${PageIndex}&PageSize=${PageSize}&search=${search}&is_deleted=false`,
         method: HTTP_METHOD.GET,
       }),
       transformResponse: (response) =>

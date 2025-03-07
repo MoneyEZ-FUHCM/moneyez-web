@@ -44,7 +44,7 @@ const axiosBaseQuery = async (
 
   if (
     result.error &&
-    result.error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED
+    result.error?.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED
   ) {
     const refreshToken = Cookies.get("refreshToken");
 
