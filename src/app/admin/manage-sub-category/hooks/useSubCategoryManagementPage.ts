@@ -59,6 +59,14 @@ const useSubCategoryManagementPage = () => {
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.DUPLICATE_SUB_CATE_NAME) {
+          showToast(
+            TOAST_STATUS.ERROR,
+            TEXT_TRANSLATE.MESSAGE_ERROR.SUB_CATEGORY_ALREADY_EXISTS,
+          );
+          return;
+        }
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
       }
