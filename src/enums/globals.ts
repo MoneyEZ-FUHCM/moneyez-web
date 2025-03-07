@@ -1,7 +1,11 @@
 export enum VALID_ROLE {
   USER = "USER",
-  STORE = "STORE",
   ADMIN = "ADMIN",
+}
+
+export enum VALID_ROLE_REQUEST {
+  ADMIN,
+  USER,
 }
 
 export enum GENDER {

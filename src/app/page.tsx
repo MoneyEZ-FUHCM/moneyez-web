@@ -2,8 +2,8 @@
 
 import {
   BackgroundIntro,
+  BackToTop,
   Comments,
-  FormContact,
   Functions,
   Packages,
   Reasons,
@@ -34,9 +34,7 @@ export default function Home() {
       <ScrollReveal>
         <BackgroundIntro />
       </ScrollReveal>
-      {/* <ScrollReveal>
-        <FormContact />
-      </ScrollReveal> */}
+      <BackToTop />
     </main>
   );
 }

@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
+import useUserInfo from "@/hooks/useUserInfo";
 
 const robotoSlab = Roboto_Slab({
   subsets: ["latin"],
@@ -25,14 +26,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${robotoSlab.variable}`}>
-        <LoadingWrapper>
-          <NextProgressBar />
-          <Providers>
+        <Providers>
+          <LoadingWrapper>
+            <NextProgressBar />
             <NavbarWrapper>{children}</NavbarWrapper>
             <ProgressBar />
-          </Providers>
-          <Toaster position="top-right" richColors />
-        </LoadingWrapper>
+            <Toaster position="top-right" richColors />
+          </LoadingWrapper>
+        </Providers>
       </body>
     </html>
   );

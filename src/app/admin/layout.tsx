@@ -2,15 +2,29 @@
 
 import Admin from "@/assets/images/logo/avatar_admin.jpg";
 import LogoWeb from "@/assets/images/logo/logo_web.png";
+import { PATH_NAME } from "@/helpers/constants/pathname";
 import { useLogout } from "@/hooks/useLogout";
-import { PieChartOutlined, PushpinOutlined } from "@ant-design/icons";
+import {
+  BarsOutlined,
+  BuildOutlined,
+  FileMarkdownOutlined,
+  FilePptOutlined,
+  PieChartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { FloatButton, Layout, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuItem } from "./admin.constant";
+import { TEXT_TRANSLATE } from "./admin.translate";
 import { useSidebar } from "./hooks/useSidebar";
 
 const { Content, Sider, Footer } = Layout;
+const { SIDE_BAR, TITLE, BUTTON } = TEXT_TRANSLATE;
+
+interface DashboardLayoutProps {
+  readonly children: React.ReactNode;
+}
 
 function getItem(
   label: React.ReactNode,
@@ -29,19 +43,50 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Thống kê", "1", <PieChartOutlined />, undefined, "/admin/statistic"),
   getItem(
-    "Người dùng",
-    "2",
-    <PushpinOutlined />,
+    SIDE_BAR.STATISTIC,
+    SIDE_BAR.POSITION_1,
+    <PieChartOutlined />,
     undefined,
-    "/admin/manage-user",
+    PATH_NAME.STATISTIC,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_USER,
+    SIDE_BAR.POSITION_2,
+    <UserOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_USER,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_SPENDING_MODEL,
+    SIDE_BAR.POSITION_3,
+    <BuildOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_SPENDING_MODEL,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_CATEGORY,
+    SIDE_BAR.POSITION_4,
+    <BarsOutlined />,
+    [
+      getItem(
+        SIDE_BAR.MANAGE_CATEGORY_MANAGE,
+        SIDE_BAR.POSITION_4,
+        <FileMarkdownOutlined />,
+        undefined,
+        PATH_NAME.MANAGE_CATEGORY,
+      ),
+      getItem(
+        SIDE_BAR.MANAGE_SUB_CATEGORY,
+        SIDE_BAR.POSITION_5,
+        <FilePptOutlined />,
+        undefined,
+        PATH_NAME.MANAGE_SUB_CATEGORY,
+      ),
+    ],
+    PATH_NAME.MANAGE_CATEGORY,
   ),
 ];
-
-interface DashboardLayoutProps {
-  children: React.ReactNode;
-}
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { collapsed, setCollapsed, selectedKeys, storeDefaultSelectedKeys } =
@@ -94,7 +139,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="demo-logo-vertical" />
         <div className="my-7 flex justify-center">
           <Image
-            className="w-7/12 select-none object-cover"
+            className="w-8/12 select-none object-cover"
             src={LogoWeb}
             alt=""
             quality={80}
@@ -111,7 +156,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       </Sider>
       <Layout
         className="scrollbar right-bar ease overflow-y-auto transition-all duration-150 ease-in-out"
-        style={{ marginLeft: collapsed ? 55 : 230 }}
+        style={{ marginLeft: collapsed ? 60 : 230 }}
       >
         <div className="header fixed z-[999] flex h-16 items-center justify-end gap-2 bg-[#f8f8f8] bg-opacity-80 pr-5 shadow-none backdrop-blur-[6px]">
           {
@@ -124,12 +169,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 height={42}
               />
               <div className="flex flex-col">
-                <strong>ADMIN</strong>
+                <strong>{TITLE.NAME}</strong>
                 <button
                   className="cursor-pointer font-semibold text-[#5099ff] hover:underline"
                   onClick={logout}
                 >
-                  Đăng xuất
+                  {BUTTON.LOGOUT}
                 </button>
               </div>
             </>
@@ -140,9 +185,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             {children}
           </div>
         </Content>
-        <Footer className="text-center">
-          Copyright &copy;2025 EzMoney.inc. All right reserved
-        </Footer>
+        <Footer className="text-center">{TITLE.COPYRIGHT}</Footer>
         <FloatButton.BackTop />
       </Layout>
     </Layout>

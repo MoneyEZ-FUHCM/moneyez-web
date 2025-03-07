@@ -17,7 +17,3 @@ export interface TokenData {
 }
 
 export interface ApiResponse extends BaseResponse<TokenData> {}
-
-export interface ErrorResponse extends BaseResponse {
-  data: ApiResponse;
-}

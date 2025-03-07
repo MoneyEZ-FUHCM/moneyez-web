@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { MenuItem } from "../admin.constant";
 
 const useSidebar = (items: MenuItem[]) => {
@@ -9,11 +9,29 @@ const useSidebar = (items: MenuItem[]) => {
 
   const storeDefaultSelectedKeys = (key: string) => {
     sessionStorage.setItem("keys", key);
+    setSelectedKeys([key]);
   };
 
   useEffect(() => {
-    const currentPath = pathname;
-    const matchedItem = items.find((item) => item.path === currentPath);
+    setCollapsed(true);
+  }, []);
+
+  const findMenuItem = (
+    items: MenuItem[],
+    path: string,
+  ): MenuItem | undefined => {
+    for (const item of items) {
+      if (item.path === path) return item;
+      if (item.children) {
+        const found = findMenuItem(item.children, path);
+        if (found) return found;
+      }
+    }
+    return undefined;
+  };
+
+  useEffect(() => {
+    const matchedItem = findMenuItem(items, pathname);
     if (matchedItem) {
       setSelectedKeys([matchedItem.key]);
       storeDefaultSelectedKeys(matchedItem.key);
