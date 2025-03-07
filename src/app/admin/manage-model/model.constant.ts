@@ -2,6 +2,7 @@ export const MANAGE_MODEL_CONSTANT = {
   ERROR_CODE: {
     MODEL_NOT_EXIST: "MODEL_NOT_EXIST",
     MODEL_ALREADY_EXISTS: "MODEL_ALREADY_EXISTS",
+    MODEL_NOT_FOUND: "SpendingModelNotFound",
   },
   FORM_NAME: {
     INDEX: "index",

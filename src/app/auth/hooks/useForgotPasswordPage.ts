@@ -64,12 +64,12 @@ const useForgotPasswordPage = (
         }, 500);
       }
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_DOES_NOT_EXIST);
         return;
       }
-      if (error.errorCode === ERROR_CODE.OTP_HAS_SENT) {
+      if (error?.errorCode === ERROR_CODE.OTP_HAS_SENT) {
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.OTP_HAS_SENT);
         return;
       }
@@ -92,8 +92,8 @@ const useForgotPasswordPage = (
         setIsOTPSubmitted(true);
       }
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.OTP_INVALID) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.OTP_INVALID) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.OTP_INVALID);
         return;
       }
@@ -136,12 +136,12 @@ const useForgotPasswordPage = (
       }
       setIsResending(false);
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_DOES_NOT_EXIST);
         return;
       }
-      if (error.errorCode === ERROR_CODE.OTP_HAS_SENT) {
+      if (error?.errorCode === ERROR_CODE.OTP_HAS_SENT) {
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.OTP_HAS_SENT);
         return;
       }

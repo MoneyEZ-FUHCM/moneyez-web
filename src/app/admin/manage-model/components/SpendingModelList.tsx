@@ -7,6 +7,7 @@ import { Button, Tag } from "antd";
 import { useMemo } from "react";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { AddSpendingModelModal } from "./AddSpendingModelModal";
 
 const SpendingModelList = () => {
   const { state, handler } = useSpendingModelManagementPage();
@@ -18,21 +19,22 @@ const SpendingModelList = () => {
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
         render: (_: any, _record: any, index: number) => index + 1,
+        width: "2%",
       },
       {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
-        width: "20%",
+        width: "29%",
       },
       {
         title: state.TITLE.DESCRIPTION,
         dataIndex: state.FORM_NAME.DESCRIPTION,
-        width: "35%",
+        width: "34%",
       },
       {
         title: state.TITLE.TYPE,
         dataIndex: state.FORM_NAME.ISTEMPLATE,
-        width: "10%",
+        width: "13%",
         render: (status: boolean) => {
           let statusText = status ? "Mặc định" : "Tùy chỉnh";
           let tagColor = status ? "green" : "red";
@@ -42,16 +44,16 @@ const SpendingModelList = () => {
       {
         title: state.TITLE.CREATED_AT,
         dataIndex: state.FORM_NAME.CREATED_DATE,
-        width: "15%",
+        width: "12%",
         render: (date: string) =>
           date ? formatTimestamp(date) : COMMON_CONSTANT.EMPTY_STRING,
       },
       {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
-        width: "15%",
+        width: "10%",
         render: (record: any) => (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center gap-2">
             <Button
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
@@ -100,6 +102,7 @@ const SpendingModelList = () => {
         loading={state.isLoadingModelList}
         rowKey={(record: { id: number }) => record.id}
       />
+      <AddSpendingModelModal />
     </TableListLayout>
   );
 };

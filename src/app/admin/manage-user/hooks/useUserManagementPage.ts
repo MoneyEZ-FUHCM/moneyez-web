@@ -64,13 +64,13 @@ const useUserManagementPage = () => {
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
-        const error = err.data;
+        const error = err?.data;
 
-        if (error.errorCode === ERROR_CODE.USER_MUST_16) {
+        if (error?.errorCode === ERROR_CODE.USER_MUST_16) {
           showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.MUST_BE_16);
-        } else if (error.errorCode === ERROR_CODE.ACCOUNT_VERIFIED) {
+        } else if (error?.errorCode === ERROR_CODE.ACCOUNT_VERIFIED) {
           showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.VERIFIED_EMAIL);
-        } else if (error.errorCode === ERROR_CODE.DUPLICATE_PHONE_NUMBER) {
+        } else if (error?.errorCode === ERROR_CODE.DUPLICATE_PHONE_NUMBER) {
           showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.PHONE_ALREADY_EXISTED);
         } else {
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
@@ -115,9 +115,9 @@ const useUserManagementPage = () => {
           await deleteUser(id).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
         } catch (err: any) {
-          const error = err.data;
+          const error = err?.data;
 
-          if (error.errorCode === ERROR_CODE.ACCOUNT_NOT_EXIST) {
+          if (error?.errorCode === ERROR_CODE.ACCOUNT_NOT_EXIST) {
             showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_NOT_EXISTS);
             return;
           }
