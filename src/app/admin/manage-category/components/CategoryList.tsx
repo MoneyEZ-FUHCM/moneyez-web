@@ -21,7 +21,7 @@ const CategoryList = () => {
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
         render: (_: any, _record: any, index: number) => index + 1,
-        width: "5%",
+        width: "2%",
       },
       {
         title: state.TITLE.CODE,
@@ -36,7 +36,7 @@ const CategoryList = () => {
       {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
-        width: "20%",
+        width: "23%",
       },
       {
         title: state.TITLE.DESCRIPTION,
@@ -53,7 +53,7 @@ const CategoryList = () => {
       {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
-        width: "10%",
+        width: "5%",
         render: (record: any) => (
           <div className="flex items-center justify-center gap-2">
             <Button
@@ -89,7 +89,7 @@ const CategoryList = () => {
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_CATEGORY}
-        onSearch={(value) => console.log("Tìm kiếm...", value)}
+        onSearch={(value) => handler.setSearchQuery(value)}
         onAddClick={handler.handleOpenModalAdd}
       />
       <TableCustom

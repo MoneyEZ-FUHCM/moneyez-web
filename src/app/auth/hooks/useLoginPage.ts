@@ -74,31 +74,31 @@ const useLoginPage = (form: FormInstance) => {
         }
       }
     } catch (err: any) {
-      const error = err.data;
+      const error = err?.data;
       if (
-        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
-        error.errorCode === ERROR_CODE.INVALID_ACCOUNT
+        error?.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error?.errorCode === ERROR_CODE.INVALID_ACCOUNT
       ) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.INVALID_INFO);
         return;
       }
       if (
-        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
-        error.errorCode === ERROR_CODE.ACCOUNT_NOT_EXIST
+        error?.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error?.errorCode === ERROR_CODE.ACCOUNT_NOT_EXIST
       ) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.INVALID_INFO);
         return;
       }
       if (
-        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
-        error.errorCode === ERROR_CODE.ACCOUNT_BLOCKED
+        error?.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error?.errorCode === ERROR_CODE.ACCOUNT_BLOCKED
       ) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_BLOCKED);
         return;
       }
       if (
-        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
-        error.errorCode === ERROR_CODE.ACCOUNT_NEED_CONFIRM_EMAIL
+        error?.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error?.errorCode === ERROR_CODE.ACCOUNT_NEED_CONFIRM_EMAIL
       ) {
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.DOEST_NOT_VERIFY_EMAIL);
         setTimeout(() => {
@@ -139,10 +139,10 @@ const useLoginPage = (form: FormInstance) => {
         }
       }
     } catch (err: any) {
-      const error = err.data;
+      const error = err?.data;
       if (
-        error.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
-        error.errorCode === ERROR_CODE.ACCOUNT_BLOCKED
+        error?.status === HTTP_STATUS.CLIENT_ERROR.UNAUTHORIZED &&
+        error?.errorCode === ERROR_CODE.ACCOUNT_BLOCKED
       ) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_BLOCKED);
         return;
@@ -180,8 +180,8 @@ const useLoginPage = (form: FormInstance) => {
         }
       }
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.OTP_INVALID) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.OTP_INVALID) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.OTP_INVALID);
         return;
       }
