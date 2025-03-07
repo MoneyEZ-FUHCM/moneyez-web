@@ -52,12 +52,21 @@ const useSubCategoryManagementPage = () => {
   const handleAddSubCategory = async () => {
     try {
       const values = await form.validateFields();
+      console.log("check values", values);
       try {
-        await createSubCategory(values.subCategories).unwrap();
+        await createSubCategory([values]).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
       } catch (err: any) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.DUPLICATE_SUB_CATE_NAME) {
+          showToast(
+            TOAST_STATUS.ERROR,
+            TEXT_TRANSLATE.MESSAGE_ERROR.SUB_CATEGORY_ALREADY_EXISTS,
+          );
+          return;
+        }
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
       }
