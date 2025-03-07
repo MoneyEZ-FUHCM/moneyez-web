@@ -52,8 +52,9 @@ const useSubCategoryManagementPage = () => {
   const handleAddSubCategory = async () => {
     try {
       const values = await form.validateFields();
+      console.log("check values", values);
       try {
-        await createSubCategory(values.subCategories).unwrap();
+        await createSubCategory([values]).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));

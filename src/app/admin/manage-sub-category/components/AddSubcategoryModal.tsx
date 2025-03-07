@@ -1,18 +1,60 @@
 "use client";
 
-import {
-  DeleteOutlined,
-  MailOutlined,
-  PlusOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Button, Col, Form, Input, Modal, Row } from "antd";
+import { CommonForm } from "@/components/common/table/CommonForm";
+import { MailOutlined, UserOutlined } from "@ant-design/icons";
+import { Input, Modal } from "antd";
 import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
 
 const AddSubCategoryModal = () => {
   const { TextArea } = Input;
 
   const { handler, state } = useSubCategoryManagementPage();
+  const categoryFields = [
+    {
+      name: state.FORM_NAME.NAME,
+      label: state.TITLE.NAME,
+      component: (
+        <Input prefix={<MailOutlined />} placeholder={state.TITLE.NAME} />
+      ),
+      rules: [
+        { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
+      ],
+    },
+    {
+      name: state.FORM_NAME.CODE,
+      label: state.TITLE.CODE,
+      component: (
+        <Input prefix={<UserOutlined />} placeholder={state.TITLE.CODE} />
+      ),
+      rules: [
+        { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
+      ],
+    },
+    {
+      name: state.FORM_NAME.ICON,
+      label: state.TITLE.ICON,
+      component: (
+        <Input prefix={<UserOutlined />} placeholder={state.TITLE.ICON} />
+      ),
+      rules: [
+        { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
+      ],
+    },
+
+    {
+      name: state.FORM_NAME.DESCRIPTION,
+      label: state.TITLE.DESCRIPTION,
+      component: (
+        <TextArea rows={4} placeholder={state.TITLE.DESCRIPTION} required />
+      ),
+      rules: [
+        {
+          required: true,
+          message: state.MESSAGE_VALIDATE.DESCRIPTION_REQUIRED,
+        },
+      ],
+    },
+  ];
 
   return (
     <Modal
@@ -26,108 +68,8 @@ const AddSubCategoryModal = () => {
       cancelText={state.BUTTON.CANCEL}
       confirmLoading={state.isCreatingSubCategory}
       okButtonProps={{ className: "custom-ok-button" }}
-      width={800}
     >
-      <Form
-        form={state.form}
-        layout="vertical"
-        initialValues={{ subCategories: [{}] }}
-      >
-        <Form.List name="subCategories">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <div key={key} style={{ marginBottom: 16, width: "100%" }}>
-                  <Row gutter={[16, 0]}>
-                    <Col span={8}>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "name"]}
-                        label="Tên danh mục"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Vui lòng nhập tên danh mục",
-                          },
-                        ]}
-                      >
-                        <Input
-                          prefix={<MailOutlined />}
-                          placeholder="Tên danh mục"
-                        />
-                      </Form.Item>
-                    </Col>
-
-                    <Col span={8}>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "code"]}
-                        label="Mã danh mục"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Vui lòng nhập mã danh mục",
-                          },
-                        ]}
-                      >
-                        <Input
-                          prefix={<UserOutlined />}
-                          placeholder="Mã danh mục"
-                        />
-                      </Form.Item>
-                    </Col>
-
-                    <Col span={8}>
-                      <Form.Item
-                        {...restField}
-                        name={[name, "icon"]}
-                        label="Icon"
-                        rules={[
-                          { required: true, message: "Vui lòng nhập icon" },
-                        ]}
-                      >
-                        <Input prefix={<UserOutlined />} placeholder="Icon" />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-
-                  <Form.Item
-                    {...restField}
-                    name={[name, "description"]}
-                    label="Mô tả"
-                    style={{ width: "100%" }}
-                    rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
-                  >
-                    <TextArea rows={2} placeholder="Mô tả danh mục" />
-                  </Form.Item>
-
-                  <div style={{ textAlign: "right" }}>
-                    {fields.length > 1 && (
-                      <Button
-                        type="dashed"
-                        danger
-                        onClick={() => remove(name)}
-                        icon={<DeleteOutlined />}
-                      >
-                        Xóa
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              ))}
-
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Thêm danh mục phụ
-              </Button>
-            </>
-          )}
-        </Form.List>
-      </Form>
+      <CommonForm colSpan={24} form={state.form} fields={categoryFields} />
     </Modal>
   );
 };
