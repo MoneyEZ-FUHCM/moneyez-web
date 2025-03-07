@@ -28,24 +28,24 @@ const CategoryDetail = () => {
     () => [
       {
         title: TITLE.INDEX,
-        key: 'index',
-        width: '5%',
+        key: "index",
+        width: "2%",
         render: (_: any, __: any, index: number) => index + 1,
       },
       {
         title: TITLE.NAME,
-        dataIndex: 'name',
-        width: '20%',
+        dataIndex: "name",
+        width: "30%",
       },
       {
         title: TITLE.DESCRIPTION,
-        dataIndex: 'description',
-        width: '45%',
+        dataIndex: "description",
+        width: "55%",
       },
       {
         title: TITLE.CREATED_AT,
-        dataIndex: 'createdDate',
-        width: '30%',
+        dataIndex: "createdDate",
+        width: "13%",
         render: (date: string) => formatTimestamp(date),
       },
     ],
@@ -61,11 +61,16 @@ const CategoryDetail = () => {
   }
 
   return (
-    <TableListLayout title={TITLE.CATEGORY_DETAIL} breadcrumbItems={breadcrumbItems}>
+    <TableListLayout
+      title={TITLE.CATEGORY_DETAIL}
+      breadcrumbItems={breadcrumbItems}
+    >
       <div className="space-y-6">
         {/* Main Category Information */}
-        <div className="bg-white p-6 rounded-xl">
-          <h2 className="text-lg font-semibold mb-4">{TITLE.MAIN_CATEGORY_INFO}</h2>
+        <div className="rounded-xl bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">
+            {TITLE.MAIN_CATEGORY_INFO}
+          </h2>
           <Descriptions bordered column={1}>
             <Descriptions.Item label={TITLE.NAME}>
               {category?.data?.name || COMMON_CONSTANT.EMPTY_STRING}
@@ -74,13 +79,17 @@ const CategoryDetail = () => {
               {category?.data?.description || COMMON_CONSTANT.EMPTY_STRING}
             </Descriptions.Item>
             <Descriptions.Item label={TITLE.CREATED_AT}>
-              {category?.data?.createdDate ? formatTimestamp(category?.data?.createdDate) : COMMON_CONSTANT.EMPTY_STRING}
+              {category?.data?.createdDate
+                ? formatTimestamp(category?.data?.createdDate)
+                : COMMON_CONSTANT.EMPTY_STRING}
             </Descriptions.Item>
             <Descriptions.Item label={TITLE.CREATED_BY}>
               {category?.data?.createdBy || COMMON_CONSTANT.EMPTY_STRING}
             </Descriptions.Item>
             <Descriptions.Item label={TITLE.UPDATED_AT}>
-              {category?.data?.updatedDate ? formatTimestamp(category?.data?.updatedDate) : COMMON_CONSTANT.EMPTY_STRING}
+              {category?.data?.updatedDate
+                ? formatTimestamp(category?.data?.updatedDate)
+                : COMMON_CONSTANT.EMPTY_STRING}
             </Descriptions.Item>
             <Descriptions.Item label={TITLE.UPDATED_BY}>
               {category?.data?.updatedBy || COMMON_CONSTANT.EMPTY_STRING}
@@ -89,8 +98,8 @@ const CategoryDetail = () => {
         </div>
 
         {/* Subcategories Table */}
-        <div className="bg-white p-6 rounded-xl">
-          <h2 className="text-lg font-semibold mb-4">{TITLE.SUBCATEGORIES}</h2>
+        <div className="rounded-xl bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">{TITLE.SUBCATEGORIES}</h2>
           <Table
             columns={subCategoryColumns}
             dataSource={category?.data?.subcategories || []}
