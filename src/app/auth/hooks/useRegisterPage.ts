@@ -74,8 +74,8 @@ const useRegisterPage = (form: FormInstance) => {
         }
       }
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.OTP_INVALID) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.OTP_INVALID) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.OTP_INVALID);
         return;
       }
@@ -96,12 +96,12 @@ const useRegisterPage = (form: FormInstance) => {
       }
       setIsResending(false);
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.RESET_PASSWORD_FAILED) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_DOES_NOT_EXIST);
         return;
       }
-      if (error.errorCode === ERROR_CODE.OTP_HAS_SENT) {
+      if (error?.errorCode === ERROR_CODE.OTP_HAS_SENT) {
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_ERROR.OTP_HAS_SENT);
         return;
       }
@@ -130,16 +130,16 @@ const useRegisterPage = (form: FormInstance) => {
         }, 1000);
       }
     } catch (err: any) {
-      const error = err.data;
-      if (error.errorCode === ERROR_CODE.ACCOUNT_NOT_EXIST) {
+      const error = err?.data;
+      if (error?.errorCode === ERROR_CODE.ACCOUNT_NOT_EXIST) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.INVALID_INFO);
         return;
       }
-      if (error.errorCode === ERROR_CODE.DUPLICATE_PHONE_NUMBER) {
+      if (error?.errorCode === ERROR_CODE.DUPLICATE_PHONE_NUMBER) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.PHONE_ALREADY_EXISTED);
         return;
       }
-      if (error.errorCode === ERROR_CODE.ACCOUNT_EXISTED) {
+      if (error?.errorCode === ERROR_CODE.ACCOUNT_EXISTED) {
         showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_ALREADY_EXISTED);
         return;
       }
