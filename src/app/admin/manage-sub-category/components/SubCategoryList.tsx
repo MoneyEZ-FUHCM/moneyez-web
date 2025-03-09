@@ -8,6 +8,7 @@ import { Button } from "antd";
 import { useMemo } from "react";
 import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
 import { AddSubCategoryModal } from "./AddSubcategoryModal";
+import { renderIcon } from "@/components/common/IconRender";
 
 const SubCategoryList = () => {
   const { state, handler } = useSubCategoryManagementPage();
@@ -18,13 +19,24 @@ const SubCategoryList = () => {
         title: state.TITLE.INDEX,
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
-        render: (_: any, _record: any, index: number) => index + 1,
         width: "2%",
+        render: (_: any, _record: any, index: number) => 
+          (state.pageIndex - 1) * state.pageSize + index + 1
       },
       {
         title: state.TITLE.CODE,
         dataIndex: state.FORM_NAME.CODE,
         width: "15%",
+      },
+      {
+        title: state.TITLE.ICON,
+        dataIndex: state.FORM_NAME.ICON,
+        width: "15%",
+        render: (icon: string) => (
+          <div className="text-primary">
+            {renderIcon(icon)}
+          </div>
+        ),
       },
       {
         title: state.TITLE.NAME,
@@ -73,7 +85,7 @@ const SubCategoryList = () => {
         ),
       },
     ],
-    [handler],
+    [handler, state.pageIndex, state.pageSize],
   );
 
   return (

@@ -14,14 +14,14 @@ import { AddUserModal } from "./AddUserModal";
 
 const UserList = () => {
   const { state, handler } = useUserManagementPage();
-
   const columns = useMemo(
     () => [
       {
         title: state.TITLE.INDEX,
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
-        render: (_: any, _record: any, index: number) => index + 1,
+        render: (_: any, _record: any, index: number) => 
+          (state.pageIndex - 1) * state.pageSize + index + 1,
       },
       {
         title: state.TITLE.EMAIL,

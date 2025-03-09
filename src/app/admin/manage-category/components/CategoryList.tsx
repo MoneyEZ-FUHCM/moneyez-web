@@ -4,15 +4,16 @@ import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/utils";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Tag } from "antd";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
 import { AddCategoryModal } from "./AddCategoryModal";
+import { renderIcon } from "@/components/common/IconRender";
 
 const CategoryList = () => {
   const router = useRouter();
-  const { state, handler } = useCategoryManagementPage();
+  const { state, handler } = useCategoryManagementPage();  
 
   const columns = useMemo(
     () => [
@@ -20,7 +21,8 @@ const CategoryList = () => {
         title: state.TITLE.INDEX,
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
-        render: (_: any, _record: any, index: number) => index + 1,
+        render: (_: any, _record: any, index: number) => 
+          (state.pageIndex - 1) * state.pageSize + index + 1,
         width: "2%",
       },
       {
@@ -32,6 +34,21 @@ const CategoryList = () => {
         title: state.TITLE.ICON,
         dataIndex: state.FORM_NAME.ICON,
         width: "15%",
+        render: (icon: string) => (
+          <div className="text-primary">
+            {renderIcon(icon)}
+          </div>
+        ),
+      },
+      {
+        title: state.TITLE.TYPE,
+        dataIndex: state.FORM_NAME.TYPE,
+        width: "10%",
+        render: (type: string) => (
+          <Tag color={type === 'INCOME' ? 'green' : 'red'}>
+            {type === 'INCOME' ? 'Thu nhập' : 'Chi tiêu'}
+          </Tag>
+        ),
       },
       {
         title: state.TITLE.NAME,
@@ -81,7 +98,7 @@ const CategoryList = () => {
         ),
       },
     ],
-    [handler, router],
+    [handler, router, state.pageIndex, state.pageSize],
   );
 
   return (
