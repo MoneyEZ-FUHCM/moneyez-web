@@ -1,6 +1,6 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import apiSlice from "@/redux/slices/apiSlice";
-import { transformCommonResponse } from "@/types/common.type";
+import { transformBaseResponse, transformCommonResponse } from "@/types/common.type";
 import { SpendingModel } from "@/types/spendingModel.types";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
@@ -30,6 +30,13 @@ const spendingModelManagementApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["SpendingModel"],
     }),
+    getSpendingModelId: builder.query({
+      query: (id) => ({
+        url: `/spending-models/${id}`,
+        method: HTTP_METHOD.GET,
+      }),
+      transformResponse: (response) => transformBaseResponse<SpendingModel>(response),
+    }),
   }),
 });
 
@@ -37,6 +44,7 @@ export const {
   useGetSpendingModelListQuery,
   useCreateSpendingModelMutation,
   useDeleteSpendingModelMutation,
+  useGetSpendingModelIdQuery,
 } = spendingModelManagementApi;
 
 export default spendingModelManagementApi;

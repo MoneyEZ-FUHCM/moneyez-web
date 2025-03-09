@@ -8,9 +8,11 @@ import { useMemo } from "react";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { AddSpendingModelModal } from "./AddSpendingModelModal";
+import { useRouter } from "next/navigation";
 
 const SpendingModelList = () => {
   const { state, handler } = useSpendingModelManagementPage();
+  const router = useRouter();
 
   const columns = useMemo(
     () => [
@@ -57,6 +59,7 @@ const SpendingModelList = () => {
             <Button
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+              onClick={() => handler.handleViewDetail(record)}
             >
               <EyeOutlined color="blue" className="text-primary" />
             </Button>
@@ -78,7 +81,7 @@ const SpendingModelList = () => {
         ),
       },
     ],
-    [handler],
+    [handler, router],
   );
 
   return (
