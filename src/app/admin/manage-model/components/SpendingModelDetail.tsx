@@ -26,7 +26,8 @@ const SpendingModelDetail = () => {
     isLoading,
     refetch,
   } = useGetSpendingModelIdQuery(id as string);
-  const { data: categories } = useGetCategoryListQuery({
+
+  const { data: categories, } = useGetCategoryListQuery({
     PageIndex: 1,
     PageSize: 50,
     search: "",
@@ -146,8 +147,16 @@ const SpendingModelDetail = () => {
           {filteredCategories?.map((category) => (
             <Col key={category.categoryId} xs={24} sm={12} lg={8}>
               <CategoryCard
+                spendingModelId={id as string}
                 category={category.category}
                 percentageAmount={category.percentageAmount}
+                onRemove={() =>
+                  handler.handleRemoveSpendingModelCategory(
+                    id as string,
+                    category.categoryId,
+                    refetch
+                  )
+                }
               />
             </Col>
           ))}

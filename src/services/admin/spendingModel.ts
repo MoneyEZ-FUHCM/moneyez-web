@@ -37,11 +37,20 @@ const spendingModelManagementApi = apiSlice.injectEndpoints({
         method: HTTP_METHOD.GET,
       }),
       transformResponse: (response) => transformBaseResponse<SpendingModel>(response),
+      providesTags: ["SpendingModel"],
     }),
     addCategoryModalToSpendingModel: builder.mutation({
       query: (payload) => ({
         url: `/spending-models/categories/`,
         method: HTTP_METHOD.POST,
+        body: payload,
+      }),
+      invalidatesTags: ["SpendingModel"],
+    }),
+    removecategoryFromSpendingModel: builder.mutation({
+      query: (payload) => ({
+        url: `/spending-models/categories/`,
+        method: HTTP_METHOD.DELETE,
         body: payload,
       }),
       invalidatesTags: ["SpendingModel"],
@@ -55,6 +64,7 @@ export const {
   useDeleteSpendingModelMutation,
   useGetSpendingModelIdQuery,
   useAddCategoryModalToSpendingModelMutation,
+  useRemovecategoryFromSpendingModelMutation,
 } = spendingModelManagementApi;
 
 export default spendingModelManagementApi;

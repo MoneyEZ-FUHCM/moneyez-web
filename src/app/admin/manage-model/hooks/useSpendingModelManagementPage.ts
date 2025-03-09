@@ -8,6 +8,7 @@ import {
   useCreateSpendingModelMutation,
   useDeleteSpendingModelMutation,
   useGetSpendingModelListQuery,
+  useRemovecategoryFromSpendingModelMutation,
 } from "@/services/admin/spendingModel";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,8 @@ const useSpendingModelManagementPage = () => {
     { isLoading: isAddCategoryModalToSpendingModel },
   ] = useAddCategoryModalToSpendingModelMutation();
   const [deleteModel] = useDeleteSpendingModelMutation();
+  const [removecategoryFromSpendingModel] =
+    useRemovecategoryFromSpendingModelMutation();
 
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -144,6 +147,41 @@ const useSpendingModelManagementPage = () => {
     }
   };
 
+  const handleRemoveSpendingModelCategory = useCallback(async (
+    modelId: string,
+    categoryId: string,
+    refetch: () => void
+  ) => {
+    confirm({
+      title: TITLE.TITLE,
+      content: TITLE.CONTENT,
+      okText: TITLE.OK_TEXT,
+      okType: "danger",
+      cancelText: TITLE.CANCEL_TEXT,
+      onOk: async () => {
+        try {
+          const requestData = {
+            spendingModelId: modelId,
+            categoryIds: [categoryId],
+          };
+          await removecategoryFromSpendingModel(requestData).unwrap();
+          refetch()
+          showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
+        } catch (err: any) {
+          const error = err?.data;
+          if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_NOT_EXISTS,
+            );
+            return;
+          }
+          showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
+        }
+      },
+    });
+  }, []);
+
   return {
     state: {
       data,
@@ -169,6 +207,7 @@ const useSpendingModelManagementPage = () => {
       handleViewDetail,
       handleAddModelCategory,
       setSelectedType,
+      handleRemoveSpendingModelCategory,
     },
   };
 };

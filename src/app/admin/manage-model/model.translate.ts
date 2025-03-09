@@ -34,5 +34,6 @@ export const TEXT_TRANSLATE = {
     ADD_MODEL: "Thêm mô hình",
     SAVE: "Lưu",
     CANCEL: "Hủy",
+    DELETE_SPENDING_MODEL_CATEGORY: "Xóa danh mục",
   },
 };

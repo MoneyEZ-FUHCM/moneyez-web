@@ -25,8 +25,10 @@ export interface SpendingModelDetailProps {
 }
 
 export interface CategoryCardProps {
+  spendingModelId: string;
   category: Category;
   percentageAmount: number;
+  onRemove: () => void;
 }
 
 export interface Subcategory {
