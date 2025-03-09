@@ -14,6 +14,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_CATEGORY_CONSTANT } from "../category.constant";
 import { TEXT_TRANSLATE } from "../category.translate";
+import {
+  useAssignSubcategoriesMutation,
+  useUnAssignSubcategoriesMutation,
+} from "@/services/admin/subCategory";
 
 const useCategoryManagementPage = () => {
   const confirm = Modal.confirm;
@@ -24,12 +28,20 @@ const useCategoryManagementPage = () => {
 
   const [createCategory, { isLoading: isCreatingCategory }] =
     useCreateCategoryMutation();
+  const [assignSubcategories, { isLoading: isAssigningSubCategories }] =
+    useAssignSubcategoriesMutation();
+  const [unAssignSubcategories, { isLoading: isUnAssigningSubCategories }] =
+    useUnAssignSubcategoriesMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const { data, isLoading: isLoadingCategoryList } = useGetCategoryListQuery({
+  const {
+    data,
+    isLoading: isLoadingCategoryList,
+    refetch,
+  } = useGetCategoryListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
     search: searchQuery,
@@ -115,6 +127,71 @@ const useCategoryManagementPage = () => {
     });
   };
 
+  const handleAssignCategory = async (refetch: any, cateCode: string) => {
+    try {
+      const values = await form.validateFields();
+      const assignmentData = {
+        assignments: [
+          {
+            categoryCode: cateCode as string,
+            subcategoryCodes: values.subcategoryCodes,
+          },
+        ],
+      };
+      try {
+        console.log("check values", assignmentData);
+        await assignSubcategories(assignmentData).unwrap();
+        showToast(
+          TOAST_STATUS.SUCCESS,
+          MESSAGE_SUCCESS.ASSIGN_SUBCATE_SUCCESSFUL,
+        );
+        form.resetFields();
+        dispatch(setIsOpen(false));
+        refetch();
+      } catch (err: any) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.CATEGORY_ALREADY_EXISTS) {
+          showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.CATEGORY_ALREADY_EXISTS);
+          return;
+        }
+        showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
+        dispatch(setIsOpen(true));
+      }
+    } catch (err) {
+      dispatch(setIsOpen(true));
+    }
+  };
+
+  const handleRemoveSubcategory = async (
+    refetch: any,
+    categoryId: string,
+    subcategoryId: string,
+  ) => {
+    confirm({
+      title: TITLE.REMOVE_SUBCATEGORY,
+      content: TITLE.REMOVE_SUBCATEGORY_CONFIRM,
+      okText: TITLE.OK_TEXT,
+      okType: "danger",
+      cancelText: TITLE.CANCEL_TEXT,
+      onOk: async () => {
+        try {
+          const request = {
+            categoryId: categoryId,
+            subcategoryId: subcategoryId,
+          };
+          await unAssignSubcategories(request).unwrap();
+          showToast(
+            TOAST_STATUS.SUCCESS,
+            MESSAGE_SUCCESS.REMOVE_SUBCATE_SUCCESSFUL,
+          );
+          refetch();
+        } catch (err) {
+          showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
+        }
+      },
+    });
+  };
+
   return {
     state: {
       data,
@@ -123,6 +200,7 @@ const useCategoryManagementPage = () => {
       pageSize,
       isOpen,
       isCreatingCategory,
+      isAssigningSubCategories,
       MESSAGE_VALIDATE,
       form,
       FORM_NAME,
@@ -137,6 +215,8 @@ const useCategoryManagementPage = () => {
       handleDeleteCategory,
       handleViewDetail,
       setSearchQuery,
+      handleAssignCategory,
+      handleRemoveSubcategory,
     },
   };
 };

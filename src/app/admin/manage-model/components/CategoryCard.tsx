@@ -33,18 +33,20 @@ const CategoryCard = ({ category, percentageAmount }: CategoryCardProps) => {
       <Text className="mb-4 block text-gray-600">{category?.description}</Text>
 
       {(category?.subcategories ?? []).length > 0 && (
-        <List
-          size="small"
-          dataSource={category.subcategories ?? []}
-          renderItem={(item) => (
-            <List.Item className="py-1">
-              <span className="flex items-center">
-                {renderIcon(item.icon, 20)}
-                <span className="ml-2">{item.name}</span>
-              </span>
-            </List.Item>
-          )}
-        />
+        <div className="max-h-[200px] overflow-y-auto">
+          <List
+            size="small"
+            dataSource={category.subcategories ?? []}
+            renderItem={(item) => (
+              <List.Item className="py-1">
+                <span className="flex items-center">
+                  {renderIcon(item.icon, 20)}
+                  <span className="ml-2">{item.name}</span>
+                </span>
+              </List.Item>
+            )}
+          />
+        </div>
       )}
     </Card>
   );
