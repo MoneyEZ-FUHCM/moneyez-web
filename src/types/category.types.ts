@@ -8,6 +8,7 @@ export interface Category extends BaseEntity {
   subcategories?: SubCategory[];
   code: string;
   icon: string;
+  type: "EXPENSE" | "INCOME";
 }
 
 export interface SubCategory extends Category {}
