@@ -2,6 +2,7 @@ export const TEXT_TRANSLATE = {
   MESSAGE_ERROR: {
     MODEL_NOT_EXISTS: "Mô hình không tồn tại",
     MODEL_ALREADY_EXISTS: "Mô hình đã tồn tại",
+    MODEL_CATE_ALREADY_ADDED: "Danh mục đã tồn tại trong mô hình",
   },
   MESSAGE_SUCCESS: {
     CREATE_SUCCESSFUL: "Tạo mô hình thành công",

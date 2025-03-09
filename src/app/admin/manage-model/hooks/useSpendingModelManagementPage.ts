@@ -4,16 +4,17 @@ import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
 import {
+  useAddCategoryModalToSpendingModelMutation,
   useCreateSpendingModelMutation,
   useDeleteSpendingModelMutation,
   useGetSpendingModelListQuery,
 } from "@/services/admin/spendingModel";
 import { Form, Modal, TablePaginationConfig } from "antd";
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
-import { useRouter } from "next/navigation";
 
 const useSpendingModelManagementPage = () => {
   const confirm = Modal.confirm;
@@ -23,6 +24,10 @@ const useSpendingModelManagementPage = () => {
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
   const [createModel, { isLoading: isCreatingModel }] =
     useCreateSpendingModelMutation();
+  const [
+    addCategoryModalToSpendingModel,
+    { isLoading: isAddCategoryModalToSpendingModel },
+  ] = useAddCategoryModalToSpendingModelMutation();
   const [deleteModel] = useDeleteSpendingModelMutation();
 
   const [pageIndex, setPageIndex] = useState<number>(1);
@@ -36,6 +41,8 @@ const useSpendingModelManagementPage = () => {
   const { ERROR_CODE, FORM_NAME } = MANAGE_MODEL_CONSTANT;
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
     TEXT_TRANSLATE;
+
+  const [selectedType, setSelectedType] = useState<string>("ALL");
 
   const handleAddModel = async () => {
     try {
@@ -70,7 +77,7 @@ const useSpendingModelManagementPage = () => {
   };
 
   const handleViewDetail = useCallback((record: any) => {
-  router.push(`/admin/manage-model/${record.id}`);
+    router.push(`/admin/manage-model/${record.id}`);
   }, []);
 
   const handleDeleteModel = (id: number) => {
@@ -99,6 +106,44 @@ const useSpendingModelManagementPage = () => {
     });
   };
 
+  const handleAddModelCategory = async (
+    modelId: string,
+    refetch: () => void,
+  ) => {
+    try {
+      const values = await form.validateFields();
+      const requestData = {
+        spendingModelId: modelId,
+        categories: [
+          {
+            categoryId: values.categoryId,
+            percentageAmount: values.percentageAmount,
+          },
+        ],
+      };
+      try {
+        await addCategoryModalToSpendingModel(requestData).unwrap();
+        showToast(TOAST_STATUS.SUCCESS, "Thêm danh mục thành công");
+        form.resetFields();
+        dispatch(setIsOpen(false));
+        refetch();
+      } catch (err: any) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.MODEL_CATE_ALREADY_ADDED) {
+          showToast(
+            TOAST_STATUS.ERROR,
+            TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_CATE_ALREADY_ADDED,
+          );
+          return;
+        }
+        showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
+        dispatch(setIsOpen(true));
+      }
+    } catch (err: any) {
+      dispatch(setIsOpen(true));
+    }
+  };
+
   return {
     state: {
       data,
@@ -107,11 +152,13 @@ const useSpendingModelManagementPage = () => {
       pageSize,
       isOpen,
       isCreatingModel,
+      isAddCategoryModalToSpendingModel,
       MESSAGE_VALIDATE,
       form,
       FORM_NAME,
       TITLE,
       BUTTON,
+      selectedType,
     },
     handler: {
       handlePageChange,
@@ -120,8 +167,11 @@ const useSpendingModelManagementPage = () => {
       handleCancel,
       handleDeleteModel,
       handleViewDetail,
+      handleAddModelCategory,
+      setSelectedType,
     },
   };
 };
 
 export { useSpendingModelManagementPage };
+

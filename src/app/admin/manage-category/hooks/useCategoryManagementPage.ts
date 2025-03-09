@@ -8,16 +8,16 @@ import {
   useDeleteCategoryMutation,
   useGetCategoryListQuery,
 } from "@/services/admin/category";
+import {
+  useAssignSubcategoriesMutation,
+  useUnAssignSubcategoriesMutation,
+} from "@/services/admin/subCategory";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_CATEGORY_CONSTANT } from "../category.constant";
 import { TEXT_TRANSLATE } from "../category.translate";
-import {
-  useAssignSubcategoriesMutation,
-  useUnAssignSubcategoriesMutation,
-} from "@/services/admin/subCategory";
 
 const useCategoryManagementPage = () => {
   const confirm = Modal.confirm;
@@ -139,7 +139,6 @@ const useCategoryManagementPage = () => {
         ],
       };
       try {
-        console.log("check values", assignmentData);
         await assignSubcategories(assignmentData).unwrap();
         showToast(
           TOAST_STATUS.SUCCESS,
@@ -201,6 +200,7 @@ const useCategoryManagementPage = () => {
       isOpen,
       isCreatingCategory,
       isAssigningSubCategories,
+      isUnAssigningSubCategories,
       MESSAGE_VALIDATE,
       form,
       FORM_NAME,
@@ -222,3 +222,4 @@ const useCategoryManagementPage = () => {
 };
 
 export { useCategoryManagementPage };
+
