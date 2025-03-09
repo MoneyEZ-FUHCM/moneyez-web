@@ -34,7 +34,7 @@ const ADMIN_PATHS = new Set([
 
 const USER_PATHS = new Set(["/user", "/user/chart"]);
 const ADMIN_DYNAMIC_PATHS =
-  /^\/admin\/(manage-category|manage-sub-category)\/[^/]+$/;
+  /^\/admin\/(manage-category|manage-sub-category|manage-model)\/[^/]+$/;
 
 export function LoadingWrapper({
   children,

@@ -22,14 +22,19 @@ const SubCategoryList = () => {
         width: "2%",
       },
       {
+        title: state.TITLE.CODE,
+        dataIndex: state.FORM_NAME.CODE,
+        width: "15%",
+      },
+      {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
-        width: "35%",
+        width: "25%",
       },
       {
         title: state.TITLE.DESCRIPTION,
         dataIndex: state.FORM_NAME.DESCRIPTION,
-        width: "43%",
+        width: "40%",
       },
       {
         title: state.TITLE.CREATED_AT,

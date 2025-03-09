@@ -13,11 +13,13 @@ import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
+import { useRouter } from "next/navigation";
 
 const useSpendingModelManagementPage = () => {
   const confirm = Modal.confirm;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const router = useRouter();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
   const [createModel, { isLoading: isCreatingModel }] =
     useCreateSpendingModelMutation();
@@ -67,6 +69,10 @@ const useSpendingModelManagementPage = () => {
     setPageSize(pagination.pageSize ?? 10);
   };
 
+  const handleViewDetail = useCallback((record: any) => {
+  router.push(`/admin/manage-model/${record.id}`);
+  }, []);
+
   const handleDeleteModel = (id: number) => {
     confirm({
       title: TITLE.TITLE,
@@ -113,6 +119,7 @@ const useSpendingModelManagementPage = () => {
       handleAddModel,
       handleCancel,
       handleDeleteModel,
+      handleViewDetail,
     },
   };
 };

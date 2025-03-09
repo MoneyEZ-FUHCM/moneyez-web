@@ -14,6 +14,7 @@ export const TEXT_TRANSLATE = {
   },
   TITLE: {
     MANAGE_MODEL: "Quản lý mô hình chi tiêu",
+    MANAGE_MODEL_DETAIL: "Chi tiết mô hình chi tiêu",
     MODEL_LIST: "Danh sách mô hình chi tiêu",
     INDEX: "STT",
     NAME: "Tên mô hình",
