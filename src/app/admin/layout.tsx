@@ -11,6 +11,7 @@ import {
   FileMarkdownOutlined,
   FilePptOutlined,
   PieChartOutlined,
+  UsergroupAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { FloatButton, Layout, Menu } from "antd";
@@ -90,8 +91,15 @@ const items: MenuItem[] = [
     PATH_NAME.MANAGE_CATEGORY,
   ),
   getItem(
-    SIDE_BAR.MANAGE_NOTIFICATION,
+    SIDE_BAR.MANAGE_GROUP,
     SIDE_BAR.POSITION_6,
+    <UsergroupAddOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_GROUP,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_NOTIFICATION,
+    SIDE_BAR.POSITION_7,
     <BellOutlined />,
     undefined,
     PATH_NAME.MANAGE_NOTIFICATION,

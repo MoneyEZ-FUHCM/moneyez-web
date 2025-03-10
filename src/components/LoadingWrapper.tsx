@@ -21,6 +21,7 @@ const VALID_PATHS = new Set([
   "/admin/manage-category",
   "/admin/manage-sub-category",
   "/admin/manage-notification",
+  "/admin/manage-group",
   "/user/chart",
 ]);
 
@@ -32,11 +33,12 @@ const ADMIN_PATHS = new Set([
   "/admin/manage-category",
   "/admin/manage-sub-category",
   "/admin/manage-notification",
+  "/admin/manage-group",
 ]);
 
 const USER_PATHS = new Set(["/user", "/user/chart"]);
 const ADMIN_DYNAMIC_PATHS =
-  /^\/admin\/(manage-category|manage-sub-category|manage-model)\/[^/]+$/;
+  /^\/admin\/(manage-category|manage-sub-category|manage-model|manage-group)\/[^/]+$/;
 
 export function LoadingWrapper({
   children,
