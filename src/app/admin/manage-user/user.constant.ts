@@ -1,7 +1,7 @@
 export const MANAGE_USER_CONSTANT = {
   FORM_NAME: {
     EMAIL: "email",
-    AVATAR: "avatar",
+    AVATAR: "avatarUrl",
     ADDERSS: "address",
     PHONE_NUMBER: "phoneNumber",
     DOB: "dob",
