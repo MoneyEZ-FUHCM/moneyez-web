@@ -6,6 +6,7 @@ import { PATH_NAME } from "@/helpers/constants/pathname";
 import { useLogout } from "@/hooks/useLogout";
 import {
   BarsOutlined,
+  BellOutlined,
   BuildOutlined,
   FileMarkdownOutlined,
   FilePptOutlined,
@@ -18,6 +19,8 @@ import Link from "next/link";
 import { MenuItem } from "./admin.constant";
 import { TEXT_TRANSLATE } from "./admin.translate";
 import { useSidebar } from "./hooks/useSidebar";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "@/redux/slices/userSlice";
 
 const { Content, Sider, Footer } = Layout;
 const { SIDE_BAR, TITLE, BUTTON } = TEXT_TRANSLATE;
@@ -86,13 +89,20 @@ const items: MenuItem[] = [
     ],
     PATH_NAME.MANAGE_CATEGORY,
   ),
+  getItem(
+    SIDE_BAR.MANAGE_NOTIFICATION,
+    SIDE_BAR.POSITION_6,
+    <BellOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_NOTIFICATION,
+  ),
 ];
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { collapsed, setCollapsed, selectedKeys, storeDefaultSelectedKeys } =
     useSidebar(items);
   const { logout } = useLogout();
-
+  const userInfo = useSelector(selectUserInfo);
   const renderMenuItems = (items: MenuItem[]) => {
     return items.map((item) => {
       if (
@@ -163,13 +173,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <>
               <Image
                 className="h-[42px] w-[42px] rounded-full border object-cover ring-2 ring-gray-300 hover:ring-[#0077ff]"
-                src={Admin}
+                src={
+                  userInfo?.avatarUrl && userInfo.avatarUrl !== null
+                    ? userInfo.avatarUrl
+                    : Admin
+                }
                 alt="error"
                 width={42}
                 height={42}
               />
               <div className="flex flex-col">
-                <strong>{TITLE.NAME}</strong>
+                <strong>
+                  {userInfo?.fullName ? userInfo.fullName : TITLE.NAME}
+                </strong>
                 <button
                   className="cursor-pointer font-semibold text-[#5099ff] hover:underline"
                   onClick={logout}
