@@ -3,6 +3,7 @@ import Price from "@/assets/images/icons/price.png";
 import Secure from "@/assets/images/icons/secure.png";
 import Star from "@/assets/images/icons/star.png";
 import Statistic from "@/assets/images/icons/statistic.png";
+import { Button } from "antd";
 import Image from "next/image";
 
 const reasons = [
@@ -41,6 +42,9 @@ const Reasons = () => {
           <p className="text-sm font-semibold text-[#fca61b]">
             Lợi ích tuyệt vời
           </p>
+          <Button
+          onClick={() => window.open("http://localhost:3000/moneyez-web/accept-invitation?token=4837e8621dfb6a376c93c6233089c1b9731379b8a734a57ecf8857efc33759c0")}
+          >fetch</Button>
         </div>
       </div>
       <h1 className="text-2xl font-medium text-[#4d4d4d] sm:text-3xl lg:text-4xl">

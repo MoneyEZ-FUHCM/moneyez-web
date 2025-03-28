@@ -14,6 +14,8 @@ const PATH_NAME = {
   USER: "/user",
   CHART: "/user/chart",
 
+
+  ACCEPT_INIVITATION: "/accept-invitation",
   NOT_FOUND: "/notfound",
   AUTH: "/auth",
 };
