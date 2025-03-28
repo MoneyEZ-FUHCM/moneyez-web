@@ -11,12 +11,13 @@ import { Navbar } from "./layouts/navbar/navbar";
 
 const NavbarWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
-  const { ADMIN, AUTH, NOT_FOUND, USER } = PATH_NAME;
+  const { ADMIN, AUTH, NOT_FOUND, USER, ACCEPT_INIVITATION } = PATH_NAME;
   const showNavbar =
     pathname !== AUTH &&
     pathname !== NOT_FOUND &&
     !pathname.startsWith(ADMIN) &&
-    !pathname.startsWith(USER);
+    !pathname.startsWith(USER) &&
+    !pathname.startsWith(ACCEPT_INIVITATION);
 
   if (!showNavbar) return <>{children}</>;
 
