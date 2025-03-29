@@ -9,7 +9,16 @@ import { useGetCategoryByIdQuery } from "@/services/admin/category";
 import { useGetSubCategoryListQuery } from "@/services/admin/subCategory";
 import { formatTimestamp } from "@/utils";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Descriptions, Form, Modal, Select, Spin, Table, Tag } from "antd";
+import {
+  Button,
+  Descriptions,
+  Form,
+  Modal,
+  Select,
+  Spin,
+  Table,
+  Tag,
+} from "antd";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { TEXT_TRANSLATE } from "../category.translate";
@@ -57,7 +66,7 @@ const CategoryDetail = () => {
       {
         title: TITLE.ICON,
         dataIndex: "icon",
-        width: "15%",
+        width: "5%",
         render: (icon: string) => (
           <div className="text-primary">{renderIcon(icon)}</div>
         ),
@@ -65,26 +74,25 @@ const CategoryDetail = () => {
       {
         title: TITLE.NAME,
         dataIndex: "name",
-        width: "20%",
+        width: "15%",
       },
       {
         title: TITLE.DESCRIPTION,
         dataIndex: "description",
-        width: "55%",
+        width: "35%",
       },
       {
         title: TITLE.CREATED_AT,
         dataIndex: "createdDate",
-        width: "13%",
+        width: "10%",
         render: (date: string) => formatTimestamp(date),
       },
       {
         title: TITLE.ACTION,
         key: "action",
-        width: "10%",
+        width: "5%",
         render: (_, record) => (
-          <ButtonCustom
-            className="text-white"
+          <Button
             onClick={() =>
               handler.handleRemoveSubcategory(
                 refetch,
@@ -92,9 +100,12 @@ const CategoryDetail = () => {
                 record.id,
               )
             }
+            danger
+            size="small"
+            className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
           >
-            <DeleteOutlined className="mr-1" />
-          </ButtonCustom>
+            <DeleteOutlined />
+          </Button>
         ),
       },
     ],

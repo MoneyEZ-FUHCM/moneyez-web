@@ -12,7 +12,7 @@ const CategoryCard = ({
   percentageAmount,
   onRemove,
 }: CategoryCardProps) => {
-  const { state } = useSpendingModelManagementPage();
+  const { state, handler } = useSpendingModelManagementPage();
 
   return (
     <Card className="relative flex h-full flex-col shadow-md transition-shadow hover:shadow-lg">
@@ -36,10 +36,15 @@ const CategoryCard = ({
           </div>
         </div>
 
-        <Title level={4} className="mb-4 text-center">
-          {category?.name}
-        </Title>
-
+        <div className="flex w-full justify-center">
+          <Title
+            level={4}
+            className="w-fit cursor-pointer text-center"
+            onClick={() => handler.handleViewDetailCategory(category?.id)}
+          >
+            {category?.name}
+          </Title>
+        </div>
         <Text className="mb-4 block text-gray-600">
           {category?.description}
         </Text>
@@ -76,4 +81,3 @@ const CategoryCard = ({
 };
 
 export { CategoryCard };
-

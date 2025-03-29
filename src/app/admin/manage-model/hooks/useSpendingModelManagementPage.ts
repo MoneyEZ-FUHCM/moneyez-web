@@ -147,39 +147,42 @@ const useSpendingModelManagementPage = () => {
     }
   };
 
-  const handleRemoveSpendingModelCategory = useCallback(async (
-    modelId: string,
-    categoryId: string,
-    refetch: () => void
-  ) => {
-    confirm({
-      title: TITLE.TITLE,
-      content: TITLE.CONTENT,
-      okText: TITLE.OK_TEXT,
-      okType: "danger",
-      cancelText: TITLE.CANCEL_TEXT,
-      onOk: async () => {
-        try {
-          const requestData = {
-            spendingModelId: modelId,
-            categoryIds: [categoryId],
-          };
-          await removecategoryFromSpendingModel(requestData).unwrap();
-          refetch()
-          showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
-        } catch (err: any) {
-          const error = err?.data;
-          if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
-            showToast(
-              TOAST_STATUS.ERROR,
-              TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_NOT_EXISTS,
-            );
-            return;
+  const handleRemoveSpendingModelCategory = useCallback(
+    async (modelId: string, categoryId: string, refetch: () => void) => {
+      confirm({
+        title: TITLE.TITLE,
+        content: TITLE.CONTENT,
+        okText: TITLE.OK_TEXT,
+        okType: "danger",
+        cancelText: TITLE.CANCEL_TEXT,
+        onOk: async () => {
+          try {
+            const requestData = {
+              spendingModelId: modelId,
+              categoryIds: [categoryId],
+            };
+            await removecategoryFromSpendingModel(requestData).unwrap();
+            refetch();
+            showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
+          } catch (err: any) {
+            const error = err?.data;
+            if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
+              showToast(
+                TOAST_STATUS.ERROR,
+                TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_NOT_EXISTS,
+              );
+              return;
+            }
+            showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
           }
-          showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
-        }
-      },
-    });
+        },
+      });
+    },
+    [],
+  );
+
+  const handleViewDetailCategory = useCallback((record: string) => {
+    router.push(`/admin/manage-category/${record}`);
   }, []);
 
   return {
@@ -208,9 +211,9 @@ const useSpendingModelManagementPage = () => {
       handleAddModelCategory,
       setSelectedType,
       handleRemoveSpendingModelCategory,
+      handleViewDetailCategory,
     },
   };
 };
 
 export { useSpendingModelManagementPage };
-

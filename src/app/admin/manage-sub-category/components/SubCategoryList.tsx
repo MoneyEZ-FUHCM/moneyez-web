@@ -20,8 +20,8 @@ const SubCategoryList = () => {
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
         width: "2%",
-        render: (_: any, _record: any, index: number) => 
-          (state.pageIndex - 1) * state.pageSize + index + 1
+        render: (_: any, _record: any, index: number) =>
+          (state.pageIndex - 1) * state.pageSize + index + 1,
       },
       {
         title: state.TITLE.CODE,
@@ -33,9 +33,7 @@ const SubCategoryList = () => {
         dataIndex: state.FORM_NAME.ICON,
         width: "15%",
         render: (icon: string) => (
-          <div className="text-primary">
-            {renderIcon(icon)}
-          </div>
+          <div className="text-primary">{renderIcon(icon)}</div>
         ),
       },
       {

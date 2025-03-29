@@ -40,12 +40,12 @@ const NavbarWrapper = ({ children }: { children: React.ReactNode }) => {
                           className="h-5 w-5"
                         />
                         <p className="text-sm font-semibold text-[#fca61b]">
-                          Chào mừng đến với app xịn nhất FPTU 2025
+                          Chào mừng đến với MoneyEZ
                         </p>
                       </div>
                     </div>
                     <h1 className="mb-5 text-3xl font-bold text-primary transition-all duration-500 lg:text-4xl xl:text-[40px] 2xl:text-5xl">
-                      Ez<span className="text-secondary">Money</span>
+                      Money<span className="text-secondary">EZ</span>
                     </h1>
                     <Typewriter
                       options={{

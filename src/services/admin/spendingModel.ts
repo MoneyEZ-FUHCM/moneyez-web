@@ -1,7 +1,10 @@
 import { AddCategoryModal } from "@/app/admin/manage-category/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import apiSlice from "@/redux/slices/apiSlice";
-import { transformBaseResponse, transformCommonResponse } from "@/types/common.type";
+import {
+  transformBaseResponse,
+  transformCommonResponse,
+} from "@/types/common.type";
 import { SpendingModel } from "@/types/spendingModel.types";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
@@ -36,7 +39,8 @@ const spendingModelManagementApi = apiSlice.injectEndpoints({
         url: `/spending-models/${id}`,
         method: HTTP_METHOD.GET,
       }),
-      transformResponse: (response) => transformBaseResponse<SpendingModel>(response),
+      transformResponse: (response) =>
+        transformBaseResponse<SpendingModel>(response),
       providesTags: ["SpendingModel"],
     }),
     addCategoryModalToSpendingModel: builder.mutation({
@@ -55,6 +59,14 @@ const spendingModelManagementApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["SpendingModel"],
     }),
+    updateSpendingModel: builder.mutation({
+      query: (payload) => ({
+        url: `/spending-models`,
+        method: HTTP_METHOD.PUT,
+        body: payload,
+      }),
+      invalidatesTags: ["SpendingModel"],
+    }),
   }),
 });
 
@@ -65,6 +77,7 @@ export const {
   useGetSpendingModelIdQuery,
   useAddCategoryModalToSpendingModelMutation,
   useRemovecategoryFromSpendingModelMutation,
+  useUpdateSpendingModelMutation,
 } = spendingModelManagementApi;
 
 export default spendingModelManagementApi;

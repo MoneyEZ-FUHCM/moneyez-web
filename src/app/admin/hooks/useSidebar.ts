@@ -21,7 +21,7 @@ const useSidebar = (items: MenuItem[]) => {
     path: string,
   ): MenuItem | undefined => {
     for (const item of items) {
-      if (item.path === path) return item;
+      if (path.startsWith(item.path as string)) return item;
       if (item.children) {
         const found = findMenuItem(item.children, path);
         if (found) return found;
@@ -32,6 +32,7 @@ const useSidebar = (items: MenuItem[]) => {
 
   useEffect(() => {
     const matchedItem = findMenuItem(items, pathname);
+    console.log("check matchedItem", matchedItem);
     if (matchedItem) {
       setSelectedKeys([matchedItem.key]);
       storeDefaultSelectedKeys(matchedItem.key);

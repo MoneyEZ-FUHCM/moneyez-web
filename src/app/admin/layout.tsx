@@ -104,6 +104,13 @@ const items: MenuItem[] = [
     undefined,
     PATH_NAME.MANAGE_NOTIFICATION,
   ),
+  getItem(
+    SIDE_BAR.MANAGE_NOTIFICATION,
+    SIDE_BAR.POSITION_7,
+    <BellOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_NOTIFICATION,
+  ),
 ];
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
@@ -195,7 +202,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   {userInfo?.fullName ? userInfo.fullName : TITLE.NAME}
                 </strong>
                 <button
-                  className="cursor-pointer font-semibold text-[#5099ff] hover:underline"
+                  className="cursor-pointer text-left font-semibold text-[#5099ff] hover:underline"
                   onClick={logout}
                 >
                   {BUTTON.LOGOUT}
