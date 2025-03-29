@@ -53,6 +53,13 @@ const SpendingModelDetail = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [totalPercentage, setTotalPercentage] = useState(0);
+  const [editingCategory, setEditingCategory] = useState<{
+    categoryId: string;
+  } | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editForm] = Form.useForm();
+  const [editingPercentages, setEditingPercentages] = useState({});
+  const [isEditingAll, setIsEditingAll] = useState(false);
 
   // API Queries
   const {
@@ -199,6 +206,47 @@ const SpendingModelDetail = () => {
     }
   };
 
+  const handleEditCategory = async () => {
+    try {
+      const values = await editForm.validateFields();
+      await updateSpendingModel({
+        id: id as string,
+        categories: [
+          {
+            categoryId: editingCategory?.categoryId || "",
+            percentageAmount: values.percentageAmount,
+          },
+        ],
+      }).unwrap();
+      setIsEditModalOpen(false);
+      refetch();
+    } catch (error) {
+      console.error("Failed to update category:", error);
+    }
+  };
+
+  const handleBulkSave = async () => {
+    try {
+      const categories = Object.entries(editingPercentages).map(
+        ([categoryId, percentageAmount]) => ({
+          categoryId,
+          percentageAmount: Number(percentageAmount),
+        }),
+      );
+
+      await updateSpendingModel({
+        id: id as string,
+        categories,
+      }).unwrap();
+
+      setIsEditingAll(false);
+      setEditingPercentages({});
+      refetch();
+    } catch (error) {
+      console.error("Failed to update categories:", error);
+    }
+  };
+
   // Loading state
   if (isLoading) {
     return (
@@ -222,146 +270,220 @@ const SpendingModelDetail = () => {
       breadcrumbItems={breadcrumbItems}
     >
       <div className="min-h-screen p-6">
-        <div className="mx-auto mb-8 max-w-4xl rounded-lg bg-white p-8 shadow-md transition-shadow hover:shadow-lg">
-          <div className="mb-6 flex items-start justify-between">
-            <div className="flex flex-col gap-2">
-              <Tag
-                color={spendingModel?.data?.isTemplate ? "green" : "blue"}
-                className="px-3 py-1 text-sm font-medium"
-              >
-                {spendingModel?.data?.isTemplate ? "Mẫu mặc định" : "Tùy chỉnh"}
-              </Tag>
-            </div>
+        <div className="flex gap-5">
+          <div className="mb-8 rounded-lg bg-white p-8 shadow-md transition-shadow hover:shadow-lg">
+            <div className="mb-6 flex items-start justify-between">
+              <div className="flex flex-col gap-2">
+                <Tag
+                  color={spendingModel?.data?.isTemplate ? "green" : "blue"}
+                  className="px-3 py-1 text-sm font-medium"
+                >
+                  {spendingModel?.data?.isTemplate
+                    ? "Mẫu mặc định"
+                    : "Tùy chỉnh"}
+                </Tag>
+              </div>
 
-            {!isEditing && (
               <ButtonCustom
                 onClick={() => setIsEditing(true)}
                 className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90 hover:shadow"
               >
                 <EditOutlined /> Chỉnh sửa
               </ButtonCustom>
+            </div>
+
+            {isEditing ? (
+              <Form form={form} layout="vertical" className="space-y-6">
+                <Form.Item
+                  name="name"
+                  label={
+                    <span className="text-base font-medium">Tên mô hình</span>
+                  }
+                  rules={[
+                    { required: true, message: "Vui lòng nhập tên mô hình" },
+                  ]}
+                >
+                  <Input
+                    className="rounded-md border-gray-300 text-xl font-bold focus:border-primary"
+                    placeholder="Nhập tên mô hình"
+                    prefix={<FileTextOutlined className="text-gray-400" />}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="description"
+                  label={
+                    <span className="text-base font-medium">
+                      Mô tả chi tiết
+                    </span>
+                  }
+                  rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
+                  validateTrigger={["onChange", "onBlur"]}
+                >
+                  <ReactQuill
+                    theme="snow"
+                    className="rounded-md border-gray-300 focus:border-primary"
+                    onChange={(content) => {
+                      form.setFieldsValue({ description: content });
+                      if (!content.trim()) {
+                        form.setFields([
+                          {
+                            name: "description",
+                            errors: ["Vui lòng nhập mô tả"],
+                          },
+                        ]);
+                      }
+                    }}
+                    placeholder="Nhập mô tả chi tiết về mô hình này..."
+                  />
+                </Form.Item>
+
+                <div className="flex justify-end gap-3">
+                  <ButtonCustom
+                    onClick={() => setIsEditing(false)}
+                    className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
+                  >
+                    Hủy
+                  </ButtonCustom>
+
+                  <ButtonCustom
+                    onClick={handleUpdateModel}
+                    className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
+                  >
+                    <SaveOutlined /> Lưu thay đổi
+                  </ButtonCustom>
+                </div>
+              </Form>
+            ) : (
+              <div className="prose max-w-none">
+                <Title
+                  level={2}
+                  className="mb-4 bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-3xl font-bold text-transparent"
+                >
+                  {spendingModel?.data?.name}
+                </Title>
+
+                <Divider className="my-6" />
+
+                <div className="mt-6 text-gray-600">
+                  {parse(spendingModel?.data?.description as string)}
+                </div>
+              </div>
             )}
           </div>
 
-          {isEditing ? (
-            <Form form={form} layout="vertical" className="space-y-6">
-              <Form.Item
-                name="name"
-                label={
-                  <span className="text-base font-medium">Tên mô hình</span>
-                }
-                rules={[
-                  { required: true, message: "Vui lòng nhập tên mô hình" },
-                ]}
-              >
-                <Input
-                  className="rounded-md border-gray-300 text-xl font-bold focus:border-primary"
-                  placeholder="Nhập tên mô hình"
-                  prefix={<FileTextOutlined className="text-gray-400" />}
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="description"
-                label={
-                  <span className="text-base font-medium">Mô tả chi tiết</span>
-                }
-                rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
-                validateTrigger={["onChange", "onBlur"]}
-              >
-                <ReactQuill
-                  theme="snow"
-                  className="rounded-md border-gray-300 focus:border-primary"
-                  onChange={(content) => {
-                    form.setFieldsValue({ description: content });
-                    if (!content.trim()) {
-                      form.setFields([
-                        {
-                          name: "description",
-                          errors: ["Vui lòng nhập mô tả"],
-                        },
-                      ]);
-                    }
-                  }}
-                  placeholder="Nhập mô tả chi tiết về mô hình này..."
-                />
-              </Form.Item>
-
-              <div className="flex justify-end gap-3">
-                <ButtonCustom
-                  onClick={() => setIsEditing(false)}
-                  className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
-                >
-                  Hủy
-                </ButtonCustom>
-
-                <ButtonCustom
-                  onClick={handleUpdateModel}
-                  className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
-                >
-                  <SaveOutlined /> Lưu thay đổi
-                </ButtonCustom>
+          <div className="mb-8 w-full">
+            <div className="rounded-lg bg-white p-6 shadow-md">
+              <div className="mb-4 flex items-center justify-between">
+                <Title level={4} className="m-0">
+                  Phân bổ ngân sách
+                </Title>
+                <div className="flex items-center gap-2">
+                  {isEditingAll ? (
+                    <>
+                      <ButtonCustom
+                        onClick={handleBulkSave}
+                        className="flex items-center gap-1 bg-primary text-white"
+                      >
+                        <SaveOutlined /> Lưu thay đổi
+                      </ButtonCustom>
+                      <ButtonCustom
+                        onClick={() => {
+                          setIsEditingAll(false);
+                          setEditingPercentages({});
+                        }}
+                        className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
+                      >
+                        Hủy
+                      </ButtonCustom>
+                    </>
+                  ) : (
+                    <ButtonCustom
+                      onClick={() => {
+                        setIsEditingAll(true);
+                        const initialPercentages = {};
+                        spendingModel?.data?.spendingModelCategories.forEach(
+                          (cat) => {
+                            initialPercentages[cat.categoryId] =
+                              cat.percentageAmount;
+                          },
+                        );
+                        setEditingPercentages(initialPercentages);
+                      }}
+                      className="flex items-center gap-1 text-white"
+                    >
+                      <EditOutlined /> Chỉnh sửa tất cả
+                    </ButtonCustom>
+                  )}
+                </div>
               </div>
-            </Form>
-          ) : (
-            <div className="prose max-w-none">
-              <Title
-                level={2}
-                className="mb-4 bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-3xl font-bold text-transparent"
-              >
-                {spendingModel?.data?.name}
-              </Title>
 
-              <Divider className="my-6" />
+              <Progress
+                percent={totalPercentage}
+                status={getProgressStatus()}
+                strokeWidth={10}
+                className="mb-4"
+              />
 
-              <div className="mt-6 text-gray-600">
-                {parse(spendingModel?.data?.description as string)}
+              <Text type="secondary" className="mb-4 block text-sm">
+                {totalPercentage === 100
+                  ? "Đã phân bổ đủ 100% ngân sách"
+                  : totalPercentage > 100
+                    ? "Đã phân bổ vượt quá 100%, vui lòng điều chỉnh"
+                    : `Còn ${(100 - totalPercentage).toFixed(1)}% chưa được phân bổ`}
+              </Text>
+
+              <div className="mt-4 space-y-2">
+                {spendingModel?.data?.spendingModelCategories.map(
+                  (category) => (
+                    <div
+                      key={category.categoryId}
+                      className="flex items-center justify-between gap-4 rounded-md bg-gray-50 p-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-8 w-8 items-center justify-center text-xl">
+                          {renderIcon(category.category.icon)}
+                        </span>
+                        <span>{category.category.name}</span>
+                        <Tag
+                          color={
+                            category.category.type === "INCOME"
+                              ? "green"
+                              : "red"
+                          }
+                        >
+                          {category.category.type === "INCOME"
+                            ? "Thu nhập"
+                            : "Chi tiêu"}
+                        </Tag>
+                      </div>
+                      {isEditingAll ? (
+                        <InputNumber
+                          min={0}
+                          max={100}
+                          value={editingPercentages[category.categoryId]}
+                          onChange={(value) => {
+                            setEditingPercentages({
+                              ...editingPercentages,
+                              [category.categoryId]: value,
+                            });
+                          }}
+                          formatter={(value) => `${value}%`}
+                          className="w-24"
+                        />
+                      ) : (
+                        <Tag color="blue" className="min-w-[60px] text-center">
+                          {category.percentageAmount}%
+                        </Tag>
+                      )}
+                    </div>
+                  ),
+                )}
               </div>
             </div>
-          )}
-        </div>
-
-        {/* Allocation Summary */}
-        <div className="mx-auto mb-8 max-w-4xl">
-          <div className="rounded-lg bg-white p-6 shadow-md">
-            <div className="mb-4 flex items-center justify-between">
-              <Title level={4} className="m-0">
-                Phân bổ ngân sách
-              </Title>
-              <Tooltip
-                title={
-                  totalPercentage === 100
-                    ? "Đã phân bổ đủ 100%"
-                    : "Chưa phân bổ đủ 100%"
-                }
-              >
-                <Tag
-                  color={totalPercentage === 100 ? "success" : "warning"}
-                  className="px-3 py-1"
-                >
-                  {totalPercentage}%
-                </Tag>
-              </Tooltip>
-            </div>
-
-            <Progress
-              percent={totalPercentage}
-              status={getProgressStatus()}
-              strokeWidth={10}
-              className="mb-2"
-            />
-
-            <Text type="secondary" className="text-sm">
-              {totalPercentage === 100
-                ? "Đã phân bổ đủ 100% ngân sách"
-                : totalPercentage > 100
-                  ? "Đã phân bổ vượt quá 100%, vui lòng điều chỉnh"
-                  : `Còn ${(100 - totalPercentage).toFixed(1)}% chưa được phân bổ`}
-            </Text>
           </div>
         </div>
 
-        {/* Categories Section */}
         <div className="mx-auto">
           <div className="mb-6 flex flex-col gap-4 rounded-lg sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center">
@@ -450,11 +572,7 @@ const SpendingModelDetail = () => {
         okText="Thêm"
         cancelText="Hủy"
         okButtonProps={{
-          className:
-            totalPercentage < 100
-              ? "bg-primary text-white hover:bg-primary/90"
-              : "",
-          disabled: totalPercentage >= 100,
+          className: "!bg-primary text-white !hover:bg-primary/90",
         }}
         cancelButtonProps={{
           className: "border border-gray-300 text-gray-700 hover:bg-gray-100",
@@ -466,20 +584,51 @@ const SpendingModelDetail = () => {
         <Paragraph className="mb-4 text-gray-500">
           Chọn danh mục và nhập phần trăm phân bổ cho danh mục này.
         </Paragraph>
-        <div className="rounded-lg p-4">
+        <div className="srounded-lg">
           <CommonForm colSpan={24} form={state.form} fields={categoryFields} />
+        </div>
+      </Modal>
+
+      <Modal
+        title={
+          <div className="flex items-center gap-2 text-lg font-bold text-primary">
+            Chỉnh sửa phân bổ cho {editingCategory?.category?.name}
+          </div>
+        }
+        open={isEditModalOpen}
+        onOk={handleEditCategory}
+        onCancel={() => {
+          setIsEditModalOpen(false);
+          setEditingCategory(null);
+        }}
+        okText="Lưu"
+        cancelText="Hủy"
+        okButtonProps={{
+          className: "bg-primary text-white hover:bg-primary/90",
+        }}
+        centered
+        maskClosable={false}
+      >
+        <Form form={editForm} layout="vertical">
+          <Form.Item
+            name="percentageAmount"
+            label="Phần trăm phân bổ"
+            rules={[{ required: true, message: "Vui lòng nhập phần trăm" }]}
+          >
+            <InputNumber
+              min={0}
+              max={100}
+              formatter={(value) => `${value}%`}
+              className="w-full"
+              addonAfter={<PercentageOutlined />}
+            />
+          </Form.Item>
           <div className="mt-4 rounded-md bg-blue-50 p-3 text-sm text-blue-700">
             <Text strong>
-              <span className="text-red">*</span> Lưu ý:
-            </Text>{" "}
-            Tổng phần trăm phân bổ hiện tại là {totalPercentage}%.
-            {totalPercentage < 100
-              ? ` Bạn cần phân bổ thêm ${(100 - totalPercentage).toFixed(1)}%.`
-              : totalPercentage > 100
-                ? " Phân bổ đã vượt quá 100%, vui lòng điều chỉnh."
-                : " Đã phân bổ đủ 100%."}
+              Tổng phân bổ sau khi thay đổi: {totalPercentage}%
+            </Text>
           </div>
-        </div>
+        </Form>
       </Modal>
     </TableListLayout>
   );
