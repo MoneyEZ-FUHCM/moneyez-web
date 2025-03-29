@@ -52,6 +52,7 @@ const subSubCategoryManagementApi = apiSlice.injectEndpoints({
         method: HTTP_METHOD.PUT,
         body: payload,
       }),
+      invalidatesTags: ["SubCategory"],
     }),
   }),
 });

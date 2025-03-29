@@ -39,12 +39,13 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { getRandomColor } from "@/helpers/libs/utils";
 import { showToast } from "@/hooks/useShowToast";
+import { useDispatch } from "react-redux";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
 import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
@@ -59,11 +60,6 @@ const SpendingModelDetail = () => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
   const [totalPercentage, setTotalPercentage] = useState(0);
-  const [editingCategory, setEditingCategory] = useState<{
-    categoryId: string;
-  } | null>(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editForm] = Form.useForm();
   const [editingPercentages, setEditingPercentages] = useState<
     Record<string, number>
   >({});
@@ -77,7 +73,6 @@ const SpendingModelDetail = () => {
     isLoading,
     refetch,
   } = useGetSpendingModelIdQuery(id as string);
-
   const [updateSpendingModel] = useUpdateSpendingModelMutation();
   const [updateSpendingModelContent] = useUpdateSpendingModelContentMutation();
 
@@ -104,7 +99,6 @@ const SpendingModelDetail = () => {
         category.category.type === state.selectedType,
     );
 
-  // Available categories for adding to model
   const availableCategories = useMemo(() => {
     if (!categories?.items || !spendingModel?.data?.spendingModelCategories)
       return [];
@@ -178,7 +172,6 @@ const SpendingModelDetail = () => {
     },
   ];
 
-  // Effects
   useEffect(() => {
     if (spendingModel?.data) {
       form.setFieldsValue({
@@ -206,21 +199,12 @@ const SpendingModelDetail = () => {
       }) || []
     );
   }, [spendingModel?.data?.spendingModelCategories]);
+  const dispatch = useDispatch();
 
-  // Handlers
   const handleUpdateModel = async () => {
     try {
       const values = await form.validateFields();
 
-      if (!values.description?.trim()) {
-        form.setFields([
-          {
-            name: "description",
-            errors: ["Vui lòng nhập mô tả"],
-          },
-        ]);
-        return;
-      }
       const payload = {
         id: id as string,
         name: values.name,
@@ -232,14 +216,13 @@ const SpendingModelDetail = () => {
         TOAST_STATUS.SUCCESS,
         "Cập nhật nội dung mô hình chi tiêu thành công",
       );
-
       setIsEditing(false);
     } catch (error) {
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     }
   };
 
-  const handleBulkSave = async () => {
+  const handleUpdatePercentage = async () => {
     try {
       const categories = Object.entries(editingPercentages).map(
         ([categoryId, percentageAmount]) => ({
@@ -353,7 +336,6 @@ const SpendingModelDetail = () => {
                         placeholder="Nhập mô tả chi tiết về mô hình này..."
                       />
                     </Form.Item>
-
                     <div className="flex justify-end gap-3">
                       <ButtonCustom
                         onClick={() => setIsEditing(false)}
@@ -361,7 +343,6 @@ const SpendingModelDetail = () => {
                       >
                         Hủy
                       </ButtonCustom>
-
                       <ButtonCustom
                         onClick={handleUpdateModel}
                         className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
@@ -382,7 +363,7 @@ const SpendingModelDetail = () => {
                     <Divider className="my-6" />
 
                     <div className="mt-6 text-gray-600">
-                      {parse(spendingModel?.data?.description as string)}
+                      {parse(spendingModel?.data?.description ?? "")}
                     </div>
                   </div>
                 )}
@@ -399,7 +380,7 @@ const SpendingModelDetail = () => {
                   {isEditingAll ? (
                     <>
                       <ButtonCustom
-                        onClick={handleBulkSave}
+                        onClick={handleUpdatePercentage}
                         className="flex items-center gap-1 bg-primary text-white"
                       >
                         <SaveOutlined /> Lưu thay đổi
@@ -612,7 +593,6 @@ const SpendingModelDetail = () => {
         cancelButtonProps={{
           className: "border border-gray-300 text-gray-700 hover:bg-gray-100",
         }}
-        centered
         maskClosable={false}
         destroyOnClose
       >

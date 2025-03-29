@@ -9,7 +9,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useMemo } from "react";
 import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
-import { AddSubCategoryModal } from "./AddSubcategoryModal";
+import { FunctionSubCategoryModal } from "./FunctionSubcategoryModal";
 
 const SubCategoryList = () => {
   const { state, handler } = useSubCategoryManagementPage();
@@ -63,7 +63,7 @@ const SubCategoryList = () => {
             <Button
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-              // onClick={() => handler.handleOpenModalEdit(record)}
+              onClick={() => handler.handleOpenModalEdit(record)}
             >
               <EditOutlined className="text-primary" />
             </Button>
@@ -106,7 +106,7 @@ const SubCategoryList = () => {
         loading={state.isLoadingCategoryList}
         rowKey={(record: { id: number }) => record.id}
       />
-      <AddSubCategoryModal />
+      <FunctionSubCategoryModal />
     </TableListLayout>
   );
 };

@@ -87,20 +87,6 @@ const GroupList = () => {
             >
               <EyeOutlined color="blue" className="text-primary" />
             </Button>
-            <Button
-              size="small"
-              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-            >
-              <EditOutlined color="blue" className="text-primary" />
-            </Button>
-            <Button
-              onClick={() => handler.handleDeleteGroup(record.id)}
-              danger
-              size="small"
-              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-            >
-              <DeleteOutlined />
-            </Button>
           </div>
         ),
       },

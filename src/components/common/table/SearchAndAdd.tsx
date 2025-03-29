@@ -1,5 +1,10 @@
 import { InputCustom } from "@/components/ui/input";
-import { SearchOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  PlusCircleOutlined,
+  PlusOutlined,
+  SearchOutlined,
+  UserAddOutlined,
+} from "@ant-design/icons";
 import { Button, Form } from "antd";
 
 interface SearchAndAddProps {
@@ -40,8 +45,11 @@ const SearchAndAdd = ({
       </Form>
 
       {isAddButton && (
-        <Button className="h-10 !bg-primary" onClick={onAddClick}>
-          <UserAddOutlined className="mr-1 text-lg text-white" />
+        <Button
+          className="flex h-10 items-center !bg-primary"
+          onClick={onAddClick}
+        >
+          <PlusCircleOutlined className="text-lg text-white" />
           <span className="font-medium text-white">{addButtonText}</span>
         </Button>
       )}

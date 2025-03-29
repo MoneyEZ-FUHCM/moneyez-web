@@ -49,3 +49,7 @@ export const getRandomColor = () => {
   }
   return color;
 };
+
+export const removeHtmlTags = (html: string) => {
+  return html.replace(/(<([^>]+)>)/gi, "").trim();
+};

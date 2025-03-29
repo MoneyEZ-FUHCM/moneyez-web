@@ -41,6 +41,14 @@ const categoryManagementApi = apiSlice.injectEndpoints({
       transformResponse: (response) =>
         transformBaseResponse<Category>(response),
     }),
+    updateCategory: builder.mutation({
+      query: (payload) => ({
+        url: "/categories",
+        method: HTTP_METHOD.PUT,
+        body: payload,
+      }),
+      invalidatesTags: ["Category"],
+    }),
   }),
 });
 
@@ -49,6 +57,7 @@ export const {
   useCreateCategoryMutation,
   useDeleteCategoryMutation,
   useGetCategoryByIdQuery,
+  useUpdateCategoryMutation,
 } = categoryManagementApi;
 
 export default categoryManagementApi;

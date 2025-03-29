@@ -1,7 +1,7 @@
 import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
-import { setIsOpen } from "@/redux/slices/modalSlice";
+import { setIsOpen, setPlainText } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
 import {
   useAddCategoryModalToSpendingModelMutation,
@@ -39,6 +39,7 @@ const useSpendingModelManagementPage = () => {
     PageIndex: pageIndex,
     PageSize: pageSize,
   });
+  const plainText = useSelector((state: RootState) => state.modal.plainText);
 
   const { SYSTEM_ERROR, CONDITION } = COMMON_CONSTANT;
   const { ERROR_CODE, FORM_NAME } = MANAGE_MODEL_CONSTANT;
@@ -51,11 +52,16 @@ const useSpendingModelManagementPage = () => {
     try {
       const values = await form.validateFields();
       const updateValue = [{ ...values, isTemplate: CONDITION.TRUE }];
+      if (!plainText.trim()) {
+        showToast(TOAST_STATUS.INFO, "Vui lòng nhập mô tả");
+        return;
+      }
       try {
         await createModel(updateValue).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
+        dispatch(setPlainText(""));
       } catch (err: any) {
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
@@ -219,6 +225,7 @@ const useSpendingModelManagementPage = () => {
       setSelectedType,
       handleRemoveSpendingModelCategory,
       handleViewDetailCategory,
+      dispatch,
     },
   };
 };

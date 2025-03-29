@@ -32,7 +32,6 @@ const useSidebar = (items: MenuItem[]) => {
 
   useEffect(() => {
     const matchedItem = findMenuItem(items, pathname);
-    console.log("check matchedItem", matchedItem);
     if (matchedItem) {
       setSelectedKeys([matchedItem.key]);
       storeDefaultSelectedKeys(matchedItem.key);

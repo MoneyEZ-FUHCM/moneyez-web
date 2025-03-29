@@ -1,2 +1,2 @@
-export { AddSubCategoryModal } from "./AddSubcategoryModal";
+export { FunctionSubCategoryModal } from "./FunctionSubcategoryModal";
 export { SubCategoryList } from "./SubCategoryList";

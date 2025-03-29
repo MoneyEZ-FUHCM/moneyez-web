@@ -8,6 +8,15 @@ export enum VALID_ROLE_REQUEST {
   USER,
 }
 
+export enum CATEGORY_TYPE {
+  INCOME,
+  EXPENSE,
+}
+export enum CATEGORY_TYPE_TEXT {
+  INCOME = "INCOME",
+  EXPENSE = "EXPENSE",
+}
+
 export enum GENDER {
   MALE,
   FEMALE,

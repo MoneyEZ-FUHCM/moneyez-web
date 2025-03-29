@@ -50,10 +50,14 @@ export const TEXT_TRANSLATE = {
     ADD_SUB_CATEGORY_TO_CATEGORY: "Thêm danh mục con vào danh mục",
     ACTION: "Thao tác",
     REMOVE_SUBCATEGORY: "Xóa danh mục con",
-    REMOVE_SUBCATEGORY_CONFIRM: "Bạn có chắc chắn muốn xóa danh mục con này khỏi danh mục chính?",
+    REMOVE_SUBCATEGORY_CONFIRM:
+      "Bạn có chắc chắn muốn xóa danh mục con này khỏi danh mục chính?",
+    ADD_CATEGORY: "Thêm danh mục",
+    UPDATE_CATEGORY: "Cập nhật danh mục",
   },
   BUTTON: {
     ADD_CATEGORY: "Thêm danh mục",
+    UPDATE_CATEGORY: "Cập nhật danh mục",
     SAVE: "Lưu",
     CANCEL: "Hủy",
     ADD_SUB_CATEGORY: "Thêm danh mục con",
