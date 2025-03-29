@@ -109,6 +109,13 @@ const useSubCategoryManagementPage = () => {
             );
             return;
           }
+          if (error?.errorCode === ERROR_CODE.SUBCATEGORY_HAS_DEPENDENCIES) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              "Danh mục chi tiêu con đang được sử dụng. Không thể xóa",
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },

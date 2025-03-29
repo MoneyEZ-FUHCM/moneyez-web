@@ -46,6 +46,13 @@ const subSubCategoryManagementApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["SubCategory"],
     }),
+    updateSubcategory: builder.mutation({
+      query: (payload) => ({
+        url: `/subcategories/update`,
+        method: HTTP_METHOD.PUT,
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -55,6 +62,7 @@ export const {
   useDeleteSubCategoryMutation,
   useAssignSubcategoriesMutation,
   useUnAssignSubcategoriesMutation,
+  useUpdateSubcategoryMutation,
 } = subSubCategoryManagementApi;
 
 export default subSubCategoryManagementApi;

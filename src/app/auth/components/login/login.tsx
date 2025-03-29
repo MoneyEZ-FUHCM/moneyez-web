@@ -137,7 +137,6 @@ const LoginForm = () => {
                       e.preventDefault();
                     }
                   }}
-                  onPaste={(e) => e.preventDefault()}
                 />
               </Form.Item>
             </motion.div>

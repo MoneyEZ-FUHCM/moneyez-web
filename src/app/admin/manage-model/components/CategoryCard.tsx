@@ -13,7 +13,7 @@ const CategoryCard = ({
   onRemove,
 }: CategoryCardProps) => {
   const { state, handler } = useSpendingModelManagementPage();
-
+  const PRIMARY_COLOR = "#609084";
   return (
     <Card className="relative flex h-full flex-col shadow-md transition-shadow hover:shadow-lg">
       <div className="flex-grow">
@@ -24,6 +24,7 @@ const CategoryCard = ({
               percent={percentageAmount}
               format={(percent) => `${percent}%`}
               size={80}
+              strokeColor={PRIMARY_COLOR}
             />
           </div>
           <div className="flex flex-col items-end gap-2">

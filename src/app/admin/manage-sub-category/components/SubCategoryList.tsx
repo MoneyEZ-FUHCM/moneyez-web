@@ -1,14 +1,15 @@
 "use client";
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
+import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { SubCategory } from "@/types/category.types";
 import { formatTimestamp } from "@/utils";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useMemo } from "react";
 import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
 import { AddSubCategoryModal } from "./AddSubcategoryModal";
-import { renderIcon } from "@/components/common/IconRender";
 
 const SubCategoryList = () => {
   const { state, handler } = useSubCategoryManagementPage();
@@ -31,7 +32,7 @@ const SubCategoryList = () => {
       {
         title: state.TITLE.ICON,
         dataIndex: state.FORM_NAME.ICON,
-        width: "15%",
+        width: "7%",
         render: (icon: string) => (
           <div className="text-primary">{renderIcon(icon)}</div>
         ),
@@ -39,12 +40,12 @@ const SubCategoryList = () => {
       {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
-        width: "25%",
+        width: "20%",
       },
       {
         title: state.TITLE.DESCRIPTION,
         dataIndex: state.FORM_NAME.DESCRIPTION,
-        width: "40%",
+        width: "36%",
       },
       {
         title: state.TITLE.CREATED_AT,
@@ -56,20 +57,15 @@ const SubCategoryList = () => {
       {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
-        width: "8%",
-        render: (record: any) => (
+        width: "10%",
+        render: (_: any, record: SubCategory) => (
           <div className="flex items-center justify-center gap-2">
             <Button
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+              // onClick={() => handler.handleOpenModalEdit(record)}
             >
-              <EyeOutlined color="blue" className="text-primary" />
-            </Button>
-            <Button
-              size="small"
-              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-            >
-              <EditOutlined color="blue" className="text-primary" />
+              <EditOutlined className="text-primary" />
             </Button>
             <Button
               onClick={() => handler.handleDeleteSubCategory(record.id)}

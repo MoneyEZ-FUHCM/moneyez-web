@@ -121,6 +121,13 @@ const useCategoryManagementPage = () => {
             );
             return;
           }
+          if (error?.errorCode === ERROR_CODE.CATEGORY_HAS_DEPENDENCIES) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              "Danh mục chi tiêu đang được sử dụng. Không thể xóa",
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },
@@ -222,4 +229,3 @@ const useCategoryManagementPage = () => {
 };
 
 export { useCategoryManagementPage };
-

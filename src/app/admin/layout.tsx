@@ -11,6 +11,7 @@ import {
   FileMarkdownOutlined,
   FilePptOutlined,
   PieChartOutlined,
+  QuestionCircleOutlined,
   UsergroupAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -97,10 +98,11 @@ const items: MenuItem[] = [
     undefined,
     PATH_NAME.MANAGE_GROUP,
   ),
+
   getItem(
-    SIDE_BAR.MANAGE_NOTIFICATION,
-    SIDE_BAR.POSITION_7,
-    <BellOutlined />,
+    SIDE_BAR.MANAGE_QUIZ,
+    SIDE_BAR.POSITION_8,
+    <QuestionCircleOutlined />,
     undefined,
     PATH_NAME.MANAGE_NOTIFICATION,
   ),

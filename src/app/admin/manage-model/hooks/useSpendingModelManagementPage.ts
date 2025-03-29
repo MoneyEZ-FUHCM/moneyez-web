@@ -103,6 +103,13 @@ const useSpendingModelManagementPage = () => {
             );
             return;
           }
+          if (error?.errorCode === ERROR_CODE.MODEL_HAS_DEPENDENCIES) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              "Mô hình đang được sử dụng. Không thể xóa ở thời điểm hiện tại",
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },

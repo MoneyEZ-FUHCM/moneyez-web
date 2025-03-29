@@ -7,6 +7,7 @@ interface SearchAndAddProps {
   addButtonText: string;
   onSearch?: (value: string) => void;
   onAddClick: () => void;
+  isAddButton?: boolean;
 }
 
 const SearchAndAdd = ({
@@ -14,6 +15,7 @@ const SearchAndAdd = ({
   addButtonText,
   onSearch,
   onAddClick,
+  isAddButton = true,
 }: SearchAndAddProps) => {
   return (
     <div className="flex justify-between">
@@ -37,10 +39,12 @@ const SearchAndAdd = ({
         </Form.Item>
       </Form>
 
-      <Button className="h-10 !bg-primary" onClick={onAddClick}>
-        <UserAddOutlined className="mr-1 text-lg text-white" />
-        <span className="font-medium text-white">{addButtonText}</span>
-      </Button>
+      {isAddButton && (
+        <Button className="h-10 !bg-primary" onClick={onAddClick}>
+          <UserAddOutlined className="mr-1 text-lg text-white" />
+          <span className="font-medium text-white">{addButtonText}</span>
+        </Button>
+      )}
     </div>
   );
 };

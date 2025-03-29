@@ -4,6 +4,8 @@ export const MANAGE_MODEL_CONSTANT = {
     MODEL_ALREADY_EXISTS: "SpendingModelAlreadyExists",
     MODEL_NOT_FOUND: "SpendingModelNotFound",
     MODEL_CATE_ALREADY_ADDED: "CategoriesAlreadyAdded",
+    INVALID_TOTAL_PERCENTAGE: "InvalidTotalPercentage",
+    MODEL_HAS_DEPENDENCIES: "SpendingModelHasDependencies",
   },
   FORM_NAME: {
     INDEX: "index",

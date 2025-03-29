@@ -7,6 +7,7 @@ export const TEXT_TRANSLATE = {
     MANAGE_SUB_CATEGORY: "Danh mục phụ",
     MANAGE_CATEGORY_MANAGE: "Danh mục chính",
     MANAGE_NOTIFICATION: "Thông báo",
+    MANAGE_QUIZ: "Câu hỏi",
     MANAGE_GROUP: "Nhóm",
     POSITION_1: "1",
     POSITION_2: "2",

@@ -20,7 +20,7 @@ const GroupList = () => {
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
         width: "5%",
-        render: (_: any, _record: any, index: number) => 
+        render: (_: any, _record: any, index: number) =>
           (state.pageIndex - 1) * state.pageSize + index + 1,
       },
       {
@@ -51,16 +51,15 @@ const GroupList = () => {
         title: state.TITLE.BALANCE,
         dataIndex: state.FORM_NAME.CURRENT_BALANCE,
         width: "10%",
-        render: (currentBalance: number) => (
-          formatCurrency(currentBalance)
-        ),
+        render: (currentBalance: number) => formatCurrency(currentBalance),
       },
       {
         title: state.TITLE.VISIBILITY,
         dataIndex: state.FORM_NAME.VISIBILITY,
         width: "10%",
         render: (visibility: string) => {
-          let visibilityText = visibility === "PUBLIC" ? state.TITLE.PUBLIC : state.TITLE.PRIVATE;
+          let visibilityText =
+            visibility === "PUBLIC" ? state.TITLE.PUBLIC : state.TITLE.PRIVATE;
           let tagColor = visibility === "PUBLIC" ? "blue" : "orange";
           return <Tag color={tagColor}>{visibilityText}</Tag>;
         },
@@ -70,7 +69,8 @@ const GroupList = () => {
         dataIndex: state.FORM_NAME.STATUS,
         width: "10%",
         render: (status: string) => {
-          let statusText = status === "ACTIVE" ? state.TITLE.ACTIVE : state.TITLE.INACTIVE;
+          let statusText =
+            status === "ACTIVE" ? state.TITLE.ACTIVE : state.TITLE.INACTIVE;
           let tagColor = status === "ACTIVE" ? "green" : "red";
           return <Tag color={tagColor}>{statusText}</Tag>;
         },
@@ -111,6 +111,7 @@ const GroupList = () => {
   return (
     <TableListLayout title={state.TITLE.MANAGE_GROUP} breadcrumbItems={[]}>
       <SearchAndAdd
+        isAddButton={false}
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_GROUP}
         onSearch={(value) => handler.setSearchQuery(value)}

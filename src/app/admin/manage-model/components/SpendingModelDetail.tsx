@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
-import { useParams } from "next/navigation";
 import parse from "html-react-parser";
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -13,17 +13,20 @@ import { ButtonCustom } from "@/components/ui/button";
 import { useGetCategoryListQuery } from "@/services/admin/category";
 import {
   useGetSpendingModelIdQuery,
+  useUpdateSpendingModelContentMutation,
   useUpdateSpendingModelMutation,
 } from "@/services/admin/spendingModel";
 import {
   EditOutlined,
-  PlusOutlined,
-  SaveOutlined,
   FileTextOutlined,
   PercentageOutlined,
+  PlusOutlined,
+  SaveOutlined,
 } from "@ant-design/icons";
 import {
   Col,
+  Divider,
+  Empty,
   Form,
   Input,
   InputNumber,
@@ -33,14 +36,17 @@ import {
   Select,
   Spin,
   Tag,
-  Typography,
-  Divider,
   Tooltip,
-  Progress,
-  Empty,
+  Typography,
 } from "antd";
+import { AnimatePresence, motion } from "framer-motion";
 
+import { TOAST_STATUS } from "@/enums/globals";
+import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { getRandomColor } from "@/helpers/libs/utils";
+import { showToast } from "@/hooks/useShowToast";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
+import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
 import { CategoryCard } from "./CategoryCard";
 
@@ -58,10 +64,14 @@ const SpendingModelDetail = () => {
   } | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editForm] = Form.useForm();
-  const [editingPercentages, setEditingPercentages] = useState({});
+  const [editingPercentages, setEditingPercentages] = useState<
+    Record<string, number>
+  >({});
   const [isEditingAll, setIsEditingAll] = useState(false);
+  const { SYSTEM_ERROR } = COMMON_CONSTANT;
+  const { ERROR_CODE } = MANAGE_MODEL_CONSTANT;
 
-  // API Queries
+  // API Queies
   const {
     data: spendingModel,
     isLoading,
@@ -69,6 +79,7 @@ const SpendingModelDetail = () => {
   } = useGetSpendingModelIdQuery(id as string);
 
   const [updateSpendingModel] = useUpdateSpendingModelMutation();
+  const [updateSpendingModelContent] = useUpdateSpendingModelContentMutation();
 
   const { data: categories } = useGetCategoryListQuery({
     PageIndex: 1,
@@ -177,6 +188,25 @@ const SpendingModelDetail = () => {
     }
   }, [spendingModel?.data, form]);
 
+  const colorMap: Record<string, string> = {};
+  const colorMapRef = useRef<Record<string, string>>({});
+
+  const segments = useMemo(() => {
+    return (
+      spendingModel?.data?.spendingModelCategories?.map((category) => {
+        if (!colorMapRef.current[category.category.id]) {
+          colorMapRef.current[category.category.id] = getRandomColor();
+        }
+        return {
+          color: colorMapRef.current[category.category.id],
+          percent: category.percentageAmount,
+          name: category.category.name,
+          icon: category.category.icon,
+        };
+      }) || []
+    );
+  }, [spendingModel?.data?.spendingModelCategories]);
+
   // Handlers
   const handleUpdateModel = async () => {
     try {
@@ -191,37 +221,21 @@ const SpendingModelDetail = () => {
         ]);
         return;
       }
-
-      await updateSpendingModel({
+      const payload = {
         id: id as string,
         name: values.name,
         description: values.description,
-        isTemplate: spendingModel?.data?.isTemplate,
-      }).unwrap();
+        isTemplate: true,
+      };
+      await updateSpendingModelContent(payload).unwrap();
+      showToast(
+        TOAST_STATUS.SUCCESS,
+        "Cập nhật nội dung mô hình chi tiêu thành công",
+      );
 
       setIsEditing(false);
-      refetch();
     } catch (error) {
-      console.error("Failed to update model:", error);
-    }
-  };
-
-  const handleEditCategory = async () => {
-    try {
-      const values = await editForm.validateFields();
-      await updateSpendingModel({
-        id: id as string,
-        categories: [
-          {
-            categoryId: editingCategory?.categoryId || "",
-            percentageAmount: values.percentageAmount,
-          },
-        ],
-      }).unwrap();
-      setIsEditModalOpen(false);
-      refetch();
-    } catch (error) {
-      console.error("Failed to update category:", error);
+      showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     }
   };
 
@@ -235,19 +249,23 @@ const SpendingModelDetail = () => {
       );
 
       await updateSpendingModel({
-        id: id as string,
+        spendingModelId: id as string,
         categories,
       }).unwrap();
+      showToast(TOAST_STATUS.SUCCESS, "Cập nhật mô hình chi tiêu thành công");
 
       setIsEditingAll(false);
       setEditingPercentages({});
-      refetch();
-    } catch (error) {
-      console.error("Failed to update categories:", error);
+    } catch (err: any) {
+      const error = err?.data;
+      if (error.errorCode === ERROR_CODE.INVALID_TOTAL_PERCENTAGE) {
+        showToast(TOAST_STATUS.ERROR, "Tổng giá trị ngân sách phải bằng 100%");
+        return;
+      }
+      showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     }
   };
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="flex h-96 items-center justify-center">
@@ -256,125 +274,124 @@ const SpendingModelDetail = () => {
     );
   }
 
-  // Get progress status
-  const getProgressStatus = () => {
-    if (totalPercentage === 0) return "exception";
-    if (totalPercentage < 100) return "active";
-    if (totalPercentage === 100) return "success";
-    return "exception";
-  };
-
   return (
     <TableListLayout
       title={state.TITLE.MANAGE_MODEL_DETAIL}
       breadcrumbItems={breadcrumbItems}
     >
       <div className="min-h-screen p-6">
-        <div className="flex gap-5">
-          <div className="mb-8 rounded-lg bg-white p-8 shadow-md transition-shadow hover:shadow-lg">
-            <div className="mb-6 flex items-start justify-between">
-              <div className="flex flex-col gap-2">
-                <Tag
-                  color={spendingModel?.data?.isTemplate ? "green" : "blue"}
-                  className="px-3 py-1 text-sm font-medium"
-                >
-                  {spendingModel?.data?.isTemplate
-                    ? "Mẫu mặc định"
-                    : "Tùy chỉnh"}
-                </Tag>
+        <motion.div
+          className="flex gap-5"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+        >
+          <div className="mb-8 w-full flex-[0.5] rounded-lg border shadow-md transition-shadow duration-500 hover:shadow-lg">
+            <div className="p-6">
+              <div className="mb-6 flex items-start justify-between">
+                <div className="flex flex-col gap-2">
+                  <Tag
+                    color={spendingModel?.data?.isTemplate ? "green" : "blue"}
+                    className="px-3 py-1 text-sm font-medium"
+                  >
+                    {spendingModel?.data?.isTemplate
+                      ? "Mẫu mặc định"
+                      : "Tùy chỉnh"}
+                  </Tag>
+                </div>
+                {!isEditing && (
+                  <ButtonCustom
+                    onClick={() => setIsEditing(true)}
+                    className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white hover:bg-primary/90 hover:shadow"
+                  >
+                    <EditOutlined /> Chỉnh sửa
+                  </ButtonCustom>
+                )}
               </div>
+              <div>
+                {isEditing ? (
+                  <Form form={form} layout="vertical" className="space-y-6">
+                    <Form.Item
+                      name="name"
+                      label={<span className="text-sm">Tên mô hình</span>}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Vui lòng nhập tên mô hình",
+                        },
+                      ]}
+                    >
+                      <Input
+                        className="rounded-md border-gray-300 text-lg font-bold focus:border-primary"
+                        placeholder="Nhập tên mô hình"
+                        prefix={<FileTextOutlined className="text-gray-400" />}
+                      />
+                    </Form.Item>
 
-              <ButtonCustom
-                onClick={() => setIsEditing(true)}
-                className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90 hover:shadow"
-              >
-                <EditOutlined /> Chỉnh sửa
-              </ButtonCustom>
+                    <Form.Item
+                      name="description"
+                      label={<span className="text-sm">Mô tả chi tiết</span>}
+                      rules={[
+                        { required: true, message: "Vui lòng nhập mô tả" },
+                      ]}
+                      validateTrigger={["onChange", "onBlur"]}
+                    >
+                      <ReactQuill
+                        theme="snow"
+                        className="rounded-md border-gray-300 focus:border-primary"
+                        onChange={(content) => {
+                          form.setFieldsValue({ description: content });
+                          if (!content.trim()) {
+                            form.setFields([
+                              {
+                                name: "description",
+                                errors: ["Vui lòng nhập mô tả"],
+                              },
+                            ]);
+                          }
+                        }}
+                        placeholder="Nhập mô tả chi tiết về mô hình này..."
+                      />
+                    </Form.Item>
+
+                    <div className="flex justify-end gap-3">
+                      <ButtonCustom
+                        onClick={() => setIsEditing(false)}
+                        className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
+                      >
+                        Hủy
+                      </ButtonCustom>
+
+                      <ButtonCustom
+                        onClick={handleUpdateModel}
+                        className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
+                      >
+                        <SaveOutlined /> Lưu thay đổi
+                      </ButtonCustom>
+                    </div>
+                  </Form>
+                ) : (
+                  <div>
+                    <Title
+                      level={2}
+                      className="mb-4 bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-3xl font-bold text-transparent"
+                    >
+                      {spendingModel?.data?.name}
+                    </Title>
+
+                    <Divider className="my-6" />
+
+                    <div className="mt-6 text-gray-600">
+                      {parse(spendingModel?.data?.description as string)}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-
-            {isEditing ? (
-              <Form form={form} layout="vertical" className="space-y-6">
-                <Form.Item
-                  name="name"
-                  label={
-                    <span className="text-base font-medium">Tên mô hình</span>
-                  }
-                  rules={[
-                    { required: true, message: "Vui lòng nhập tên mô hình" },
-                  ]}
-                >
-                  <Input
-                    className="rounded-md border-gray-300 text-xl font-bold focus:border-primary"
-                    placeholder="Nhập tên mô hình"
-                    prefix={<FileTextOutlined className="text-gray-400" />}
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="description"
-                  label={
-                    <span className="text-base font-medium">
-                      Mô tả chi tiết
-                    </span>
-                  }
-                  rules={[{ required: true, message: "Vui lòng nhập mô tả" }]}
-                  validateTrigger={["onChange", "onBlur"]}
-                >
-                  <ReactQuill
-                    theme="snow"
-                    className="rounded-md border-gray-300 focus:border-primary"
-                    onChange={(content) => {
-                      form.setFieldsValue({ description: content });
-                      if (!content.trim()) {
-                        form.setFields([
-                          {
-                            name: "description",
-                            errors: ["Vui lòng nhập mô tả"],
-                          },
-                        ]);
-                      }
-                    }}
-                    placeholder="Nhập mô tả chi tiết về mô hình này..."
-                  />
-                </Form.Item>
-
-                <div className="flex justify-end gap-3">
-                  <ButtonCustom
-                    onClick={() => setIsEditing(false)}
-                    className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
-                  >
-                    Hủy
-                  </ButtonCustom>
-
-                  <ButtonCustom
-                    onClick={handleUpdateModel}
-                    className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
-                  >
-                    <SaveOutlined /> Lưu thay đổi
-                  </ButtonCustom>
-                </div>
-              </Form>
-            ) : (
-              <div className="prose max-w-none">
-                <Title
-                  level={2}
-                  className="mb-4 bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-3xl font-bold text-transparent"
-                >
-                  {spendingModel?.data?.name}
-                </Title>
-
-                <Divider className="my-6" />
-
-                <div className="mt-6 text-gray-600">
-                  {parse(spendingModel?.data?.description as string)}
-                </div>
-              </div>
-            )}
           </div>
-
-          <div className="mb-8 w-full">
-            <div className="rounded-lg bg-white p-6 shadow-md">
-              <div className="mb-4 flex items-center justify-between">
+          <div className="mb-8 w-full flex-[0.5] rounded-lg border shadow-md transition-shadow duration-500 hover:shadow-lg">
+            <div className="p-6">
+              <div className="mb-5 flex items-center justify-between">
                 <Title level={4} className="m-0">
                   Phân bổ ngân sách
                 </Title>
@@ -401,7 +418,7 @@ const SpendingModelDetail = () => {
                     <ButtonCustom
                       onClick={() => {
                         setIsEditingAll(true);
-                        const initialPercentages = {};
+                        const initialPercentages: Record<string, number> = {};
                         spendingModel?.data?.spendingModelCategories.forEach(
                           (cat) => {
                             initialPercentages[cat.categoryId] =
@@ -418,13 +435,29 @@ const SpendingModelDetail = () => {
                 </div>
               </div>
 
-              <Progress
-                percent={totalPercentage}
-                status={getProgressStatus()}
-                strokeWidth={10}
-                className="mb-4"
-              />
-
+              <div className="flex h-3 w-full overflow-hidden rounded-lg">
+                {segments.map((segment, index) => (
+                  <Tooltip
+                    key={index}
+                    title={
+                      <div className="flex items-center gap-2">
+                        {renderIcon(segment.icon)}
+                        <span>
+                          {segment.name}: <strong>{segment.percent}%</strong>
+                        </span>
+                      </div>
+                    }
+                  >
+                    <motion.div
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${segment.percent}%` }}
+                      transition={{ duration: 0.7, ease: "easeInOut" }}
+                      style={{ backgroundColor: segment.color }}
+                      className="h-full"
+                    />
+                  </Tooltip>
+                ))}
+              </div>
               <Text type="secondary" className="mb-4 block text-sm">
                 {totalPercentage === 100
                   ? "Đã phân bổ đủ 100% ngân sách"
@@ -463,10 +496,12 @@ const SpendingModelDetail = () => {
                           max={100}
                           value={editingPercentages[category.categoryId]}
                           onChange={(value) => {
-                            setEditingPercentages({
-                              ...editingPercentages,
-                              [category.categoryId]: value,
-                            });
+                            if (value !== null) {
+                              setEditingPercentages({
+                                ...editingPercentages,
+                                [category.categoryId]: value,
+                              });
+                            }
                           }}
                           formatter={(value) => `${value}%`}
                           className="w-24"
@@ -482,9 +517,9 @@ const SpendingModelDetail = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mx-auto">
+        <div className="mx-auto mb-5 mt-16">
           <div className="mb-6 flex flex-col gap-4 rounded-lg sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center">
               <Radio.Group
@@ -587,48 +622,6 @@ const SpendingModelDetail = () => {
         <div className="srounded-lg">
           <CommonForm colSpan={24} form={state.form} fields={categoryFields} />
         </div>
-      </Modal>
-
-      <Modal
-        title={
-          <div className="flex items-center gap-2 text-lg font-bold text-primary">
-            Chỉnh sửa phân bổ cho {editingCategory?.category?.name}
-          </div>
-        }
-        open={isEditModalOpen}
-        onOk={handleEditCategory}
-        onCancel={() => {
-          setIsEditModalOpen(false);
-          setEditingCategory(null);
-        }}
-        okText="Lưu"
-        cancelText="Hủy"
-        okButtonProps={{
-          className: "bg-primary text-white hover:bg-primary/90",
-        }}
-        centered
-        maskClosable={false}
-      >
-        <Form form={editForm} layout="vertical">
-          <Form.Item
-            name="percentageAmount"
-            label="Phần trăm phân bổ"
-            rules={[{ required: true, message: "Vui lòng nhập phần trăm" }]}
-          >
-            <InputNumber
-              min={0}
-              max={100}
-              formatter={(value) => `${value}%`}
-              className="w-full"
-              addonAfter={<PercentageOutlined />}
-            />
-          </Form.Item>
-          <div className="mt-4 rounded-md bg-blue-50 p-3 text-sm text-blue-700">
-            <Text strong>
-              Tổng phân bổ sau khi thay đổi: {totalPercentage}%
-            </Text>
-          </div>
-        </Form>
       </Modal>
     </TableListLayout>
   );
