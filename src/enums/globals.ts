@@ -45,3 +45,8 @@ export enum TOAST_STATUS {
   WARNING = "warning",
   INFO = "info",
 }
+
+export enum QUIZ_ASSIGN_STATUS {
+  ACTIVE,
+  INACTIVE,
+}

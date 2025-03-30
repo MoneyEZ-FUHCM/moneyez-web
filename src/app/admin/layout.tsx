@@ -104,7 +104,7 @@ const items: MenuItem[] = [
     SIDE_BAR.POSITION_8,
     <QuestionCircleOutlined />,
     undefined,
-    PATH_NAME.MANAGE_NOTIFICATION,
+    PATH_NAME.MANAGE_QUIZ,
   ),
   getItem(
     SIDE_BAR.MANAGE_NOTIFICATION,

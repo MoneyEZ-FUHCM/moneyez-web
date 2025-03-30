@@ -78,7 +78,7 @@ const GroupList = () => {
       {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
-        width: "5%",
+        width: "6%",
         render: (record: any) => (
           <div className="flex items-center justify-center gap-2">
             <Button

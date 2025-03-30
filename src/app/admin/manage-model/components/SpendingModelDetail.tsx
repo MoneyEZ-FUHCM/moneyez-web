@@ -45,7 +45,6 @@ import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { getRandomColor } from "@/helpers/libs/utils";
 import { showToast } from "@/hooks/useShowToast";
-import { useDispatch } from "react-redux";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
 import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
@@ -91,6 +90,16 @@ const SpendingModelDetail = () => {
       setTotalPercentage(total);
     }
   }, [spendingModel?.data?.spendingModelCategories]);
+
+  useEffect(() => {
+    if (isEditingAll) {
+      const total = Object.values(editingPercentages).reduce(
+        (sum, value) => sum + (value || 0),
+        0,
+      );
+      setTotalPercentage(total);
+    }
+  }, [editingPercentages, isEditingAll]);
 
   const filteredCategories =
     spendingModel?.data?.spendingModelCategories.filter(
@@ -184,7 +193,23 @@ const SpendingModelDetail = () => {
   const colorMap: Record<string, string> = {};
   const colorMapRef = useRef<Record<string, string>>({});
 
-  const segments = useMemo(() => {
+  const budgets = useMemo(() => {
+    if (isEditingAll) {
+      return (
+        spendingModel?.data?.spendingModelCategories?.map((category) => {
+          if (!colorMapRef.current[category.category.id]) {
+            colorMapRef.current[category.category.id] = getRandomColor();
+          }
+          return {
+            color: colorMapRef.current[category.category.id],
+            percent: editingPercentages[category.categoryId] ?? 0, // Use 0 for null/undefined
+            name: category.category.name,
+            icon: category.category.icon,
+          };
+        }) || []
+      );
+    }
+
     return (
       spendingModel?.data?.spendingModelCategories?.map((category) => {
         if (!colorMapRef.current[category.category.id]) {
@@ -198,8 +223,11 @@ const SpendingModelDetail = () => {
         };
       }) || []
     );
-  }, [spendingModel?.data?.spendingModelCategories]);
-  const dispatch = useDispatch();
+  }, [
+    spendingModel?.data?.spendingModelCategories,
+    isEditingAll,
+    editingPercentages,
+  ]);
 
   const handleUpdateModel = async () => {
     try {
@@ -247,6 +275,36 @@ const SpendingModelDetail = () => {
       }
       showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
     }
+  };
+
+  const getPercentageText = (percentage: number) => {
+    if (percentage === 100) {
+      return (
+        <>
+          Đã phân bổ đủ <span className="text-green">100%</span> ngân sách
+        </>
+      );
+    }
+    if (percentage > 100) {
+      return (
+        <>
+          Đã phân bổ vượt quá <span className="text-red">100%</span>, vui lòng
+          điều chỉnh
+        </>
+      );
+    }
+    return (
+      <>
+        Còn <span className="text-red">{(100 - percentage).toFixed(1)}%</span>{" "}
+        chưa được phân bổ
+      </>
+    );
+  };
+
+  const getPercentageClass = (percentage: number) => {
+    if (percentage === 100) return "font-medium text-green";
+    if (percentage > 100) return "font-medium text-red";
+    return "font-medium text-yellow-500";
   };
 
   if (isLoading) {
@@ -359,9 +417,7 @@ const SpendingModelDetail = () => {
                     >
                       {spendingModel?.data?.name}
                     </Title>
-
                     <Divider className="my-6" />
-
                     <div className="mt-6 text-gray-600">
                       {parse(spendingModel?.data?.description ?? "")}
                     </div>
@@ -389,6 +445,12 @@ const SpendingModelDetail = () => {
                         onClick={() => {
                           setIsEditingAll(false);
                           setEditingPercentages({});
+                          const originalTotal =
+                            spendingModel?.data?.spendingModelCategories.reduce(
+                              (sum, item) => sum + item.percentageAmount,
+                              0,
+                            );
+                          setTotalPercentage(originalTotal || 0);
                         }}
                         className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
                       >
@@ -415,38 +477,35 @@ const SpendingModelDetail = () => {
                   )}
                 </div>
               </div>
-
-              <div className="flex h-3 w-full overflow-hidden rounded-lg">
-                {segments.map((segment, index) => (
+              <div className="flex h-3 w-full overflow-hidden rounded-lg bg-[#eee]">
+                {budgets?.map((budget, index) => (
                   <Tooltip
                     key={index}
                     title={
                       <div className="flex items-center gap-2">
-                        {renderIcon(segment.icon)}
+                        {renderIcon(budget?.icon)}
                         <span>
-                          {segment.name}: <strong>{segment.percent}%</strong>
+                          {budget.name}: <strong>{budget?.percent}%</strong>
                         </span>
                       </div>
                     }
                   >
                     <motion.div
                       initial={{ width: "0%" }}
-                      animate={{ width: `${segment.percent}%` }}
+                      animate={{ width: `${budget.percent}%` }}
                       transition={{ duration: 0.7, ease: "easeInOut" }}
-                      style={{ backgroundColor: segment.color }}
+                      style={{ backgroundColor: budget.color }}
                       className="h-full"
                     />
                   </Tooltip>
                 ))}
               </div>
-              <Text type="secondary" className="mb-4 block text-sm">
-                {totalPercentage === 100
-                  ? "Đã phân bổ đủ 100% ngân sách"
-                  : totalPercentage > 100
-                    ? "Đã phân bổ vượt quá 100%, vui lòng điều chỉnh"
-                    : `Còn ${(100 - totalPercentage).toFixed(1)}% chưa được phân bổ`}
+              <Text
+                type="secondary"
+                className={`mb-4 block text-sm ${getPercentageClass(totalPercentage)}`}
+              >
+                {getPercentageText(totalPercentage)}
               </Text>
-
               <div className="mt-4 space-y-2">
                 {spendingModel?.data?.spendingModelCategories.map(
                   (category) => (
@@ -475,16 +534,14 @@ const SpendingModelDetail = () => {
                         <InputNumber
                           min={0}
                           max={100}
-                          value={editingPercentages[category.categoryId]}
+                          value={editingPercentages[category.categoryId] ?? 0}
                           onChange={(value) => {
-                            if (value !== null) {
-                              setEditingPercentages({
-                                ...editingPercentages,
-                                [category.categoryId]: value,
-                              });
-                            }
+                            setEditingPercentages({
+                              ...editingPercentages,
+                              [category.categoryId]: value ?? 0,
+                            });
                           }}
-                          formatter={(value) => `${value}%`}
+                          formatter={(value) => `${value ?? 0}%`}
                           className="w-24"
                         />
                       ) : (

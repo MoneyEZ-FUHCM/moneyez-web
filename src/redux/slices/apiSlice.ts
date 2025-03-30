@@ -1,5 +1,4 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { PATH_NAME } from "@/helpers/constants/pathname";
 import {
   BaseQueryApi,
   createApi,
@@ -7,7 +6,6 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
 
 interface RefreshResultData {
   accessToken: string;
@@ -95,7 +93,14 @@ const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery,
   endpoints: () => ({}),
-  tagTypes: ["User", "SpendingModel", "Category", "SubCategory", "Group"],
+  tagTypes: [
+    "User",
+    "SpendingModel",
+    "Category",
+    "SubCategory",
+    "Group",
+    "Quiz",
+  ],
 });
 
 export default apiSlice;

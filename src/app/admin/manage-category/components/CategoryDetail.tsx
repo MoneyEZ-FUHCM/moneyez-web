@@ -61,7 +61,7 @@ const CategoryDetail = () => {
       {
         title: TITLE.CODE,
         dataIndex: "code",
-        width: "15%",
+        width: "12%",
       },
       {
         title: TITLE.ICON,
@@ -90,29 +90,30 @@ const CategoryDetail = () => {
       {
         title: TITLE.ACTION,
         key: "action",
-        width: "5%",
+        width: "6%",
         render: (_, record) => (
-          <Button
-            onClick={() =>
-              handler.handleRemoveSubcategory(
-                refetch,
-                category?.data?.id as string,
-                record.id,
-              )
-            }
-            danger
-            size="small"
-            className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-          >
-            <DeleteOutlined />
-          </Button>
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              onClick={() =>
+                handler.handleRemoveSubcategory(
+                  refetch,
+                  category?.data?.id as string,
+                  record.id,
+                )
+              }
+              danger
+              size="small"
+              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+            >
+              <DeleteOutlined />
+            </Button>
+          </div>
         ),
       },
     ],
     [category?.data?.code, handler, refetch],
   );
 
-  // Filter out already assigned subcategories
   const availableSubcategories = useMemo(() => {
     if (!allSubcategories?.items || !category?.data?.subcategories) return [];
     const assignedCodes = new Set(
@@ -163,7 +164,6 @@ const CategoryDetail = () => {
       breadcrumbItems={breadcrumbItems}
     >
       <div className="space-y-6">
-        {/* Main Category Information */}
         <div className="rounded-xl bg-white p-6">
           <h2 className="mb-4 text-lg font-semibold">
             {TITLE.MAIN_CATEGORY_INFO}
@@ -213,7 +213,6 @@ const CategoryDetail = () => {
           </Descriptions>
         </div>
 
-        {/* Subcategories Table */}
         <div className="rounded-xl bg-white p-6">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-semibold">{TITLE.SUBCATEGORIES}</h2>

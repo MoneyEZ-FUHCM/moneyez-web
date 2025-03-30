@@ -9,11 +9,11 @@ const PATH_NAME = {
   MANAGE_SUB_CATEGORY: "/admin/manage-sub-category",
   MANAGE_NOTIFICATION: "/admin/manage-notification",
   MANAGE_GROUP: "/admin/manage-group",
+  MANAGE_QUIZ: "/admin/manage-quiz",
 
   //USER
   USER: "/user",
   CHART: "/user/chart",
-
 
   ACCEPT_INIVITATION: "/accept-invitation",
   NOT_FOUND: "/notfound",
