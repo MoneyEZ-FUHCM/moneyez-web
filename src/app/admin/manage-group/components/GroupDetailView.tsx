@@ -40,8 +40,8 @@ const GroupDetailView: React.FC = () => {
                 className="transition-transform duration-300 hover:scale-105"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-100 via-blue-50 to-gray-100">
-                <span className="text-5xl font-bold text-blue-500">
+              <div className="flex h-full w-full items-center justify-center bg-primary">
+                <span className="text-8xl font-medium uppercase text-white">
                   {groupDetail?.name.charAt(0)}
                 </span>
               </div>

@@ -20,7 +20,7 @@ const UserList = () => {
         title: state.TITLE.INDEX,
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
-        render: (_: any, _record: any, index: number) => 
+        render: (_: any, _record: any, index: number) =>
           (state.pageIndex - 1) * state.pageSize + index + 1,
       },
       {
@@ -32,15 +32,23 @@ const UserList = () => {
         title: state.TITLE.AVATAR,
         dataIndex: state.FORM_NAME.AVATAR,
         width: "10%",
-        render: (avatar: string) => (
-          <Image
-            src={avatar || Avatar}
-            alt="error"
-            width={50}
-            height={50}
-            className="rounded-[100%]"
-          />
-        ),
+        render: (avatar: string, record: any) =>
+          avatar ? (
+            <Image
+              src={avatar}
+              alt={record?.fullName}
+              width={50}
+              height={50}
+              objectFit="cover"
+              className="h-12 w-12 rounded-[100%] transition-transform duration-300 hover:scale-105"
+            />
+          ) : (
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
+              <span className="text-2xl font-medium uppercase text-white">
+                {record?.fullName?.charAt(0)}
+              </span>
+            </div>
+          ),
       },
       {
         title: state.TITLE.FULLNAME,
