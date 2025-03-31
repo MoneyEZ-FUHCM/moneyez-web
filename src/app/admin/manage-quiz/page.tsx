@@ -27,18 +27,24 @@ import {
 import { Badge, Button, Divider, Popconfirm } from "antd";
 import { useState } from "react";
 
+interface AnswerOption {
+  content: string;
+  type: string;
+}
+
+interface Question {
+  content: string;
+  answerOptions: AnswerOption[];
+}
+
 interface Quiz {
   title: string;
   description: string;
   status: number;
-  questions: {
-    content: string;
-    answerOptions: { content: string; type: string }[];
-  }[];
-  createdAt: Date;
+  questions: Question[];
 }
 
-const Card = ({ children, title, extra, className = "" }) => (
+const Card = ({ children, title, extra, className = "" }: any) => (
   <div
     className={`overflow-hidden rounded-lg border border-gray-200 shadow-sm transition-all hover:shadow-md ${className}`}
   >
@@ -54,7 +60,7 @@ const Card = ({ children, title, extra, className = "" }) => (
   </div>
 );
 
-const BadgeCustom = ({ count, className = "" }) => {
+const BadgeCustom = ({ count, className = "" }: any) => {
   return (
     <span
       className={`inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-primary px-2 py-0.5 text-xs font-medium text-white ${className}`}
@@ -64,30 +70,11 @@ const BadgeCustom = ({ count, className = "" }) => {
   );
 };
 
-// Icons
-const PlusIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="12" y1="5" x2="12" y2="19"></line>
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-  </svg>
-);
-
-// Main Component
 const QuizCreator = () => {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [quiz, setQuiz] = useState({
+  const [quiz, setQuiz] = useState<Quiz>({
     title: "",
     description: "",
     status: 0,
@@ -107,19 +94,19 @@ const QuizCreator = () => {
     PageSize: 100,
   });
 
-  const handleQuizChange = (e) => {
+  const handleQuizChange = (e: any) => {
     const { name, value } = e.target;
     setQuiz((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleQuestionChange = (e) => {
+  const handleQuestionChange = (e: any) => {
     setCurrentQuestion((prev) => ({
       ...prev,
       content: e.target.value,
     }));
   };
 
-  const handleAnswerChange = (index, e) => {
+  const handleAnswerChange = (index: any, e: any) => {
     const newAnswers = [...currentQuestion.answerOptions];
     newAnswers[index].content = e.target.value;
     setCurrentQuestion((prev) => ({
@@ -135,8 +122,8 @@ const QuizCreator = () => {
     }));
   };
 
-  const removeAnswer = (index) => {
-    if (currentQuestion.answerOptions.length <= 2) return; // Minimum 2 options
+  const removeAnswer = (index: any) => {
+    if (currentQuestion.answerOptions.length <= 2) return;
 
     const newAnswers = [...currentQuestion.answerOptions];
     newAnswers.splice(index, 1);
@@ -153,24 +140,22 @@ const QuizCreator = () => {
       return;
     }
 
-    // Check if all answers have content
     const allAnswersHaveContent = currentQuestion.answerOptions.every(
       (option) => option.content.trim(),
     );
     if (!allAnswersHaveContent) {
       showToast(
         TOAST_STATUS.INFO,
-        "Vui lòng nhập nội dung cho tất cả các câu hỏi",
+        "Vui lòng nhập nội dung cho tất cả các đáp án",
       );
       return;
     }
 
-    setQuiz((prev) => ({
+    setQuiz((prev: any) => ({
       ...prev,
       questions: [...prev.questions, currentQuestion],
     }));
 
-    // Reset current question
     setCurrentQuestion({
       content: "",
       answerOptions: [
@@ -182,7 +167,7 @@ const QuizCreator = () => {
     showToast(TOAST_STATUS.SUCCESS, "Đã thêm câu hỏi vào bộ câu hỏi");
   };
 
-  const removeQuestion = (index) => {
+  const removeQuestion = (index: any) => {
     const newQuestions = [...quiz.questions];
     newQuestions.splice(index, 1);
     setQuiz((prev) => ({
@@ -230,13 +215,13 @@ const QuizCreator = () => {
     showToast(TOAST_STATUS.SUCCESS, "Đã cập nhật bộ câu hỏi thành công");
   };
 
-  const toggleActive = async (quizId) => {
+  const toggleActive = async (quizId: string) => {
     if (quizId !== selectedQuiz) {
       showToast(TOAST_STATUS.INFO, "Vui lòng chọn bộ câu hỏi trước khi active");
       return;
     }
 
-    const targetQuiz = quizList?.data?.find((q) => q.id === quizId);
+    const targetQuiz = quizList?.data?.find((q: any) => q.id === quizId);
     if (targetQuiz?.status === QUIZ_ASSIGN_STATUS.ACTIVE) {
       showToast(TOAST_STATUS.INFO, "bộ câu hỏi này đã được active");
       return;
@@ -266,7 +251,6 @@ const QuizCreator = () => {
       return;
     }
 
-    // Create new quiz with unique ID
     const newQuiz = {
       ...quiz,
     };
@@ -282,7 +266,6 @@ const QuizCreator = () => {
       return;
     }
 
-    // Reset form
     setQuiz({
       title: "",
       description: "",
@@ -296,8 +279,8 @@ const QuizCreator = () => {
     showToast(TOAST_STATUS.SUCCESS, "Đã lưu bộ câu hỏi thành công");
   };
 
-  const selectQuiz = (id) => {
-    const found = quizList?.data?.find((q) => q.id === id);
+  const selectQuiz = (id: any) => {
+    const found = quizList?.data?.find((q: any) => q.id === id);
 
     if (found) {
       setSelectedQuiz(id);
@@ -311,14 +294,7 @@ const QuizCreator = () => {
     }
   };
 
-  // Handle quiz deletion
-  const handleDeleteQuiz = async (id, e) => {
-    // Stop event propagation to prevent selection of the quiz
-    e.stopPropagation();
-
-    // Here you would typically call your delete API
-    // For now, we'll just log the ID
-    console.log("Deleting quiz with ID:", id);
+  const handleDeleteQuiz = async (id: any, e: any) => {
     try {
       await deleteQuizList(id).unwrap();
       showToast(TOAST_STATUS.SUCCESS, `Đã xóa bộ câu hỏi với ID: ${id}`);
@@ -327,7 +303,6 @@ const QuizCreator = () => {
       return;
     }
 
-    // If the deleted quiz is currently selected, reset the form
     if (selectedQuiz === id) {
       setSelectedQuiz(null);
       setIsEditing(false);
@@ -342,7 +317,6 @@ const QuizCreator = () => {
 
   return (
     <div className="flex h-full">
-      {/* Left Panel - Quiz List */}
       <div className="h-[82vh] w-2/5 overflow-hidden border-r border-[#E1EACD] bg-white shadow-sm">
         <div className="flex h-full flex-col">
           <div className="sticky top-0 z-10 mb-6 flex items-center justify-between bg-white p-4 pb-4">
@@ -378,10 +352,9 @@ const QuizCreator = () => {
               </ButtonCustom>
             </div>
           </div>
-
           <div className="scrollbar-thin flex-1 overflow-y-auto px-4 pb-4">
             <div className="space-y-4">
-              {quizList?.data?.map((q) =>
+              {quizList?.data?.map((q: any) =>
                 q?.status === QUIZ_ASSIGN_STATUS.ACTIVE ? (
                   <Badge.Ribbon key={q.id} text="Đã áp dụng" color="#609084">
                     <div
@@ -408,8 +381,6 @@ const QuizCreator = () => {
                           onClick={(e) => e.stopPropagation()}
                         />
                       </Popconfirm>
-
-                      {/* Quiz Content - Wrapped in a div to handle click event */}
                       <div onClick={() => selectQuiz(q.id)}>
                         <div className="mb-3 flex items-center justify-between">
                           <h3
@@ -418,17 +389,14 @@ const QuizCreator = () => {
                             {q?.title}
                           </h3>
                         </div>
-
                         <p className="mb-3 line-clamp-2 text-sm text-gray-600">
                           {q?.description}
                         </p>
-
                         <div className="mt-4 flex items-center justify-between border-t border-[#EBEFD6] pt-3">
                           <p className="flex items-center text-xs font-medium text-gray-500">
                             <CalendarOutlined className="mr-2" />
                             {new Date(q?.createdAt).toLocaleDateString()}
                           </p>
-
                           <div className="flex items-center gap-1 rounded-full bg-secondary/30 px-3 py-1 text-xs font-medium text-primary">
                             <SolutionOutlined />
                             {q?.questions?.length} câu hỏi
@@ -446,7 +414,6 @@ const QuizCreator = () => {
                         : "border-gray-200 bg-white"
                     }`}
                   >
-                    {/* Delete Button */}
                     <Popconfirm
                       title="Xóa bộ câu hỏi"
                       description="Bạn có chắc chắn muốn xóa bộ câu hỏi này?"
@@ -463,8 +430,6 @@ const QuizCreator = () => {
                         onClick={(e) => e.stopPropagation()}
                       />
                     </Popconfirm>
-
-                    {/* Quiz Content - Wrapped in a div to handle click event */}
                     <div onClick={() => selectQuiz(q.id)}>
                       <div className="mb-3 flex items-center justify-between">
                         <h3
@@ -498,10 +463,8 @@ const QuizCreator = () => {
         </div>
       </div>
 
-      {/* Right Panel - Quiz Editor */}
       <div className="h-[82vh] w-3/5 overflow-y-auto bg-light/50 p-6">
         <div className="mx-auto max-w-3xl space-y-6">
-          {/* Quiz Details */}
           <Card
             className="bg-white"
             title={
@@ -541,7 +504,6 @@ const QuizCreator = () => {
             </div>
           </Card>
 
-          {/* Existing Questions */}
           {quiz.questions.length > 0 && (
             <Card
               className="bg-white"
@@ -589,17 +551,19 @@ const QuizCreator = () => {
                     </p>
                     <Divider className="my-4" />
                     <div className="grid grid-cols-2 gap-3">
-                      {question.answerOptions.map((option, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center rounded-lg bg-secondary/30 p-3 text-base text-gray-700 transition-colors"
-                        >
-                          <span className="mr-3 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white font-medium text-gray-700 shadow-sm">
-                            {String.fromCharCode(65 + index)}
-                          </span>
-                          <span>{option.content}</span>
-                        </div>
-                      ))}
+                      {question?.answerOptions.map(
+                        (option: any, index: any) => (
+                          <div
+                            key={index}
+                            className="flex items-center rounded-lg bg-secondary/30 p-3 text-base text-gray-700 transition-colors"
+                          >
+                            <span className="mr-3 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white font-medium text-gray-700 shadow-sm">
+                              {String.fromCharCode(65 + index)}
+                            </span>
+                            <span>{option.content}</span>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </Card>
                 ))}
@@ -650,7 +614,7 @@ const QuizCreator = () => {
                       <InputCustom
                         value={option.content}
                         onChange={(e) => handleAnswerChange(index, e)}
-                        placeholder={`Nhập lựa chọn ${index + 1}`}
+                        placeholder={`Nhập đáp án ${index + 1}`}
                         className="w-full rounded-lg border-gray-300 px-4 py-2 shadow-sm focus:border-primary focus:ring-primary"
                       />
                     </div>
@@ -659,7 +623,7 @@ const QuizCreator = () => {
                       onClick={() => removeAnswer(index)}
                       type="text"
                       disabled={currentQuestion.answerOptions.length <= 2}
-                      className="flex h-8 w-8 items-center justify-center rounded-full !border-none !bg-transparent"
+                      className="flex h-8 w-8 items-center justify-center rounded-full !border-none !bg-transparent hover:!bg-red"
                       icon={<CloseOutlined className="text-red" />}
                     />
                   </div>
@@ -670,7 +634,7 @@ const QuizCreator = () => {
                 <Button
                   type="dashed"
                   onClick={addAnswer}
-                  icon={<PlusIcon />}
+                  icon={<PlusCircleOutlined />}
                   className="flex items-center border-primary text-primary hover:border-[#4d766d] hover:text-[#4d766d]"
                 >
                   Thêm lựa chọn
@@ -681,7 +645,7 @@ const QuizCreator = () => {
                   disabled={!currentQuestion.content.trim()}
                   className="flex items-center gap-x-2 rounded-lg bg-primary px-4 py-2 text-white hover:bg-[#4d766d] disabled:bg-gray-300"
                 >
-                  <PlusIcon />
+                  <PlusCircleOutlined />
                   <span>Thêm câu hỏi</span>
                 </ButtonCustom>
               </div>
