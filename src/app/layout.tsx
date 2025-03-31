@@ -1,5 +1,4 @@
 import { LoadingWrapper, NextProgressBar, ProgressBar } from "@/components";
-import NavbarWrapper from "@/components/NavbarWrapper";
 import { Providers } from "@/redux/provider";
 import { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
@@ -26,13 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
       </head>
       <body className={`${robotoSlab.variable}`}>
         <Providers>
           <LoadingWrapper>
             <NextProgressBar />
-            <NavbarWrapper>{children}</NavbarWrapper>
+            {children}
             <ProgressBar />
             <Toaster position="top-right" richColors />
           </LoadingWrapper>

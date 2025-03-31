@@ -7,10 +7,10 @@ import MobileFull from "@/assets/images/mobile-full.png";
 import Image from "next/image";
 
 const features = [
-  { id: 1, src: Contact, label: "Hỗ trợ tận tình" },
+  { id: 1, src: Contact, label: "Quản lí mô hình chi tiêu" },
   { id: 2, src: Secure, label: "Quản lý chi tiêu" },
   { id: 3, src: Price, label: "Trợ lý AI" },
-  { id: 4, src: Statistic, label: "Thống kê" },
+  { id: 4, src: Statistic, label: "Thống kê định kì" },
 ];
 
 const Functions = () => {

@@ -23,6 +23,7 @@ const VALID_PATHS = new Set([
   "/admin/manage-notification",
   "/admin/manage-group",
   "/user/chart",
+  "/admin/manage-quiz",
 ]);
 
 const ADMIN_PATHS = new Set([
@@ -34,6 +35,7 @@ const ADMIN_PATHS = new Set([
   "/admin/manage-sub-category",
   "/admin/manage-notification",
   "/admin/manage-group",
+  "/admin/manage-quiz",
 ]);
 
 const USER_PATHS = new Set(["/user", "/user/chart"]);
@@ -58,7 +60,7 @@ export function LoadingWrapper({
         pathname.startsWith(PATH_NAME.USER) ||
         pathname.startsWith(PATH_NAME.ADMIN)
       ) {
-        router.replace(PATH_NAME.NOT_FOUND);
+        router.replace(PATH_NAME.AUTH);
       }
       return;
     }
@@ -76,11 +78,11 @@ export function LoadingWrapper({
 
     if (role === VALID_ROLE.ADMIN) {
       if (!(ADMIN_PATHS.has(pathname) || ADMIN_DYNAMIC_PATHS.test(pathname))) {
-        router.replace(PATH_NAME.NOT_FOUND);
+        router.replace(PATH_NAME.STATISTIC);
       }
     } else if (role === VALID_ROLE.USER) {
       if (!USER_PATHS.has(pathname)) {
-        router.replace(PATH_NAME.NOT_FOUND);
+        router.replace(PATH_NAME.USER);
       }
     }
   }, [token, pathname, loading, userInfo]);

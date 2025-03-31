@@ -11,6 +11,7 @@ import {
   FileMarkdownOutlined,
   FilePptOutlined,
   PieChartOutlined,
+  QuestionCircleOutlined,
   UsergroupAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -96,6 +97,14 @@ const items: MenuItem[] = [
     <UsergroupAddOutlined />,
     undefined,
     PATH_NAME.MANAGE_GROUP,
+  ),
+
+  getItem(
+    SIDE_BAR.MANAGE_QUIZ,
+    SIDE_BAR.POSITION_8,
+    <QuestionCircleOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_QUIZ,
   ),
   getItem(
     SIDE_BAR.MANAGE_NOTIFICATION,
@@ -195,7 +204,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   {userInfo?.fullName ? userInfo.fullName : TITLE.NAME}
                 </strong>
                 <button
-                  className="cursor-pointer font-semibold text-[#5099ff] hover:underline"
+                  className="cursor-pointer text-left font-semibold text-[#5099ff] hover:underline"
                   onClick={logout}
                 >
                   {BUTTON.LOGOUT}

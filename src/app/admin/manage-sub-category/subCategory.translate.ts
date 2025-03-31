@@ -43,11 +43,13 @@ export const TEXT_TRANSLATE = {
     CREATED_BY: "Người tạo",
     MAIN_CATEGORY_INFO: "Thông tin danh mục chính",
     SUBCATEGORIES: "Danh sách danh mục phụ",
+    ADD_SUB_CATEGORY: "Thêm danh mục phụ",
+    UPDATE_SUB_CATEGORY: "Cập nhật danh mục phụ",
   },
   BUTTON: {
-    ADD_CATEGORY: "Thêm danh mục",
+    ADD_SUB_CATEGORY: "Thêm danh mục",
+    UPDATE_SUB_CATEGORY: "Cập nhật danh mục phụ",
     SAVE: "Lưu",
     CANCEL: "Hủy",
-    ADD_SUB_CATEGORY: "Thêm danh mục phụ",
   },
 };

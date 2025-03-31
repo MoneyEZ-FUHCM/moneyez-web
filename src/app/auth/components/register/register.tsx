@@ -181,9 +181,6 @@ const RegisterForm = (props: IRegisterProps) => {
                   placeholder={LABEL.PASSWORD}
                   type="password"
                   className="hover:border-primary focus:border-primary"
-                  onPaste={(e) => {
-                    e.preventDefault();
-                  }}
                   onKeyPress={(e) => {
                     if (e.code === "Space") {
                       e.preventDefault();

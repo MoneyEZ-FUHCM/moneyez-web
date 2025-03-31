@@ -9,6 +9,7 @@ import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagem
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { AddSpendingModelModal } from "./AddSpendingModelModal";
 import { useRouter } from "next/navigation";
+import parse from "html-react-parser";
 
 const SpendingModelList = () => {
   const { state, handler } = useSpendingModelManagementPage();
@@ -32,6 +33,7 @@ const SpendingModelList = () => {
         title: state.TITLE.DESCRIPTION,
         dataIndex: state.FORM_NAME.DESCRIPTION,
         width: "34%",
+        render: (description: string) => parse(description),
       },
       {
         title: state.TITLE.TYPE,
@@ -62,12 +64,6 @@ const SpendingModelList = () => {
               onClick={() => handler.handleViewDetail(record)}
             >
               <EyeOutlined color="blue" className="text-primary" />
-            </Button>
-            <Button
-              size="small"
-              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-            >
-              <EditOutlined color="blue" className="text-primary" />
             </Button>
             <Button
               onClick={() => handler.handleDeleteModel(record.id)}

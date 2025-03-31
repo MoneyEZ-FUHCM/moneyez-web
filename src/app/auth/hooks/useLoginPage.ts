@@ -58,19 +58,21 @@ const useLoginPage = (form: FormInstance) => {
             decoded[
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
-          if (role !== VALID_ROLE.USER) {
-            router.replace(PATH_NAME.STATISTIC);
-            return;
-          } else {
-            if (rememberMe) {
-              const encryptedEmail = encryptData(values.email, secretKey);
-              const encryptedPassword = encryptData(values.password, secretKey);
-              Cookies.set("email", encryptedEmail);
-              Cookies.set("password", encryptedPassword);
-            }
-            router.replace(PATH_NAME.CHART);
-            showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
+
+          if (rememberMe) {
+            const encryptedEmail = encryptData(values.email, secretKey);
+            const encryptedPassword = encryptData(values.password, secretKey);
+            Cookies.set("email", encryptedEmail);
+            Cookies.set("password", encryptedPassword);
           }
+
+          if (role === VALID_ROLE.USER) {
+            router.replace(PATH_NAME.CHART);
+          } else {
+            router.replace(PATH_NAME.STATISTIC);
+          }
+
+          showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
         }
       }
     } catch (err: any) {

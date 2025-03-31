@@ -1,20 +1,28 @@
 "use client";
 
 import { CommonForm } from "@/components/common/table/CommonForm";
-import { MailOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  BorderlessTableOutlined,
+  QrcodeOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
 import { Input, Modal } from "antd";
-import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
+import { useSubCategoryManagementPage } from "../hooks/useSubCategoryManagementPage";
+import { TEXT_TRANSLATE } from "../subCategory.translate";
 
-const AddCategoryModal = () => {
+const FunctionSubCategoryModal = () => {
   const { TextArea } = Input;
+  const { handler, state } = useSubCategoryManagementPage();
 
-  const { handler, state } = useCategoryManagementPage();
-  const categoryFields = [
+  const subCategoryFields = [
     {
       name: state.FORM_NAME.NAME,
       label: state.TITLE.NAME,
       component: (
-        <Input prefix={<MailOutlined />} placeholder={state.TITLE.NAME} />
+        <Input
+          prefix={<UnorderedListOutlined />}
+          placeholder={state.TITLE.NAME}
+        />
       ),
       rules: [
         { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
@@ -24,7 +32,7 @@ const AddCategoryModal = () => {
       name: state.FORM_NAME.CODE,
       label: state.TITLE.CODE,
       component: (
-        <Input prefix={<UserOutlined />} placeholder={state.TITLE.CODE} />
+        <Input prefix={<QrcodeOutlined />} placeholder={state.TITLE.CODE} />
       ),
       rules: [
         { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
@@ -34,7 +42,10 @@ const AddCategoryModal = () => {
       name: state.FORM_NAME.ICON,
       label: state.TITLE.ICON,
       component: (
-        <Input prefix={<UserOutlined />} placeholder={state.TITLE.ICON} />
+        <Input
+          prefix={<BorderlessTableOutlined />}
+          placeholder={state.TITLE.ICON}
+        />
       ),
       rules: [
         { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
@@ -58,18 +69,29 @@ const AddCategoryModal = () => {
 
   return (
     <Modal
-      title={<p className="text-lg font-bold text-primary">Thêm danh mục</p>}
+      title={
+        <p className="text-lg font-bold text-primary">
+          {state.subCategory
+            ? TEXT_TRANSLATE.TITLE.UPDATE_SUB_CATEGORY
+            : TEXT_TRANSLATE.TITLE.ADD_SUB_CATEGORY}
+        </p>
+      }
       open={state.isOpen}
-      onOk={handler.handleAddCategory}
+      onOk={handler.handleSubmitForm}
       onCancel={handler.handleCancel}
-      okText={state.BUTTON.ADD_CATEGORY}
+      okText={
+        state.subCategory
+          ? TEXT_TRANSLATE.BUTTON.UPDATE_SUB_CATEGORY
+          : TEXT_TRANSLATE.BUTTON.ADD_SUB_CATEGORY
+      }
       cancelText={state.BUTTON.CANCEL}
-      confirmLoading={state.isCreatingCategory}
+      confirmLoading={state.isSubmitting}
       okButtonProps={{ className: "custom-ok-button" }}
+      destroyOnClose
     >
-      <CommonForm colSpan={24} form={state.form} fields={categoryFields} />
+      <CommonForm colSpan={24} form={state.form} fields={subCategoryFields} />
     </Modal>
   );
 };
 
-export { AddCategoryModal };
+export { FunctionSubCategoryModal };

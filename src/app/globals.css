@@ -143,6 +143,39 @@ body {
 }
 
 /* antd */
+
+.custom-antd-footer .ant-modal-footer {
+  margin-top: 50px !important;
+}
+
+.custom-antd-footer .radio-group-custom .ant-radio-button-wrapper {
+  background-color: #f3f4f6 !important;
+  color: #333 !important;
+  transition: background 0.3s ease-in-out !important;
+}
+
+.radio-group-custom
+  .ant-radio-button-wrapper:hover:not(
+    .radio-group-custom .ant-radio-button-wrapper-checked
+  ) {
+  background-color: #e5e7eb !important;
+  color: #333 !important;
+}
+
+.radio-group-custom .ant-radio-button-wrapper-checked {
+  background-color: var(--c-primary) !important;
+  color: white !important;
+  border-color: var(--c-primary) !important;
+}
+
+:where(
+    .css-dev-only-do-not-override-7ny38l
+  ).ant-radio-button-wrapper-checked:not(
+    .ant-radio-button-wrapper-disabled
+  )::before {
+  background-color: transparent !important;
+}
+
 .ant-upload-list-item-thumbnail > img {
   object-fit: cover !important;
 }

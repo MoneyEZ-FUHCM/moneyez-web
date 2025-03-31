@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 
-const CountupCustom = ({ value }: { value: number }) => {
+const CountupCustom = ({
+  value,
+  className = "text-center",
+}: {
+  value: number;
+  className?: string;
+}) => {
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.5,
@@ -16,7 +22,7 @@ const CountupCustom = ({ value }: { value: number }) => {
   }, [inView]);
 
   return (
-    <div ref={ref} className="text-center font-bold">
+    <div ref={ref} className={`${className} font-bold`}>
       {startCount && <CountUp start={0} end={value} duration={3} />}
     </div>
   );
