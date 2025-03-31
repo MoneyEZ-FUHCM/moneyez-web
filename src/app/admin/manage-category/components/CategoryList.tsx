@@ -1,19 +1,24 @@
 "use client";
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
+import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/utils";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  BarsOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
-import { AddCategoryModal } from "./AddCategoryModal";
-import { renderIcon } from "@/components/common/IconRender";
+import { FunctionCategoryModal } from "./FunctionCategoryModal";
 
 const CategoryList = () => {
   const router = useRouter();
-  const { state, handler } = useCategoryManagementPage();  
+  const { state, handler } = useCategoryManagementPage();
 
   const columns = useMemo(
     () => [
@@ -21,7 +26,7 @@ const CategoryList = () => {
         title: state.TITLE.INDEX,
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
-        render: (_: any, _record: any, index: number) => 
+        render: (_: any, _record: any, index: number) =>
           (state.pageIndex - 1) * state.pageSize + index + 1,
         width: "2%",
       },
@@ -35,9 +40,7 @@ const CategoryList = () => {
         dataIndex: state.FORM_NAME.ICON,
         width: "15%",
         render: (icon: string) => (
-          <div className="text-primary">
-            {renderIcon(icon)}
-          </div>
+          <div className="text-primary">{renderIcon(icon)}</div>
         ),
       },
       {
@@ -45,8 +48,8 @@ const CategoryList = () => {
         dataIndex: state.FORM_NAME.TYPE,
         width: "10%",
         render: (type: string) => (
-          <Tag color={type === 'INCOME' ? 'green' : 'red'}>
-            {type === 'INCOME' ? 'Thu nhập' : 'Chi tiêu'}
+          <Tag color={type === "INCOME" ? "green" : "red"}>
+            {type === "INCOME" ? "Thu nhập" : "Chi tiêu"}
           </Tag>
         ),
       },
@@ -83,6 +86,7 @@ const CategoryList = () => {
             <Button
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
+              onClick={() => handler.handleOpenModalEdit(record)}
             >
               <EditOutlined color="blue" className="text-primary" />
             </Button>
@@ -122,7 +126,7 @@ const CategoryList = () => {
         loading={state.isLoadingCategoryList}
         rowKey={(record: { id: number }) => record.id}
       />
-      <AddCategoryModal />
+      <FunctionCategoryModal />
     </TableListLayout>
   );
 };

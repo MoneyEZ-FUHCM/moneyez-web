@@ -2,6 +2,7 @@ export const MANAGE_CATEGORY_CONSTANT = {
   ERROR_CODE: {
     CATEGORY_NOT_EXIST: "CategoryNotFound",
     CATEGORY_ALREADY_EXISTS: "CategoryAlreadyExists",
+    CATEGORY_HAS_DEPENDENCIES: "CategoryHasDependencies",
   },
   FORM_NAME: {
     INDEX: "index",

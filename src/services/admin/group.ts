@@ -29,6 +29,12 @@ const groupManagementApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Group"],
     }),
+    getGroupDetail: builder.query({
+      query: ({ id }) => ({
+        url: `/groups/${id}`,
+        method: HTTP_METHOD.GET,
+      }),
+    }),
   }),
 });
 
@@ -36,6 +42,7 @@ export const {
   useGetGroupListQuery,
   useCreateGroupMutation,
   useDeleteGroupMutation,
+  useGetGroupDetailQuery,
 } = groupManagementApi;
 
 export default groupManagementApi;

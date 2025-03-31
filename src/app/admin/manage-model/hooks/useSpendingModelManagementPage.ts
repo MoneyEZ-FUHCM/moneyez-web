@@ -1,7 +1,7 @@
 import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
-import { setIsOpen } from "@/redux/slices/modalSlice";
+import { setIsOpen, setPlainText } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
 import {
   useAddCategoryModalToSpendingModelMutation,
@@ -39,6 +39,7 @@ const useSpendingModelManagementPage = () => {
     PageIndex: pageIndex,
     PageSize: pageSize,
   });
+  const plainText = useSelector((state: RootState) => state.modal.plainText);
 
   const { SYSTEM_ERROR, CONDITION } = COMMON_CONSTANT;
   const { ERROR_CODE, FORM_NAME } = MANAGE_MODEL_CONSTANT;
@@ -51,11 +52,16 @@ const useSpendingModelManagementPage = () => {
     try {
       const values = await form.validateFields();
       const updateValue = [{ ...values, isTemplate: CONDITION.TRUE }];
+      if (!plainText.trim()) {
+        showToast(TOAST_STATUS.INFO, "Vui lòng nhập mô tả");
+        return;
+      }
       try {
         await createModel(updateValue).unwrap();
         showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         form.resetFields();
         dispatch(setIsOpen(false));
+        dispatch(setPlainText(""));
       } catch (err: any) {
         showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         dispatch(setIsOpen(true));
@@ -103,6 +109,13 @@ const useSpendingModelManagementPage = () => {
             );
             return;
           }
+          if (error?.errorCode === ERROR_CODE.MODEL_HAS_DEPENDENCIES) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              "Mô hình đang được sử dụng. Không thể xóa ở thời điểm hiện tại",
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },
@@ -147,39 +160,42 @@ const useSpendingModelManagementPage = () => {
     }
   };
 
-  const handleRemoveSpendingModelCategory = useCallback(async (
-    modelId: string,
-    categoryId: string,
-    refetch: () => void
-  ) => {
-    confirm({
-      title: TITLE.TITLE,
-      content: TITLE.CONTENT,
-      okText: TITLE.OK_TEXT,
-      okType: "danger",
-      cancelText: TITLE.CANCEL_TEXT,
-      onOk: async () => {
-        try {
-          const requestData = {
-            spendingModelId: modelId,
-            categoryIds: [categoryId],
-          };
-          await removecategoryFromSpendingModel(requestData).unwrap();
-          refetch()
-          showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
-        } catch (err: any) {
-          const error = err?.data;
-          if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
-            showToast(
-              TOAST_STATUS.ERROR,
-              TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_NOT_EXISTS,
-            );
-            return;
+  const handleRemoveSpendingModelCategory = useCallback(
+    async (modelId: string, categoryId: string, refetch: () => void) => {
+      confirm({
+        title: TITLE.TITLE,
+        content: TITLE.CONTENT,
+        okText: TITLE.OK_TEXT,
+        okType: "danger",
+        cancelText: TITLE.CANCEL_TEXT,
+        onOk: async () => {
+          try {
+            const requestData = {
+              spendingModelId: modelId,
+              categoryIds: [categoryId],
+            };
+            await removecategoryFromSpendingModel(requestData).unwrap();
+            refetch();
+            showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
+          } catch (err: any) {
+            const error = err?.data;
+            if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
+              showToast(
+                TOAST_STATUS.ERROR,
+                TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_NOT_EXISTS,
+              );
+              return;
+            }
+            showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
           }
-          showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
-        }
-      },
-    });
+        },
+      });
+    },
+    [],
+  );
+
+  const handleViewDetailCategory = useCallback((record: string) => {
+    router.push(`/admin/manage-category/${record}`);
   }, []);
 
   return {
@@ -208,9 +224,10 @@ const useSpendingModelManagementPage = () => {
       handleAddModelCategory,
       setSelectedType,
       handleRemoveSpendingModelCategory,
+      handleViewDetailCategory,
+      dispatch,
     },
   };
 };
 
 export { useSpendingModelManagementPage };
-

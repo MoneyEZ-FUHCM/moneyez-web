@@ -8,6 +8,15 @@ export enum VALID_ROLE_REQUEST {
   USER,
 }
 
+export enum CATEGORY_TYPE {
+  INCOME,
+  EXPENSE,
+}
+export enum CATEGORY_TYPE_TEXT {
+  INCOME = "INCOME",
+  EXPENSE = "EXPENSE",
+}
+
 export enum GENDER {
   MALE,
   FEMALE,
@@ -35,4 +44,9 @@ export enum TOAST_STATUS {
   ERROR = "error",
   WARNING = "warning",
   INFO = "info",
+}
+
+export enum QUIZ_ASSIGN_STATUS {
+  ACTIVE,
+  INACTIVE,
 }

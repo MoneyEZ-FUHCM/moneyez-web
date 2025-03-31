@@ -3,33 +3,32 @@ import Price from "@/assets/images/icons/price.png";
 import Secure from "@/assets/images/icons/secure.png";
 import Star from "@/assets/images/icons/star.png";
 import Statistic from "@/assets/images/icons/statistic.png";
-import { Button } from "antd";
 import Image from "next/image";
 
 const reasons = [
   {
     icon: Secure,
-    title: "Giao dịch nhanh chóng và an toàn",
+    title: "Bảo mật thông tin chi tiêu",
     description:
-      "Tận hưởng quản lý chi tiêu an toàn và tức thời mọi lúc, mọi nơi. EzMoney mang đến cho bạn sự an tâm.",
+      "Dữ liệu chi tiêu của bạn luôn được bảo vệ an toàn với công nghệ bảo mật tiên tiến.",
   },
   {
     icon: Contact,
-    title: "Hỗ trợ tận tình 24/7",
+    title: "Hỗ trợ thông minh 24/7",
     description:
-      "Đội ngũ của chúng tôi luôn sẵn sàng hỗ trợ bạn bất cứ lúc nào. Nếu bạn có thắc mắc hoặc vấn đề, đừng ngần ngại liên hệ với chúng tôi.",
+      "Giải đáp thắc mắc nhanh chóng với chatbot tích hợp, hỗ trợ bạn quản lý chi tiêu hiệu quả hơn.",
   },
   {
     icon: Price,
-    title: "Khuyến mãi và giảm giá gói VIP độc quyền",
+    title: "Lập ngân sách dễ dàng",
     description:
-      "Khuyến mãi gói VIP độc quyền, nhiều tính năng, tận hưởng lợi ích trong tài khoản của bạn.",
+      "Theo dõi chi tiêu, đặt hạn mức ngân sách và nhận gợi ý tiết kiệm thông minh giúp bạn kiểm soát tài chính cá nhân tốt hơn.",
   },
   {
     icon: Statistic,
-    title: "Quản lý tài chính dễ dàng",
+    title: "Thống kê chi tiêu trực quan",
     description:
-      "Quản lý tài chính, theo dõi chi phí, lập ngân sách và đầu tư dễ dàng bằng ứng dụng ví điện tử của chúng tôi.",
+      "Xem báo cáo chi tiêu theo danh mục, biểu đồ minh họa giúp bạn hiểu rõ thói quen tiêu dùng của mình.",
   },
 ];
 
@@ -42,9 +41,6 @@ const Reasons = () => {
           <p className="text-sm font-semibold text-[#fca61b]">
             Lợi ích tuyệt vời
           </p>
-          <Button
-          onClick={() => window.open("http://localhost:3000/moneyez-web/accept-invitation?token=4837e8621dfb6a376c93c6233089c1b9731379b8a734a57ecf8857efc33759c0")}
-          >fetch</Button>
         </div>
       </div>
       <h1 className="text-2xl font-medium text-[#4d4d4d] sm:text-3xl lg:text-4xl">
