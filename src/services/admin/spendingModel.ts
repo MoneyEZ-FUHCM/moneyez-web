@@ -1,4 +1,3 @@
-import { AddCategoryModal } from "@/app/admin/manage-category/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import apiSlice from "@/redux/slices/apiSlice";
 import {

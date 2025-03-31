@@ -1,7 +1,7 @@
 "use client";
 
 import { CommonForm } from "@/components/common/table/CommonForm";
-import { CATEGORY_TYPE, CATEGORY_TYPE_TEXT } from "@/enums/globals";
+import { CATEGORY_TYPE } from "@/enums/globals";
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
