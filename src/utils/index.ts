@@ -1,5 +1,6 @@
 import { FormInstance } from "antd";
 import CryptoJS from "crypto-js";
+import moment from "moment";
 
 export function encryptData(
   data: string | CryptoJS.lib.WordArray,
@@ -68,3 +69,21 @@ export const formatCurrency = (value: number): string =>
   })
     .format(value)
     .replace(/\s₫/, "đ");
+
+export const formatDate = (
+  date: moment.MomentInput,
+  pattern: string = "DD/MM/YYYY",
+): string => {
+  if (!date) return "N/A";
+  return moment.utc(date).format(pattern);
+};
+
+export const calculateDaysDifference = (startDateStr: string) => {
+  const startDate = new Date(startDateStr);
+  const currentDate = new Date();
+
+  const timeDifference = currentDate.getTime() - startDate.getTime();
+  const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+  return dayDifference;
+};

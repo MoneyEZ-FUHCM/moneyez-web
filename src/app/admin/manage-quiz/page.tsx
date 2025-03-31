@@ -21,11 +21,10 @@ import {
   EditOutlined,
   PlusCircleOutlined,
   QuestionCircleOutlined,
-  QuestionOutlined,
   SaveOutlined,
   SolutionOutlined,
 } from "@ant-design/icons";
-import { Badge, Button, Divider, Popconfirm, Tag } from "antd";
+import { Badge, Button, Divider, Popconfirm } from "antd";
 import { useState } from "react";
 
 interface Quiz {
@@ -161,7 +160,7 @@ const QuizCreator = () => {
     if (!allAnswersHaveContent) {
       showToast(
         TOAST_STATUS.INFO,
-        "Vui lòng nhập nội dung cho tất cả các đáp án",
+        "Vui lòng nhập nội dung cho tất cả các câu hỏi",
       );
       return;
     }
@@ -651,7 +650,7 @@ const QuizCreator = () => {
                       <InputCustom
                         value={option.content}
                         onChange={(e) => handleAnswerChange(index, e)}
-                        placeholder={`Nhập đáp án ${index + 1}`}
+                        placeholder={`Nhập lựa chọn ${index + 1}`}
                         className="w-full rounded-lg border-gray-300 px-4 py-2 shadow-sm focus:border-primary focus:ring-primary"
                       />
                     </div>
@@ -660,7 +659,7 @@ const QuizCreator = () => {
                       onClick={() => removeAnswer(index)}
                       type="text"
                       disabled={currentQuestion.answerOptions.length <= 2}
-                      className="flex h-8 w-8 items-center justify-center rounded-full !border-none !bg-transparent hover:!bg-red"
+                      className="flex h-8 w-8 items-center justify-center rounded-full !border-none !bg-transparent"
                       icon={<CloseOutlined className="text-red" />}
                     />
                   </div>

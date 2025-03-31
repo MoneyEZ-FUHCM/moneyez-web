@@ -3,13 +3,13 @@
 import Avatar from "@/assets/images/logo/avatar_user.jpg";
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { formatCurrency } from "@/utils";
+import { EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import Image from "next/image";
 import { useMemo } from "react";
 import { useGroupManagementPage } from "../hooks/useGroupManagementPage";
 import { AddGroupModal } from "./AddGroupModal";
-import { formatCurrency } from "@/utils";
 
 const GroupList = () => {
   const { state, handler } = useGroupManagementPage();
@@ -82,6 +82,7 @@ const GroupList = () => {
         render: (record: any) => (
           <div className="flex items-center justify-center gap-2">
             <Button
+              onClick={() => handler.handleViewDetail(record)}
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
             >
