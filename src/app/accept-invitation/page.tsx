@@ -4,7 +4,6 @@ import LogoWeb from "@/assets/images/logo/logo_web.png";
 import { ButtonCustom } from "@/components/ui/button";
 import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { PATH_NAME } from "@/helpers/constants/pathname";
 import { showToast } from "@/hooks/useShowToast";
 import { useAcceptInvitationMutation } from "@/services/group";
 import { Card, Divider, Spin, Typography } from "antd";
@@ -31,8 +30,7 @@ const Accept = () => {
   });
 
   const handleBackToApp = () => {
-    const deepLinkUrl =
-      "myapp://group-details/group-home/group-home-default/GroupHomeDefault";
+    const deepLinkUrl = "myapp://Group";
 
     window.location.href = deepLinkUrl;
 
@@ -89,7 +87,9 @@ const Accept = () => {
   }, [searchParams, acceptInvitation, SYSTEM_ERROR]);
 
   const navigateToHome = () => {
-    router.replace(PATH_NAME.HOME);
+    const driverUrl =
+      "https://drive.google.com/drive/u/2/folders/1w71IoIV6gxdI2T1zc1bUYX-HpFpjp1I6";
+    window.location.href = driverUrl;
   };
 
   const renderContent = () => {
