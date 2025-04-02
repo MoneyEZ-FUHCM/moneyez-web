@@ -19,21 +19,6 @@ import Image from "next/image";
 import Typewriter from "typewriter-effect";
 
 export default function Home() {
-  const handleBackToApp = () => {
-    const deepLinkUrl = "myapp://Group";
-
-    window.location.href = deepLinkUrl;
-
-    setTimeout(() => {
-      const appStoreUrl =
-        "https://play.google.com/store/apps/details?id=com.ezmoney";
-      const appStoreUrlIOS =
-        "https://apps.apple.com/us/app/moneyez/id123456789";
-
-      window.location.href = appStoreUrl;
-    }, 2000);
-  };
-
   return (
     <main className="transition-all duration-500">
       <div className="relative select-none overflow-hidden bg-yellow-100 transition-all duration-500">
@@ -97,8 +82,6 @@ export default function Home() {
         </div>
         <div className="absolute bottom-0 h-16 min-w-full rounded-t-[100%] bg-white" />
       </div>
-      <button onClick={handleBackToApp}>Trở lại ứng dụng</button>
-
       <section className="container mx-auto select-none transition-all duration-500">
         <Supporter />
         <ScrollReveal>

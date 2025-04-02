@@ -30,8 +30,20 @@ const Accept = () => {
     status: "loading",
   });
 
+  const handleBackToApp = () => {
+    const deepLinkUrl =
+      "myapp://group-details/group-home/group-home-default/GroupHomeDefault";
+
+    window.location.href = deepLinkUrl;
+
+    // setTimeout(() => {
+    //   const driverUrl =
+    //     "https://drive.google.com/drive/u/2/folders/1w71IoIV6gxdI2T1zc1bUYX-HpFpjp1I6";
+    //   window.location.href = driverUrl;
+    // }, 2000);
+  };
+
   useEffect(() => {
-    // Chỉ gọi effect này một lần duy nhất
     if (effectCalled.current) return;
     effectCalled.current = true;
 
@@ -54,7 +66,7 @@ const Accept = () => {
             groupName: result.data?.name || "nhóm",
           });
           showToast(TOAST_STATUS.SUCCESS, "Tham gia nhóm thành công!");
-        } 
+        }
       } catch (err: any) {
         const error = err?.data;
         if (error?.errorCode === "GroupMemberAlreadyExist") {
@@ -110,7 +122,7 @@ const Accept = () => {
             <Divider className="my-6" />
             <ButtonCustom
               className="w-full border-primary bg-primary text-white hover:bg-primary/80"
-              onClick={navigateToHome}
+              onClick={handleBackToApp}
             >
               Về Trang Chủ
             </ButtonCustom>
