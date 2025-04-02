@@ -86,11 +86,11 @@ const Accept = () => {
     handleAcceptInvitation();
   }, [searchParams, acceptInvitation, SYSTEM_ERROR]);
 
-  const navigateToHome = () => {
-    const driverUrl =
-      "https://drive.google.com/drive/u/2/folders/1w71IoIV6gxdI2T1zc1bUYX-HpFpjp1I6";
-    window.location.href = driverUrl;
-  };
+  // const navigateToHome = () => {
+  //   const driverUrl =
+  //     "https://drive.google.com/drive/u/2/folders/1w71IoIV6gxdI2T1zc1bUYX-HpFpjp1I6";
+  //   window.location.href = driverUrl;
+  // };
 
   const renderContent = () => {
     switch (state.status) {
@@ -147,7 +147,7 @@ const Accept = () => {
             <div className="flex flex-col gap-3">
               <ButtonCustom
                 className="w-full border-primary bg-primary text-white hover:bg-primary/80"
-                onClick={navigateToHome}
+                onClick={handleBackToApp}
               >
                 Về Trang Chủ
               </ButtonCustom>
