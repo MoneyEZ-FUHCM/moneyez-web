@@ -20,7 +20,7 @@ import Typewriter from "typewriter-effect";
 
 export default function Home() {
   const handleBackToApp = () => {
-    const deepLinkUrl = "myapp://";
+    const deepLinkUrl = "myapp://Group";
 
     window.location.href = deepLinkUrl;
 
