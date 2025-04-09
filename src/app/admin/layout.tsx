@@ -4,6 +4,7 @@ import Admin from "@/assets/images/logo/avatar_admin.jpg";
 import LogoWeb from "@/assets/images/logo/logo_web.png";
 import { PATH_NAME } from "@/helpers/constants/pathname";
 import { useLogout } from "@/hooks/useLogout";
+import { selectUserInfo } from "@/redux/slices/userSlice";
 import {
   BarsOutlined,
   BellOutlined,
@@ -18,11 +19,10 @@ import {
 import { FloatButton, Layout, Menu } from "antd";
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 import { MenuItem } from "./admin.constant";
 import { TEXT_TRANSLATE } from "./admin.translate";
 import { useSidebar } from "./hooks/useSidebar";
-import { useSelector } from "react-redux";
-import { selectUserInfo } from "@/redux/slices/userSlice";
 
 const { Content, Sider, Footer } = Layout;
 const { SIDE_BAR, TITLE, BUTTON } = TEXT_TRANSLATE;
@@ -56,13 +56,6 @@ const items: MenuItem[] = [
     PATH_NAME.STATISTIC,
   ),
   getItem(
-    SIDE_BAR.MANAGE_USER,
-    SIDE_BAR.POSITION_2,
-    <UserOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_USER,
-  ),
-  getItem(
     SIDE_BAR.MANAGE_SPENDING_MODEL,
     SIDE_BAR.POSITION_3,
     <BuildOutlined />,
@@ -92,19 +85,25 @@ const items: MenuItem[] = [
     PATH_NAME.MANAGE_CATEGORY,
   ),
   getItem(
+    SIDE_BAR.MANAGE_QUIZ,
+    SIDE_BAR.POSITION_8,
+    <QuestionCircleOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_QUIZ,
+  ),
+  getItem(
     SIDE_BAR.MANAGE_GROUP,
     SIDE_BAR.POSITION_6,
     <UsergroupAddOutlined />,
     undefined,
     PATH_NAME.MANAGE_GROUP,
   ),
-
   getItem(
-    SIDE_BAR.MANAGE_QUIZ,
-    SIDE_BAR.POSITION_8,
-    <QuestionCircleOutlined />,
+    SIDE_BAR.MANAGE_USER,
+    SIDE_BAR.POSITION_2,
+    <UserOutlined />,
     undefined,
-    PATH_NAME.MANAGE_QUIZ,
+    PATH_NAME.MANAGE_USER,
   ),
   getItem(
     SIDE_BAR.MANAGE_NOTIFICATION,

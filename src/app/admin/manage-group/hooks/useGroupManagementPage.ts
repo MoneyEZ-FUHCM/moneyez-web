@@ -15,6 +15,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_GROUP_CONSTANT } from "../group.constant";
 import { TEXT_TRANSLATE } from "../group.translate";
+import { Group } from "@/types/group.types";
 
 const useGroupManagementPage = () => {
   const confirm = Modal.confirm;
@@ -32,7 +33,7 @@ const useGroupManagementPage = () => {
   const { data, isLoading: isLoadingGroupList } = useGetGroupListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
-    search: searchQuery,
+    search: searchQuery || "",
   });
   const { data: groupDetail, isLoading: isLoadingGroupDetail } =
     useGetGroupDetailQuery({ id: id }, { skip: !id });
@@ -166,7 +167,7 @@ const useGroupManagementPage = () => {
       FORM_NAME,
       TITLE,
       BUTTON,
-      groupDetail: groupDetail?.data,
+      groupDetail: groupDetail?.data as Group,
       isLoadingGroupDetail,
     },
     handler: {
