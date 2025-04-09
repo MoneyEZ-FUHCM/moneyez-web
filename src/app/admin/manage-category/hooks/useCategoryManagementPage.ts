@@ -42,14 +42,10 @@ const useCategoryManagementPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
-  const {
-    data,
-    isLoading: isLoadingCategoryList,
-    refetch,
-  } = useGetCategoryListQuery({
+  const { data, isLoading: isLoadingCategoryList } = useGetCategoryListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
-    search: searchQuery,
+    search: searchQuery || "",
   });
   const category = useSelector((state: RootState) => state.system.systemData);
   const CATEGORY_TYPE_MAPPING = {

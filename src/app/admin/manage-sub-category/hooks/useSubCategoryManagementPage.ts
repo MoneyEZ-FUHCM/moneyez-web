@@ -39,7 +39,11 @@ const useSubCategoryManagementPage = () => {
 
   const { data, isLoading: isLoadingCategoryList } = useGetSubCategoryListQuery(
     useMemo(
-      () => ({ PageIndex: pageIndex, PageSize: pageSize, search: searchQuery }),
+      () => ({
+        PageIndex: pageIndex,
+        PageSize: pageSize,
+        search: searchQuery || "",
+      }),
       [pageIndex, pageSize, searchQuery],
     ),
   );

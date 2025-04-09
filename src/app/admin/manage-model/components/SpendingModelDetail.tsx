@@ -1,11 +1,5 @@
 "use client";
 
-import parse from "html-react-parser";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
 import { TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { CommonForm } from "@/components/common/table/CommonForm";
@@ -40,8 +34,13 @@ import {
   Typography,
 } from "antd";
 import { motion } from "framer-motion";
+import parse from "html-react-parser";
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
-import { TOAST_STATUS } from "@/enums/globals";
+import { CATEGORY_TYPE_TEXT, TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { getRandomColor } from "@/helpers/libs/utils";
 import { showToast } from "@/hooks/useShowToast";
@@ -66,7 +65,6 @@ const SpendingModelDetail = () => {
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
   const { ERROR_CODE } = MANAGE_MODEL_CONSTANT;
 
-  // API Queies
   const {
     data: spendingModel,
     isLoading,
@@ -143,8 +141,14 @@ const SpendingModelDetail = () => {
                   {renderIcon(cat.icon)}
                 </span>
                 <span>{cat.name}</span>
-                <Tag color={cat.type === "INCOME" ? "green" : "red"}>
-                  {cat.type === "INCOME" ? "Thu nhập" : "Chi tiêu"}
+                <Tag
+                  color={
+                    cat.type === CATEGORY_TYPE_TEXT.INCOME ? "green" : "red"
+                  }
+                >
+                  {cat.type === CATEGORY_TYPE_TEXT.INCOME
+                    ? "Thu nhập"
+                    : "Chi tiêu"}
                 </Tag>
               </div>
             ),
@@ -190,7 +194,6 @@ const SpendingModelDetail = () => {
     }
   }, [spendingModel?.data, form]);
 
-  const colorMap: Record<string, string> = {};
   const colorMapRef = useRef<Record<string, string>>({});
 
   const budgets = useMemo(() => {
@@ -202,7 +205,7 @@ const SpendingModelDetail = () => {
           }
           return {
             color: colorMapRef.current[category.category.id],
-            percent: editingPercentages[category.categoryId] ?? 0, // Use 0 for null/undefined
+            percent: editingPercentages[category.categoryId] ?? 0,
             name: category.category.name,
             icon: category.category.icon,
           };
@@ -252,12 +255,28 @@ const SpendingModelDetail = () => {
 
   const handleUpdatePercentage = async () => {
     try {
-      const categories = Object.entries(editingPercentages).map(
-        ([categoryId, percentageAmount]) => ({
+      const categories = Object.entries(editingPercentages)
+        .filter(([categoryId]) => {
+          const category = spendingModel?.data?.spendingModelCategories.find(
+            (item) => item.categoryId === categoryId,
+          );
+          return category?.category.type !== CATEGORY_TYPE_TEXT.INCOME;
+        })
+        .map(([categoryId, percentageAmount]) => ({
           categoryId,
           percentageAmount: Number(percentageAmount),
-        }),
-      );
+        }));
+
+      const incomeCategories = spendingModel?.data?.spendingModelCategories
+        .filter((item) => item.category.type === CATEGORY_TYPE_TEXT.INCOME)
+        .map((item) => ({
+          categoryId: item.categoryId,
+          percentageAmount: item.percentageAmount,
+        }));
+
+      if (incomeCategories) {
+        categories.push(...incomeCategories);
+      }
 
       await updateSpendingModel({
         spendingModelId: id as string,
@@ -520,12 +539,12 @@ const SpendingModelDetail = () => {
                         <span>{category.category.name}</span>
                         <Tag
                           color={
-                            category.category.type === "INCOME"
+                            category.category.type === CATEGORY_TYPE_TEXT.INCOME
                               ? "green"
                               : "red"
                           }
                         >
-                          {category.category.type === "INCOME"
+                          {category.category.type === CATEGORY_TYPE_TEXT.INCOME
                             ? "Thu nhập"
                             : "Chi tiêu"}
                         </Tag>
@@ -543,6 +562,9 @@ const SpendingModelDetail = () => {
                           }}
                           formatter={(value) => `${value ?? 0}%`}
                           className="w-24"
+                          disabled={
+                            category.category.type === CATEGORY_TYPE_TEXT.INCOME
+                          }
                         />
                       ) : (
                         <Tag color="blue" className="min-w-[60px] text-center">
@@ -570,10 +592,16 @@ const SpendingModelDetail = () => {
                 <Radio.Button value="ALL" className="font-medium">
                   Tất cả
                 </Radio.Button>
-                <Radio.Button value="INCOME" className="font-medium">
+                <Radio.Button
+                  value={CATEGORY_TYPE_TEXT.INCOME}
+                  className="font-medium"
+                >
                   Thu nhập
                 </Radio.Button>
-                <Radio.Button value="EXPENSE" className="font-medium">
+                <Radio.Button
+                  value={CATEGORY_TYPE_TEXT.EXPENSE}
+                  className="font-medium"
+                >
                   Chi tiêu
                 </Radio.Button>
               </Radio.Group>
@@ -589,7 +617,6 @@ const SpendingModelDetail = () => {
               </ButtonCustom>
             </Tooltip>
           </div>
-
           <Row gutter={[16, 16]}>
             {filteredCategories?.length ? (
               filteredCategories.map((category) => (
