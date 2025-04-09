@@ -10,6 +10,7 @@ const quizManagementApi = apiSlice.injectEndpoints({
         url: `/quiz?PageIndex=${PageIndex}&PageSize=${PageSize}`,
         method: HTTP_METHOD.GET,
       }),
+      transformResponse: (response) => transformCommonResponse(response),
       providesTags: ["Quiz"],
     }),
     createQuiz: builder.mutation({

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import QuizCreator from "./components/QuizCreator";
+import { QuizCreator } from "./components";
 
 export const metadata: Metadata = {
   title: "EzMoney | Quản lý câu hỏi",
