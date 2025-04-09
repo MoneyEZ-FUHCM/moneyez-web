@@ -1,6 +1,5 @@
 "use client";
 
-import Avatar from "@/assets/images/logo/avatar_user.jpg";
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatCurrency } from "@/utils";

@@ -31,7 +31,7 @@ const useUserManagementPage = () => {
   const { data, isLoading: isLoadingUserList } = useGetUserListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
-    search: searchQuery,
+    search: searchQuery || "",
   });
 
   const { SYSTEM_ERROR } = COMMON_CONSTANT;
@@ -155,3 +155,4 @@ const useUserManagementPage = () => {
 };
 
 export { useUserManagementPage };
+
