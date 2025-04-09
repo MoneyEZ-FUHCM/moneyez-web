@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { SpendingModelList } from "./components/SpendingModelList";
 
 export const metadata: Metadata = {
-  title: "EzMoney | Quản lý mô hình chi tiêu",
+  title: "MoneyEz | Quản lý mô hình chi tiêu",
   description: "Theo dõi, quản lý mô hình chi tiêu trong hệ thống",
 };
 

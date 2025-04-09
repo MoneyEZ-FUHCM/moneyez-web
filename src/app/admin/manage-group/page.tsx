@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { GroupList } from "./components/GroupList";
 
 export const metadata: Metadata = {
-  title: "EzMoney | Quản lý nhóm",
+  title: "MoneyEz | Quản lý nhóm",
   description: "Theo dõi, quản lý nhóm trong hệ thống",
 };
 
