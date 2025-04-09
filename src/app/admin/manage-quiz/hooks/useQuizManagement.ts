@@ -192,7 +192,11 @@ export const useQuizManagementPage = () => {
       return;
     }
 
-    const newQuiz = { ...quiz, id: selectedQuiz };
+    const { status, ...rest } = quiz;
+    const newQuiz = {
+      ...rest,
+      id: selectedQuiz,
+    };
 
     try {
       await updateQuizList(newQuiz).unwrap();

@@ -20,7 +20,7 @@ export const TEXT_TRANSLATE = {
   },
   TITLE: {
     NAME: "ADMIN",
-    COPYRIGHT: "Copyright ©2025 EzMoney.inc. All right reserved",
+    COPYRIGHT: "Copyright ©2025 MoneyEz.inc. All right reserved",
   },
   BUTTON: {
     LOGOUT: "Đăng xuất",

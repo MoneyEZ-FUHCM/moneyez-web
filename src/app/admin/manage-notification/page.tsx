@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { NotificationView } from "./components";
 
 export const metadata: Metadata = {
-  title: "EzMoney | Quản lý thông báo",
+  title: "MoneyEz | Quản lý thông báo",
   description: "Theo dõi, quản lý thông báo hệ thống",
 };
 
