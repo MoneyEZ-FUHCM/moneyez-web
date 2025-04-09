@@ -31,14 +31,7 @@ const Accept = () => {
 
   const handleBackToApp = () => {
     const deepLinkUrl = "myapp://Group";
-
     window.location.href = deepLinkUrl;
-
-    // setTimeout(() => {
-    //   const driverUrl =
-    //     "https://drive.google.com/drive/u/2/folders/1w71IoIV6gxdI2T1zc1bUYX-HpFpjp1I6";
-    //   window.location.href = driverUrl;
-    // }, 2000);
   };
 
   useEffect(() => {
@@ -85,12 +78,6 @@ const Accept = () => {
 
     handleAcceptInvitation();
   }, [searchParams, acceptInvitation, SYSTEM_ERROR]);
-
-  // const navigateToHome = () => {
-  //   const driverUrl =
-  //     "https://drive.google.com/drive/u/2/folders/1w71IoIV6gxdI2T1zc1bUYX-HpFpjp1I6";
-  //   window.location.href = driverUrl;
-  // };
 
   const renderContent = () => {
     switch (state.status) {
