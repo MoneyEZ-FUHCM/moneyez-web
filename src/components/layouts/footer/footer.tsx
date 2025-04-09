@@ -8,7 +8,7 @@ const Footer = () => {
         <span className="text-sm text-gray-500 sm:text-center">
           © 2025{" "}
           <a href="https://www.facebook.com/Fricks.BuildingService">
-            EzMoney™
+            MoneyEz™
           </a>
           . All Rights Reserved.
         </span>

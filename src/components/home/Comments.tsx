@@ -10,38 +10,38 @@ const Comments = () => {
   const feedbacks = [
     {
       id: 1,
-      name: "Duong Bao",
-      role: "Developer",
+      name: "Dương Tôn Bảo",
+      role: "Công nhân",
       avatar: Admin,
       feedback:
-        "Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa",
+        "Tính năng góp quỹ nhóm quá tiện! Mình và bạn bè cùng tiết kiệm cho chuyến du lịch hè, giờ ai đóng bao nhiêu đều rõ ràng minh bạch.",
       rating: Rating,
     },
     {
       id: 2,
-      name: "Bao Duong",
-      role: "Designer",
+      name: "Thương Huyền",
+      role: "Nội trợ",
       avatar: Admin,
       feedback:
-        "Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa",
+        "Ứng dụng rất dễ dùng, có thể phân loại chi tiêu theo từng nhóm như ăn uống, mua sắm, học hành... Nhờ vậy mình kiểm soát được ngân sách tốt hơn.",
       rating: Rating,
     },
     {
       id: 3,
-      name: "Duong Ton Bao",
-      role: "Manager",
+      name: "Gia Đức",
+      role: "Quản lý",
       avatar: Admin,
       feedback:
-        "Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa",
+        "Mình hay dùng hũ tiết kiệm trong app để dành tiền mua laptop. Nhìn số tiền tăng dần mỗi tuần cảm giác rất có động lực!",
       rating: Rating4,
     },
     {
       id: 4,
-      name: "Duong Ton Bao",
-      role: "Manager",
+      name: "Minh Trí",
+      role: "Kỹ sư",
       avatar: Admin,
       feedback:
-        "Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa Bảo đã code quá nhiều rồi không nên để bảo code nữa",
+        "Điều mình thích nhất là tính năng chatbot nhập chi tiêu siêu nhanh. Chỉ cần gõ 'ăn trưa 45k', không cần chọn danh mục hay ngày giờ gì cả, quá tiện!",
       rating: Rating4,
     },
   ];

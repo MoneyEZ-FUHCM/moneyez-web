@@ -6,7 +6,7 @@ export const TEXT_TRANSLATE = {
     FORGOT_PASSWORD: "Quên mật khẩu",
     WELCOME_BACK: "Chào mừng trở lại",
     SUB_GREETING: "Quản lý chi tiêu thông minh, tối ưu ngân sách với",
-    WEB_NAME: "EzMoney",
+    WEB_NAME: "MoneyEz",
     START: "Bắt đầu ngay",
     DOB: "Ngày sinh",
     PHONE_NUMBER: "Số điện thoại",

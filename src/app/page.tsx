@@ -96,9 +96,9 @@ export default function Home() {
         <ScrollReveal>
           <Comments />
         </ScrollReveal>
-        <ScrollReveal>
+        {/* <ScrollReveal>
           <Packages />
-        </ScrollReveal>
+        </ScrollReveal> */}
         <ScrollReveal>
           <BackgroundIntro />
         </ScrollReveal>
