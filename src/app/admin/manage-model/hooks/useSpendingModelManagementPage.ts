@@ -17,6 +17,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
 
+type CategoryItem = {
+  categoryId: string;
+  percentageAmount: number;
+};
+
+interface AddCategoryModelRequest {
+  spendingModelId: string;
+  categories: CategoryItem[];
+}
+
+interface RemoveCategoryRequest {
+  spendingModelId: string;
+  categoryIds: string[];
+}
+
+interface ModelRecord {
+  id: string;
+  [key: string]: any;
+}
+
 const useSpendingModelManagementPage = () => {
   const confirm = Modal.confirm;
   const [form] = Form.useForm();
@@ -48,7 +68,7 @@ const useSpendingModelManagementPage = () => {
 
   const [selectedType, setSelectedType] = useState<string>("ALL");
 
-  const handleAddModel = async () => {
+  const handleAddModel = async (): Promise<void> => {
     try {
       const values = await form.validateFields();
       const updateValue = [{ ...values, isTemplate: CONDITION.TRUE }];
@@ -71,25 +91,28 @@ const useSpendingModelManagementPage = () => {
     }
   };
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     dispatch(setIsOpen(false));
     form.resetFields();
   };
 
-  const handleOpenModalAdd = useCallback(() => {
+  const handleOpenModalAdd = useCallback((): void => {
     dispatch(setIsOpen(true));
   }, [dispatch]);
 
-  const handlePageChange = (pagination: TablePaginationConfig) => {
+  const handlePageChange = (pagination: TablePaginationConfig): void => {
     setPageIndex(pagination.current ?? 1);
     setPageSize(pagination.pageSize ?? 10);
   };
 
-  const handleViewDetail = useCallback((record: any) => {
-    router.push(`/admin/manage-model/${record.id}`);
-  }, []);
+  const handleViewDetail = useCallback(
+    (record: ModelRecord): void => {
+      router.push(`/admin/manage-model/${record.id}`);
+    },
+    [router],
+  );
 
-  const handleDeleteModel = (id: number) => {
+  const handleDeleteModel = (id: number): void => {
     confirm({
       title: TITLE.TITLE,
       content: TITLE.CONTENT,
@@ -122,46 +145,62 @@ const useSpendingModelManagementPage = () => {
     });
   };
 
-  const handleAddModelCategory = async (
-    modelId: string,
-    refetch: () => void,
-  ) => {
-    try {
-      const values = await form.validateFields();
-      const requestData = {
-        spendingModelId: modelId,
-        categories: [
-          {
-            categoryId: values.categoryId,
-            percentageAmount: values.percentageAmount,
-          },
-        ],
-      };
+  const handleAddModelCategory = useCallback(
+    async (spendingModelId: string, refetch: () => void): Promise<void> => {
       try {
-        await addCategoryModalToSpendingModel(requestData).unwrap();
-        showToast(TOAST_STATUS.SUCCESS, "Thêm danh mục thành công");
-        form.resetFields();
-        dispatch(setIsOpen(false));
-        refetch();
-      } catch (err: any) {
-        const error = err?.data;
-        if (error?.errorCode === ERROR_CODE.MODEL_CATE_ALREADY_ADDED) {
+        const values = await form.validateFields();
+
+        try {
+          // Check if there are existing categories in the model
+          const existingCategories =
+            data?.items?.find((model) => model.id === spendingModelId)
+              ?.spendingModelCategories || [];
+
+          const hasExistingCategories = existingCategories.length > 0;
+
+          const payload: AddCategoryModelRequest = {
+            spendingModelId: spendingModelId,
+            categories:
+              values.categories?.length > 0 &&
+              values.categories?.map((category: CategoryItem) => ({
+                categoryId: category?.categoryId,
+                // If there are existing categories, default percentage to 0 if not provided
+                percentageAmount: hasExistingCategories
+                  ? category?.percentageAmount || 0
+                  : category?.percentageAmount,
+              })),
+          };
+
+          await addCategoryModalToSpendingModel(payload).unwrap();
           showToast(
-            TOAST_STATUS.ERROR,
-            TEXT_TRANSLATE.MESSAGE_ERROR.MODEL_CATE_ALREADY_ADDED,
+            TOAST_STATUS.SUCCESS,
+            "Thêm danh mục vào mô hình thành công",
           );
-          return;
+          handleCancel();
+
+          refetch();
+        } catch (err: any) {
+          const error = err?.data;
+          if (error?.errorCode === ERROR_CODE.INVALID_TOTAL_PERCENTAGE) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              "Tổng giá trị ngân sách phải bằng 100%",
+            );
+            return;
+          }
+          showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
-        showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
-        dispatch(setIsOpen(true));
-      }
-    } catch (err: any) {
-      dispatch(setIsOpen(true));
-    }
-  };
+      } catch (err: any) {}
+    },
+    [data?.items],
+  );
 
   const handleRemoveSpendingModelCategory = useCallback(
-    async (modelId: string, categoryId: string, refetch: () => void) => {
+    async (
+      modelId: string,
+      categoryId: string,
+      refetch: () => void,
+    ): Promise<void> => {
       confirm({
         title: TITLE.TITLE,
         content: TITLE.CONTENT,
@@ -170,7 +209,7 @@ const useSpendingModelManagementPage = () => {
         cancelText: TITLE.CANCEL_TEXT,
         onOk: async () => {
           try {
-            const requestData = {
+            const requestData: RemoveCategoryRequest = {
               spendingModelId: modelId,
               categoryIds: [categoryId],
             };
@@ -194,9 +233,12 @@ const useSpendingModelManagementPage = () => {
     [],
   );
 
-  const handleViewDetailCategory = useCallback((record: string) => {
-    router.push(`/admin/manage-category/${record}`);
-  }, []);
+  const handleViewDetailCategory = useCallback(
+    (record: string): void => {
+      router.push(`/admin/manage-category/${record}`);
+    },
+    [router],
+  );
 
   return {
     state: {
