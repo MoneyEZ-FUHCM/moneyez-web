@@ -32,7 +32,7 @@ const Comments = () => {
       role: "Quản lý",
       avatar: Admin,
       feedback:
-        "Mình hay dùng hũ tiết kiệm trong app để dành tiền mua laptop. Nhìn số tiền tăng dần mỗi tuần cảm giác rất có động lực!",
+        "Mình hay dùng hũ tiết kiệm trong app để dành tiền mua laptop. Nhìn số tiền tăng dần mỗi tuần cảm giác rất có động lực để góp quỹ nhiều hơn!",
       rating: Rating4,
     },
     {
