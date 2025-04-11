@@ -1,20 +1,20 @@
 import { useMemo } from "react";
-import { CHART_COLORS, REVENUE_DATA } from "../statistic.constant";
+import { CHART_COLORS } from "../statistic.constant";
 
-const useDonutChartData = () => {
+const useDonutChartData = (modelStats = []) => {
   return useMemo(() => {
     return {
-      labels: REVENUE_DATA.map((data) => data.storeName),
+      labels: modelStats.map((model) => model.modelName),
       datasets: [
         {
-          label: "Doanh thu",
-          data: REVENUE_DATA.map((data) => data.revenue),
+          label: "Người dùng",
+          data: modelStats.map((model) => model.userCount),
           backgroundColor: CHART_COLORS,
           hoverOffset: 4,
         },
       ],
     };
-  }, []);
+  }, [modelStats]);
 };
 
 export { useDonutChartData };

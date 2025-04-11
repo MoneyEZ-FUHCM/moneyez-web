@@ -24,6 +24,7 @@ const VALID_PATHS = new Set([
   "/admin/manage-group",
   "/user/chart",
   "/admin/manage-quiz",
+  "/admin/manage-post",
 ]);
 
 const ADMIN_PATHS = new Set([
@@ -36,6 +37,7 @@ const ADMIN_PATHS = new Set([
   "/admin/manage-notification",
   "/admin/manage-group",
   "/admin/manage-quiz",
+  "/admin/manage-post",
 ]);
 
 const USER_PATHS = new Set(["/user", "/user/chart"]);

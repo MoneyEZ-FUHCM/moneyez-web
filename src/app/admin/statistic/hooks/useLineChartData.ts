@@ -1,24 +1,13 @@
 import { useMemo } from "react";
-import dayjs from "dayjs";
-import { MAIN_CHART_DATA } from "../statistic.constant";
-import { useWeekDays } from "./useWeekDays";
 
-const useLineChartData = () => {
-  const { labels, dayNames } = useWeekDays();
-
+const useLineChartData = (modelStats = []) => {
   return useMemo(() => {
     return {
-      labels: dayNames,
+      labels: modelStats.map((model) => model.modelName),
       datasets: [
         {
-          label: "Đơn hàng",
-          data: labels.map((date: string) => {
-            return (
-              MAIN_CHART_DATA.find(
-                (data) => dayjs(data.date).format("DD/MM/YYYY") === date,
-              )?.orderCount || 0
-            );
-          }),
+          label: "Giao dịch",
+          data: modelStats.map((model) => model.transactionCount),
           type: "bar",
           borderColor: "rgba(0, 143, 251, 0.85);",
           pointBorderWidth: 1,
@@ -30,14 +19,8 @@ const useLineChartData = () => {
           barThickness: 30,
         },
         {
-          label: "Doanh thu",
-          data: labels.map((date: string) => {
-            return (
-              MAIN_CHART_DATA.find(
-                (data) => dayjs(data.date).format("DD/MM/YYYY") === date,
-              )?.revenue || 0
-            );
-          }),
+          label: "Số dư",
+          data: modelStats.map((model) => model.totalAmount / 1000000),
           borderColor: "rgb(0, 227, 150)",
           pointBorderWidth: 1,
           pointBackgroundColor: "rgb(0, 227, 150)",
@@ -48,7 +31,7 @@ const useLineChartData = () => {
         },
       ],
     };
-  }, [labels, dayNames]);
+  }, [modelStats]);
 };
 
 export { useLineChartData };

@@ -12,79 +12,104 @@ interface TotalFieldProps {
 
 const TotalField = ({ data }: TotalFieldProps) => {
   return (
-    <section className="grid grid-cols-1 gap-5 transition-all duration-500 md:grid-cols-2 lg:grid-cols-4">
-      <div className="bold flex items-center gap-5 rounded-xl bg-[#fff] px-6 py-10 text-white shadow-md transition-all duration-500">
-        <div>
-          <Image
-            src={Cart}
-            alt="error"
-            width={80}
-            height={80}
-            quality={100}
-            className="w-[80px]"
-          />
-        </div>
-        <div>
-          <p className="text-3xl font-bold text-[black]">
-            <CountUp end={data.revenue} duration={2} />đ
-          </p>
-          <p className="text-[15px] font-semibold text-[#bdbdbd]">Doanh thu</p>
-        </div>
-      </div>
-      <div className="bold flex items-center gap-5 rounded-xl bg-[#fff] px-6 py-10 text-white shadow-md transition-all duration-500">
-        <div>
-          <Image
-            src={Revenue}
-            alt="error"
-            className="w-[80px]"
-            width={80}
-            height={80}
-            quality={100}
-          />
-        </div>
-        <div>
-          <p className="text-3xl font-bold text-[black]">
-            <CountUp end={data.numOfOrders ?? 0} duration={2} />
-          </p>
-          <p className="text-[15px] font-semibold text-[#bdbdbd]">Đơn hàng</p>
+    <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:translate-y-px hover:shadow-md">
+        <div className="flex items-center p-6">
+          <div className="flex-shrink-0 rounded-lg bg-blue-50 p-3">
+            <Image
+              src={Cart}
+              alt="Revenue icon"
+              width={50}
+              height={50}
+              quality={100}
+              className="h-12 w-12"
+            />
+          </div>
+          <div className="ml-4">
+            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500">
+              Doanh thu
+            </p>
+            <div className="flex items-baseline">
+              <p className="text-2xl font-bold text-gray-800">
+                <CountUp end={data.revenue} duration={2} separator="." />đ
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="bold flex items-center gap-5 rounded-xl bg-[#fff] px-6 py-10 text-white shadow-md transition-all duration-500">
-        <div>
-          <Image
-            src={Bag}
-            alt="error"
-            width={80}
-            height={80}
-            quality={100}
-            className="w-[80px]"
-          />
-        </div>
-        <div>
-          <p className="text-3xl font-bold text-[black]">
-            <CountUp end={data.numOfStores} duration={2} />
-          </p>
-          <p className="text-[15px] font-semibold text-[#bdbdbd]">
-            Hũ tiết kiệm
-          </p>
+
+      <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:translate-y-px hover:shadow-md">
+        <div className="flex items-center p-6">
+          <div className="bg-green-50 flex-shrink-0 rounded-lg p-3">
+            <Image
+              src={Revenue}
+              alt="Orders icon"
+              width={50}
+              height={50}
+              quality={100}
+              className="h-12 w-12"
+            />
+          </div>
+          <div className="ml-4">
+            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500">
+              Giao dịch
+            </p>
+            <div className="flex items-baseline">
+              <p className="text-2xl font-bold text-gray-800">
+                <CountUp end={data.numOfOrders ?? 0} duration={2} />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="bold flex items-center gap-5 rounded-xl bg-[#fff] px-6 py-10 text-white shadow-md transition-all duration-500">
-        <div>
-          <Image
-            src={User}
-            alt="error"
-            width={80}
-            height={80}
-            quality={100}
-            className="w-[80px]"
-          />
+
+      <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:translate-y-px hover:shadow-md">
+        <div className="flex items-center p-6">
+          <div className="flex-shrink-0 rounded-lg bg-purple-50 p-3">
+            <Image
+              src={Bag}
+              alt="Models icon"
+              width={50}
+              height={50}
+              quality={100}
+              className="h-12 w-12"
+            />
+          </div>
+          <div className="ml-4">
+            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500">
+              Mô hình
+            </p>
+            <div className="flex items-baseline">
+              <p className="text-2xl font-bold text-gray-800">
+                <CountUp end={data.numOfStores} duration={2} />
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-          <p className="text-3xl font-bold text-[black]">
-            <CountUp end={data.numOfUsers} duration={2} />
-          </p>
-          <p className="text-[15px] font-semibold text-[#bdbdbd]">Người dùng</p>
+      </div>
+
+      <div className="overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:translate-y-px hover:shadow-md">
+        <div className="flex items-center p-6">
+          <div className="flex-shrink-0 rounded-lg bg-amber-50 p-3">
+            <Image
+              src={User}
+              alt="Users icon"
+              width={50}
+              height={50}
+              quality={100}
+              className="h-12 w-12"
+            />
+          </div>
+          <div className="ml-4">
+            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500">
+              Người dùng
+            </p>
+            <div className="flex items-baseline">
+              <p className="text-2xl font-bold text-gray-800">
+                <CountUp end={data.numOfUsers} duration={2} />
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

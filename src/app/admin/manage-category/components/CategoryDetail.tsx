@@ -5,22 +5,13 @@ import { renderIcon } from "@/components/common/IconRender";
 import { CommonForm } from "@/components/common/table/CommonForm";
 import { ButtonCustom } from "@/components/ui/button";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { formatTimestamp } from "@/helpers/libs/utils";
 import { useGetCategoryByIdQuery } from "@/services/admin/category";
 import { useGetSubCategoryListQuery } from "@/services/admin/subCategory";
-import { formatTimestamp } from "@/utils";
-import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Descriptions,
-  Form,
-  Modal,
-  Select,
-  Spin,
-  Table,
-  Tag,
-} from "antd";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Descriptions, Modal, Select, Spin, Table, Tag } from "antd";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { TEXT_TRANSLATE } from "../category.translate";
 import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
 

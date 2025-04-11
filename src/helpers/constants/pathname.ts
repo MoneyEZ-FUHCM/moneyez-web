@@ -10,6 +10,7 @@ const PATH_NAME = {
   MANAGE_NOTIFICATION: "/admin/manage-notification",
   MANAGE_GROUP: "/admin/manage-group",
   MANAGE_QUIZ: "/admin/manage-quiz",
+  MANAGE_POST: "/admin/manage-post",
 
   //USER
   USER: "/user",

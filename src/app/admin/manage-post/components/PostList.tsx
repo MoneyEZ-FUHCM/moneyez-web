@@ -3,22 +3,16 @@
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import {
-  BarsOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
-import { Button, Tag } from "antd";
-import { useRouter } from "next/navigation";
+import { SubCategory } from "@/types/category.types";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import { useMemo } from "react";
-import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
-import { FunctionCategoryModal } from "./FunctionCategoryModal";
+import { usePostManagementPage } from "../hooks/usePostManagement";
+import { FunctionPostModal } from "./FunctionPostModal";
 import { formatTimestamp } from "@/helpers/libs/utils";
 
-const CategoryList = () => {
-  const router = useRouter();
-  const { state, handler } = useCategoryManagementPage();
+const PostList = () => {
+  const { state, handler } = usePostManagementPage();
 
   const columns = useMemo(
     () => [
@@ -26,9 +20,9 @@ const CategoryList = () => {
         title: state.TITLE.INDEX,
         dataIndex: state.FORM_NAME.INDEX,
         key: state.FORM_NAME.INDEX,
+        width: "2%",
         render: (_: any, _record: any, index: number) =>
           (state.pageIndex - 1) * state.pageSize + index + 1,
-        width: "2%",
       },
       {
         title: state.TITLE.CODE,
@@ -38,60 +32,43 @@ const CategoryList = () => {
       {
         title: state.TITLE.ICON,
         dataIndex: state.FORM_NAME.ICON,
-        width: "15%",
+        width: "7%",
         render: (icon: string) => (
           <div className="text-primary">{renderIcon(icon)}</div>
         ),
       },
       {
-        title: state.TITLE.TYPE,
-        dataIndex: state.FORM_NAME.TYPE,
-        width: "10%",
-        render: (type: string) => (
-          <Tag color={type === "INCOME" ? "green" : "red"}>
-            {type === "INCOME" ? "Thu nhập" : "Chi tiêu"}
-          </Tag>
-        ),
-      },
-      {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
-        width: "23%",
+        width: "20%",
       },
       {
         title: state.TITLE.DESCRIPTION,
         dataIndex: state.FORM_NAME.DESCRIPTION,
-        width: "30%",
+        width: "36%",
       },
       {
         title: state.TITLE.CREATED_AT,
         dataIndex: state.FORM_NAME.CREATED_DATE,
-        width: "10%",
+        width: "12%",
         render: (date: string) =>
           date ? formatTimestamp(date) : COMMON_CONSTANT.EMPTY_STRING,
       },
       {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
-        width: "5%",
-        render: (record: any) => (
+        width: "10%",
+        render: (_: any, record: SubCategory) => (
           <div className="flex items-center justify-center gap-2">
-            <Button
-              size="small"
-              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-              onClick={() => handler.handleViewDetail(record)}
-            >
-              <EyeOutlined color="blue" className="text-primary" />
-            </Button>
             <Button
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
               onClick={() => handler.handleOpenModalEdit(record)}
             >
-              <EditOutlined color="blue" className="text-primary" />
+              <EditOutlined className="text-primary" />
             </Button>
             <Button
-              onClick={() => handler.handleDeleteCategory(record.id)}
+              onClick={() => handler.handleDeleteSubCategory(record.id)}
               danger
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
@@ -102,33 +79,33 @@ const CategoryList = () => {
         ),
       },
     ],
-    [handler, router, state.pageIndex, state.pageSize],
+    [handler, state.pageIndex, state.pageSize],
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_CATEGORY} breadcrumbItems={[]}>
+    <TableListLayout title={state.TITLE.MANAGE_POST} breadcrumbItems={[]}>
       <SearchAndAdd
-        searchPlaceholder={state.TITLE.SEARCH}
-        addButtonText={state.BUTTON.ADD_CATEGORY}
+        searchPlaceholder={state.TITLE.SEARCH_SUB}
+        addButtonText={state.BUTTON.ADD_POST}
         onSearch={(value) => handler.setSearchQuery(value)}
         onAddClick={handler.handleOpenModalAdd}
       />
       <TableCustom
-        title={state.TITLE.CATEGORY_LIST}
+        title={state.TITLE.POST_LIST}
         columns={columns}
         dataSource={state.data?.items}
         pagination={{
           current: state.pageIndex,
-          total: state?.data?.totalCount,
+          total: state.data?.totalCount,
           pageSize: state.pageSize,
         }}
         onChange={handler.handlePageChange}
-        loading={state.isLoadingCategoryList}
+        loading={state.isLoadingPostList}
         rowKey={(record: { id: number }) => record.id}
       />
-      <FunctionCategoryModal />
+      <FunctionPostModal />
     </TableListLayout>
   );
 };
 
-export { CategoryList };
+export { PostList };
