@@ -1,10 +1,9 @@
 "use client";
 
-import Avatar from "@/assets/images/logo/avatar_user.jpg";
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { VALID_ROLE } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { formatTimestamp } from "@/utils";
+import { formatTimestamp } from "@/helpers/libs/utils";
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import Image from "next/image";

@@ -45,6 +45,15 @@ export enum TOAST_STATUS {
   WARNING = "warning",
   INFO = "info",
 }
+export enum GROUP_MEMBER_STATUS {
+  ACTIVE = "Đang hoạt động",
+  PENDING = "Chờ xác nhận",
+  INACTIVE = "Không hoạt động",
+}
+export enum GROUP_ROLE {
+  LEADER = "Trưởng nhóm",
+  MEMBER = "Thành viên",
+}
 
 export enum QUIZ_ASSIGN_STATUS {
   ACTIVE,

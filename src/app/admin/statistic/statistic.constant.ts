@@ -1,42 +1,40 @@
-export const REVENUE_DATA = [
-  { storeName: "Bảo", revenue: 20000000 },
-  { storeName: "Đức", revenue: 15000000 },
-  { storeName: "Huyền", revenue: 10000000 },
-  { storeName: "Trí", revenue: 5000000 },
-  { storeName: "Linh", revenue: 5000000 },
-];
-
-export const DASHBOARD_DATA = {
-  revenue: 1500000,
-  numOfProducts: 123,
-  numOfStores: 5,
-  numOfOrders: 5,
-  numOfUsers: 5,
-  lastUpdated: "2025-02-08T14:00:00Z",
-};
-
-export const MAIN_CHART_DATA = [
-  { date: "2025-02-01", orderCount: 10, revenue: 100 },
-  { date: "2025-02-02", orderCount: 15, revenue: 150 },
-  { date: "2025-02-03", orderCount: 20, revenue: 200 },
-  { date: "2025-02-04", orderCount: 18, revenue: 180 },
-  { date: "2025-02-05", orderCount: 22, revenue: 220 },
-  { date: "2025-02-06", orderCount: 19, revenue: 190 },
-  { date: "2025-02-07", orderCount: 25, revenue: 250 },
-];
-
 export const lineOptions = {
   plugins: {
     datalabels: {
       display: false,
     },
+    legend: {
+      position: "top",
+      align: "center",
+      labels: {
+        usePointStyle: false,
+        font: {
+          size: 12,
+        },
+      },
+    },
+    tooltip: {
+      backgroundColor: "rgba(53, 72, 91, 0.95)",
+      titleFont: {
+        size: 13,
+      },
+      bodyFont: {
+        size: 12,
+      },
+      padding: 12,
+      cornerRadius: 8,
+      displayColors: true,
+    },
   },
   elements: {
     point: {
-      radius: 2,
+      radius: 3,
       backgroundColor: "currentColor",
-      hoverRadius: 4,
-      hitRadius: 6,
+      hoverRadius: 5,
+      hitRadius: 8,
+    },
+    line: {
+      tension: 0.3,
     },
   },
   scales: {
@@ -44,6 +42,22 @@ export const lineOptions = {
       type: "linear",
       display: true,
       position: "left",
+      grid: {
+        color: "rgba(0, 0, 0, 0.05)",
+      },
+      ticks: {
+        font: {
+          size: 11,
+        },
+      },
+      title: {
+        display: true,
+        text: "Số giao dịch",
+        font: {
+          size: 12,
+          weight: "normal",
+        },
+      },
     },
     y1: {
       type: "linear",
@@ -52,9 +66,136 @@ export const lineOptions = {
       grid: {
         drawOnChartArea: false,
       },
+      ticks: {
+        font: {
+          size: 11,
+        },
+      },
+      title: {
+        display: true,
+        text: "Số dư (triệu đồng)",
+        font: {
+          size: 12,
+          weight: "normal",
+        },
+      },
+    },
+    x: {
+      grid: {
+        color: "rgba(0, 0, 0, 0.05)",
+      },
+      ticks: {
+        font: {
+          size: 12,
+        },
+      },
     },
   },
   responsive: true,
+  maintainAspectRatio: false,
 };
 
-export const CHART_COLORS = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"];
+export const barOptions = {
+  plugins: {
+    datalabels: {
+      display: false,
+    },
+    legend: {
+      position: "top",
+      labels: {
+        usePointStyle: false,
+        padding: 20,
+        font: {
+          size: 12,
+        },
+      },
+    },
+    tooltip: {
+      backgroundColor: "rgba(53, 72, 91, 0.95)",
+      titleFont: {
+        size: 13,
+      },
+      bodyFont: {
+        size: 12,
+      },
+      padding: 12,
+      cornerRadius: 8,
+      displayColors: true,
+      callbacks: {
+        label: function (context: any) {
+          let label = context.dataset.label || "";
+          if (label) {
+            label += ": ";
+          }
+          if (context.parsed.y !== null) {
+            if (label.includes("Avg")) {
+              label += new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(context.parsed.y);
+            } else {
+              label += context.parsed.y;
+            }
+          }
+          return label;
+        },
+      },
+    },
+  },
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      beginAtZero: true,
+      grid: {
+        color: "rgba(0, 0, 0, 0.05)",
+      },
+      ticks: {
+        font: {
+          size: 11,
+        },
+      },
+      title: {
+        // display: true,
+        text: "Giá trị",
+        font: {
+          size: 12,
+          weight: "normal",
+        },
+      },
+    },
+    x: {
+      grid: {
+        color: "rgba(0, 0, 0, 0.05)",
+      },
+      ticks: {
+        font: {
+          size: 11,
+        },
+      },
+    },
+  },
+  barPercentage: 0.8,
+  categoryPercentage: 0.7,
+};
+
+export const donutOptions = {
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        usePointStyle: false,
+        padding: 20,
+      },
+    },
+  },
+};
+
+export const CHART_COLORS = [
+  "rgba(66, 133, 244, 0.8)", // Blue
+  "rgba(219, 68, 55, 0.8)", // Red
+  "rgba(244, 180, 0, 0.8)", // Yellow
+  "rgba(15, 157, 88, 0.8)", // Green
+  "rgba(171, 71, 188, 0.8)", // Purple
+];

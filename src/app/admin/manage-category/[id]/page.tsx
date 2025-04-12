@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { CategoryDetail } from "../components/CategoryDetail";
+import { CategoryDetail } from "../components";
 
 export const metadata: Metadata = {
   title: "MoneyEz | Chi tiết nhóm",

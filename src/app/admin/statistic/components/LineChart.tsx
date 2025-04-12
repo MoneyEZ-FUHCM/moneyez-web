@@ -1,6 +1,7 @@
 import Chart, { CategoryScale, ChartData } from "chart.js/auto";
 import dayjs from "dayjs";
 import { Line } from "react-chartjs-2";
+import { TEXT_TRANSLATE } from "../statistic.translate";
 
 Chart.register(CategoryScale);
 
@@ -14,19 +15,23 @@ const LineChart = ({ chartData, options }: LineChartProps) => {
   const startOfWeek =
     currentDate.day() === 0
       ? currentDate.day(-6).startOf("day")
-      : currentDate.day(1).startOf("day"); // start week (Monday)
-  const endOfWeek = startOfWeek.add(6, "days").endOf("day"); // end week (Sunday)
+      : currentDate.day(1).startOf("day");
+  const endOfWeek = startOfWeek.add(6, "days").endOf("day");
 
   return (
-    <section className="w-full p-5">
-      <div className="mb-10">
-        <p className="text-xl font-bold">
-          Đơn hàng và doanh thu từ ngày{" "}
-          {`${startOfWeek.format("DD/MM/YYYY")} đến ${endOfWeek.format("DD/MM/YYYY")}`}
+    <div className="px-4 py-2">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-800">
+          {TEXT_TRANSLATE.LINE_CHART.TITLE}
+        </h3>
+        <p className="mt-1 text-sm text-gray-500">
+          {TEXT_TRANSLATE.LINE_CHART.SUB_TITLE}
         </p>
       </div>
-      <Line data={chartData} options={options} />
-    </section>
+      <div className="h-96">
+        <Line data={chartData} options={options} />
+      </div>
+    </div>
   );
 };
 

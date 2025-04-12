@@ -2,7 +2,7 @@
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { formatCurrency } from "@/utils";
+import { formatCurrency } from "@/helpers/libs/utils";
 import { EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import Image from "next/image";

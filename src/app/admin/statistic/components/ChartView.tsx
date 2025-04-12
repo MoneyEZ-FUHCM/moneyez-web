@@ -1,33 +1,58 @@
 "use client";
 
+import { LoadingSectionWrapper } from "@/components";
+import { useBarChartData } from "../hooks/useBarChartData";
+import { useChartView } from "../hooks/useChartView";
 import { useDonutChartData } from "../hooks/useDonutChartData";
 import { useLineChartData } from "../hooks/useLineChartData";
-import { DASHBOARD_DATA, lineOptions } from "../statistic.constant";
+import { barOptions, donutOptions, lineOptions } from "../statistic.constant";
+import { TEXT_TRANSLATE } from "../statistic.translate";
+import { BarChart } from "./BarChart";
 import { DonutChart } from "./DonutChart";
 import { LineChart } from "./LineChart";
+import { ModelUsageTable } from "./ModelUsageTable";
 import { TotalField } from "./TotalField";
 
 const ChartView = () => {
-  const lineData = useLineChartData();
-  const donutData = useDonutChartData();
+  const { state } = useChartView();
+  const lineData = useLineChartData(state.modelStats);
+  const donutData = useDonutChartData(state.modelStats);
+  const barData = useBarChartData(state.modelStats);
 
   return (
-    <section>
-      <div className="p-5">
-        <TotalField data={DASHBOARD_DATA} />
-      </div>
-      <div className="grid grid-cols-1 gap-5 p-5 sm:grid-cols-3">
-        <div className="col-span-1 rounded-xl bg-[#fff] shadow-md sm:col-span-2">
-          <LineChart chartData={lineData} options={lineOptions} />
+    <LoadingSectionWrapper isLoading={state.isLoading}>
+      <section className="bg-gray-50 py-6">
+        <div className="px-6">
+          <TotalField data={state.dashboardData} />
         </div>
-
-        <div className="col-span-1 flex flex-col rounded-xl bg-[#fff] sm:col-span-1">
-          <div className="h-full flex-1">
-            <DonutChart chartData={donutData} />
+        <div className="mt-8 grid grid-cols-1 gap-6 px-6 md:grid-cols-3">
+          <div className="col-span-1 overflow-hidden rounded-xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg md:col-span-2">
+            <LineChart chartData={lineData} options={lineOptions} />
+          </div>
+          <div className="col-span-1 overflow-hidden rounded-xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg">
+            <div className="flex h-full flex-col justify-center px-2">
+              <DonutChart chartData={donutData} options={donutOptions} />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+        <div className="mt-8 grid grid-cols-1 gap-6 px-6 lg:grid-cols-2">
+          <div className="overflow-hidden rounded-xl bg-white p-4 shadow-md transition-all duration-300 hover:shadow-lg">
+            <BarChart chartData={barData} options={barOptions} />
+          </div>
+          <div className="overflow-hidden rounded-xl bg-white p-6 shadow-md transition-all duration-300 hover:shadow-lg">
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-gray-800">
+                {TEXT_TRANSLATE.MODEL_USAGE_TABLE.TITLE}
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                {TEXT_TRANSLATE.MODEL_USAGE_TABLE.SUB_TITLE}
+              </p>
+            </div>
+            <ModelUsageTable modelStats={state.modelStats} />
+          </div>
+        </div>
+      </section>
+    </LoadingSectionWrapper>
   );
 };
 
