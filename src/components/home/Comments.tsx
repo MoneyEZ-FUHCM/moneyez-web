@@ -4,24 +4,27 @@ import Rating4 from "@/assets/images/icons/4star.png";
 import Rating from "@/assets/images/icons/rating.png";
 import Star from "@/assets/images/icons/star.png";
 import Admin from "@/assets/images/logo/avatar_admin.jpg";
+import Huyen from "@/assets/images/avatar/huyen_avatar.jpg";
+import Tri from "@/assets/images/avatar/tri_avatar.jpg";
+import Duc from "@/assets/images/avatar/duc_avatar.jpg";
 import Image from "next/image";
 
 const Comments = () => {
   const feedbacks = [
     {
       id: 1,
-      name: "Dương Tôn Bảo",
+      name: "Tôn Bảo",
       role: "Công nhân",
       avatar: Admin,
       feedback:
         "Tính năng góp quỹ nhóm quá tiện! Mình và bạn bè cùng tiết kiệm cho chuyến du lịch hè, giờ ai đóng bao nhiêu đều rõ ràng minh bạch.",
-      rating: Rating,
+      rating: Rating4,
     },
     {
       id: 2,
       name: "Thương Huyền",
       role: "Nội trợ",
-      avatar: Admin,
+      avatar: Huyen,
       feedback:
         "Ứng dụng rất dễ dùng, có thể phân loại chi tiêu theo từng nhóm như ăn uống, mua sắm, học hành... Nhờ vậy mình kiểm soát được ngân sách tốt hơn.",
       rating: Rating,
@@ -30,7 +33,7 @@ const Comments = () => {
       id: 3,
       name: "Gia Đức",
       role: "Quản lý",
-      avatar: Admin,
+      avatar: Duc,
       feedback:
         "Mình hay dùng hũ tiết kiệm trong app để dành tiền mua laptop. Nhìn số tiền tăng dần mỗi tuần cảm giác rất có động lực để góp quỹ nhiều hơn!",
       rating: Rating4,
@@ -39,10 +42,10 @@ const Comments = () => {
       id: 4,
       name: "Minh Trí",
       role: "Kỹ sư",
-      avatar: Admin,
+      avatar: Tri,
       feedback:
         "Điều mình thích nhất là tính năng chatbot nhập chi tiêu siêu nhanh. Chỉ cần gõ 'ăn trưa 45k', không cần chọn danh mục hay ngày giờ gì cả, quá tiện!",
-      rating: Rating4,
+      rating: Rating,
     },
   ];
 

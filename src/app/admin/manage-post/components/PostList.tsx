@@ -26,26 +26,21 @@ const PostList = () => {
       },
       {
         title: state.TITLE.CODE,
-        dataIndex: state.FORM_NAME.CODE,
+        dataIndex: state.FORM_NAME.TITLE,
         width: "15%",
       },
       {
-        title: state.TITLE.ICON,
-        dataIndex: state.FORM_NAME.ICON,
+        title: state.TITLE.SHORT_CONTENT,
+        dataIndex: state.FORM_NAME.SHORT_CONTENT,
         width: "7%",
         render: (icon: string) => (
           <div className="text-primary">{renderIcon(icon)}</div>
         ),
       },
       {
-        title: state.TITLE.NAME,
-        dataIndex: state.FORM_NAME.NAME,
+        title: state.TITLE.THUMBNAIL,
+        dataIndex: state.FORM_NAME.THUMBNAIL,
         width: "20%",
-      },
-      {
-        title: state.TITLE.DESCRIPTION,
-        dataIndex: state.FORM_NAME.DESCRIPTION,
-        width: "36%",
       },
       {
         title: state.TITLE.CREATED_AT,

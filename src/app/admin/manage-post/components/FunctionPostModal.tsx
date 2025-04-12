@@ -1,14 +1,13 @@
 "use client";
 
+import { UploadImage } from "@/components";
 import { CommonForm } from "@/components/common/table/CommonForm";
-import {
-  BorderlessTableOutlined,
-  QrcodeOutlined,
-  UnorderedListOutlined,
-} from "@ant-design/icons";
+import { QrcodeOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Input, Modal } from "antd";
-import { TEXT_TRANSLATE } from "../post.translate";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { usePostManagementPage } from "../hooks/usePostManagement";
+import { TEXT_TRANSLATE } from "../post.translate";
 
 const FunctionPostModal = () => {
   const { TextArea } = Input;
@@ -16,8 +15,8 @@ const FunctionPostModal = () => {
 
   const subCategoryFields = [
     {
-      name: state.FORM_NAME.NAME,
-      label: state.TITLE.NAME,
+      name: state.FORM_NAME.TITLE,
+      label: state.TITLE.CODE,
       component: (
         <Input
           prefix={<UnorderedListOutlined />}
@@ -29,8 +28,8 @@ const FunctionPostModal = () => {
       ],
     },
     {
-      name: state.FORM_NAME.CODE,
-      label: state.TITLE.CODE,
+      name: state.FORM_NAME.SHORT_CONTENT,
+      label: state.TITLE.SHORT_CONTENT,
       component: (
         <Input prefix={<QrcodeOutlined />} placeholder={state.TITLE.CODE} />
       ),
@@ -39,36 +38,37 @@ const FunctionPostModal = () => {
       ],
     },
     {
-      name: state.FORM_NAME.ICON,
-      label: state.TITLE.ICON,
+      name: state.FORM_NAME.CONTENT,
+      label: state.TITLE.CONTENT,
+      isRequired: true,
       component: (
-        <Input
-          prefix={<BorderlessTableOutlined />}
-          placeholder={state.TITLE.ICON}
+        <ReactQuill
+          // onChange={(content) => {
+          //   const plainText = removeHtmlTags(content);
+          //   // handler.dispatch(setPlainText(plainText));
+          //   state.form.setFieldsValue({ description: content });
+          // }}
+          className="rounded-md border-gray-300 focus:border-primary"
+          placeholder="Nhập mô tả chi tiết về mô hình này..."
         />
       ),
-      rules: [
-        { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
-      ],
     },
-
     {
-      name: state.FORM_NAME.DESCRIPTION,
-      label: state.TITLE.DESCRIPTION,
+      name: state.FORM_NAME.THUMBNAIL,
+      label: state.TITLE.THUMBNAIL,
       component: (
-        <TextArea rows={4} placeholder={state.TITLE.DESCRIPTION} required />
+        <UploadImage
+          onFileChange={handler.handleFileChange}
+          initialImage={""}
+          titleButton={"Thêm ảnh"}
+        />
       ),
-      rules: [
-        {
-          required: true,
-          message: state.MESSAGE_VALIDATE.DESCRIPTION_REQUIRED,
-        },
-      ],
     },
   ];
 
   return (
     <Modal
+      width={800}
       title={
         <p className="text-lg font-bold text-primary">
           {state.subCategory

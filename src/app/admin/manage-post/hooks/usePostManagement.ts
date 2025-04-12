@@ -4,7 +4,10 @@ import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { clearSystemData, setSystemData } from "@/redux/slices/systemSlice";
 import { RootState } from "@/redux/store";
-import { useGetPostListQuery } from "@/services/admin/post";
+import {
+  useCreatePostMutation,
+  useGetPostListQuery,
+} from "@/services/admin/post";
 import {
   useCreateSubCategoryMutation,
   useDeleteSubCategoryMutation,
@@ -30,11 +33,15 @@ const usePostManagementPage = () => {
   const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
     TEXT_TRANSLATE;
 
-  const [createSubCategory, { isLoading: isCreating }] =
-    useCreateSubCategoryMutation();
+  const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
   const [updateSubCategory, { isLoading: isUpdating }] =
     useUpdateSubcategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
+  const [fileChange, setFileChange] = useState<string>("");
+
+  const handleFileChange = useCallback((newFileChange: string) => {
+    setFileChange(newFileChange);
+  }, []);
 
   const subCategory = useSelector(
     (state: RootState) => state.system.systemData,
@@ -60,12 +67,13 @@ const usePostManagementPage = () => {
   const handleSubmitForm = useCallback(async () => {
     try {
       const values = await form.validateFields();
+      console.log("check values", values);
       try {
         if (subCategory) {
           await updateSubCategory({ id: subCategory.id, ...values }).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.UPDATE_SUCCESSFUL);
         } else {
-          await createSubCategory([values]).unwrap();
+          await createPost(values).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         }
         form.resetFields();
@@ -84,7 +92,7 @@ const usePostManagementPage = () => {
     } catch (err: any) {
       dispatch(setIsOpen(true));
     }
-  }, [form, subCategory, updateSubCategory, createSubCategory, dispatch]);
+  }, [form, subCategory, updateSubCategory, createPost, dispatch]);
 
   const handleCancel = useCallback(() => {
     form.resetFields();
@@ -112,7 +120,7 @@ const usePostManagementPage = () => {
     (id: string) => {
       confirm({
         title: TITLE.TITLE,
-        content: TITLE.CONTENT,
+        content: TITLE.CONTENT_CONFIRM,
         okText: TITLE.OK_TEXT,
         okType: "danger",
         cancelText: TITLE.CANCEL_TEXT,
@@ -141,6 +149,10 @@ const usePostManagementPage = () => {
     },
     [confirm, deleteSubCategory],
   );
+  useEffect(() => {
+    console.log("check fileChange", fileChange);
+    form.setFieldsValue({ thumbnail: fileChange });
+  }, [fileChange, form]);
 
   useEffect(() => {
     if (isOpen && subCategory) {
@@ -171,6 +183,7 @@ const usePostManagementPage = () => {
       handleCancel,
       handleDeleteSubCategory,
       setSearchQuery,
+      handleFileChange,
     },
   };
 };

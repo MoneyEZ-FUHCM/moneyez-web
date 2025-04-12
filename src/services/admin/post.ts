@@ -15,7 +15,7 @@ const postManagementApi = apiSlice.injectEndpoints({
         transformCommonResponse<SubCategory>(response),
       providesTags: ["Post"],
     }),
-    createSubCategory: builder.mutation({
+    createPost: builder.mutation({
       query: (payload) => ({
         url: "/posts",
         method: HTTP_METHOD.POST,
@@ -43,7 +43,7 @@ const postManagementApi = apiSlice.injectEndpoints({
 
 export const {
   useGetPostListQuery,
-  useCreateSubCategoryMutation,
+  useCreatePostMutation,
   useDeletePostMutation,
   useUpdatePostMutation,
 } = postManagementApi;
