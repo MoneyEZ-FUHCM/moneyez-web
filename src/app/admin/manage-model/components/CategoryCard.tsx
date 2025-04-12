@@ -1,5 +1,6 @@
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
+import { Colors } from "@/helpers/constants/color";
 import { CategoryCardProps } from "@/types/spendingModel.types";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Card, List, Progress, Tag, Typography } from "antd";
@@ -13,7 +14,7 @@ const CategoryCard = ({
   onRemove,
 }: CategoryCardProps) => {
   const { state, handler } = useSpendingModelManagementPage();
-  const PRIMARY_COLOR = "#609084";
+
   return (
     <Card className="relative flex h-full flex-col shadow-md transition-shadow hover:shadow-lg">
       <div className="flex-grow">
@@ -24,7 +25,7 @@ const CategoryCard = ({
               percent={percentageAmount}
               format={(percent) => `${percent}%`}
               size={80}
-              strokeColor={PRIMARY_COLOR}
+              strokeColor={Colors.colors.primary}
             />
           </div>
           <div className="flex flex-col items-end gap-2">

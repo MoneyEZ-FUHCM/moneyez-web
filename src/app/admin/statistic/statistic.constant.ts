@@ -179,6 +179,19 @@ export const barOptions = {
   categoryPercentage: 0.7,
 };
 
+export const donutOptions = {
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "bottom",
+      labels: {
+        usePointStyle: false,
+        padding: 20,
+      },
+    },
+  },
+};
+
 export const CHART_COLORS = [
   "rgba(66, 133, 244, 0.8)", // Blue
   "rgba(219, 68, 55, 0.8)", // Red

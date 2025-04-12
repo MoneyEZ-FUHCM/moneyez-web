@@ -1,6 +1,7 @@
 import Chart, { CategoryScale, ChartData } from "chart.js/auto";
 import dayjs from "dayjs";
 import { Line } from "react-chartjs-2";
+import { TEXT_TRANSLATE } from "../statistic.translate";
 
 Chart.register(CategoryScale);
 
@@ -21,10 +22,10 @@ const LineChart = ({ chartData, options }: LineChartProps) => {
     <div className="px-4 py-2">
       <div className="mb-6">
         <h3 className="text-xl font-bold text-gray-800">
-          Giao dịch và số dư theo mô hình
+          {TEXT_TRANSLATE.LINE_CHART.TITLE}
         </h3>
         <p className="mt-1 text-sm text-gray-500">
-          Biểu đồ thể hiện số dư và số lượng giao dịch của từng mô hình
+          {TEXT_TRANSLATE.LINE_CHART.SUB_TITLE}
         </p>
       </div>
       <div className="h-96">

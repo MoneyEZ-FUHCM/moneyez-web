@@ -1,6 +1,6 @@
 import { formatCurrency } from "@/helpers/libs/utils";
 
-const ModelUsageTable = ({ modelStats }) => {
+const ModelUsageTable = ({ modelStats }: { modelStats: any }) => {
   return (
     <div className="rounded-lg border border-gray-200 shadow">
       <table className="min-w-full divide-y divide-gray-200">
@@ -39,10 +39,10 @@ const ModelUsageTable = ({ modelStats }) => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white">
-          {modelStats.map((model, index) => (
+          {modelStats.map((model: any, index: number) => (
             <tr
               key={model.modelId}
-              className={`transition-colors hover:bg-blue-50 ${
+              className={`transition-colors hover:bg-light/60 ${
                 index % 2 === 0 ? "bg-white" : "bg-gray-50"
               }`}
             >

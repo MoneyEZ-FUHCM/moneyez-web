@@ -1,5 +1,6 @@
 import Chart, { CategoryScale, ChartData } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
+import { TEXT_TRANSLATE } from "../statistic.translate";
 
 Chart.register(CategoryScale);
 
@@ -13,8 +14,8 @@ interface BarChartProps {
 const BarChart = ({
   chartData,
   options,
-  title = "Transaction Analysis",
-  description = "Chi tiết về mức độ sử dụng và hiệu quả của các mô hình",
+  title = TEXT_TRANSLATE.BAR_CHART.TITLE,
+  description = TEXT_TRANSLATE.BAR_CHART.SUB_TITLE,
 }: BarChartProps) => {
   return (
     <div className="px-4 py-2">

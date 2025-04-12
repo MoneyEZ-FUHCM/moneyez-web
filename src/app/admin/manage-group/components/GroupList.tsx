@@ -2,13 +2,13 @@
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { formatCurrency } from "@/helpers/libs/utils";
 import { EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import Image from "next/image";
 import { useMemo } from "react";
 import { useGroupManagementPage } from "../hooks/useGroupManagementPage";
 import { AddGroupModal } from "./AddGroupModal";
-import { formatCurrency } from "@/helpers/libs/utils";
 
 const GroupList = () => {
   const { state, handler } = useGroupManagementPage();

@@ -1,13 +1,14 @@
+import { ModelStats } from "@/types/dashboard.type";
 import { useMemo } from "react";
 
-const useLineChartData = (modelStats = []) => {
+const useLineChartData = (modelStats: ModelStats[]) => {
   return useMemo(() => {
     return {
-      labels: modelStats.map((model) => model.modelName),
+      labels: modelStats.map((model: ModelStats) => model.modelName),
       datasets: [
         {
           label: "Giao dịch",
-          data: modelStats.map((model) => model.transactionCount),
+          data: modelStats.map((model: ModelStats) => model.transactionCount),
           type: "bar",
           borderColor: "rgba(0, 143, 251, 0.85);",
           pointBorderWidth: 1,
@@ -20,7 +21,9 @@ const useLineChartData = (modelStats = []) => {
         },
         {
           label: "Số dư",
-          data: modelStats.map((model) => model.totalAmount / 1000000),
+          data: modelStats.map(
+            (model: ModelStats) => model.totalAmount / 1000000,
+          ),
           borderColor: "rgb(0, 227, 150)",
           pointBorderWidth: 1,
           pointBackgroundColor: "rgb(0, 227, 150)",

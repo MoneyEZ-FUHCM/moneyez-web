@@ -9,7 +9,7 @@ import { formatTimestamp } from "@/helpers/libs/utils";
 import { useGetCategoryByIdQuery } from "@/services/admin/category";
 import { useGetSubCategoryListQuery } from "@/services/admin/subCategory";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Descriptions, Modal, Select, Spin, Table, Tag } from "antd";
+import { Button, Descriptions, Modal, Select, Table, Tag } from "antd";
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { TEXT_TRANSLATE } from "../category.translate";
@@ -141,18 +141,11 @@ const CategoryDetail = () => {
     },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center p-8">
-        <Spin />
-      </div>
-    );
-  }
-
   return (
     <TableListLayout
       title={TITLE.CATEGORY_DETAIL}
       breadcrumbItems={breadcrumbItems}
+      isLoading={isLoading}
     >
       <div className="space-y-6">
         <div className="rounded-xl bg-white p-6">

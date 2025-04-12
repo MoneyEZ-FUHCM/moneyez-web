@@ -1,25 +1,15 @@
+import { ModelStats } from "@/types/dashboard.type";
 import { useMemo } from "react";
 import { CHART_COLORS } from "../statistic.constant";
 
-const useBarChartData = (modelStats = []) => {
+const useBarChartData = (modelStats: ModelStats[]) => {
   return useMemo(() => {
-    const avgPerUser = modelStats.map((model) => {
-      if (model.userCount === 0) return 0;
-      return Math.round(model.totalAmount / model.userCount);
-    });
-
-    const avgPerTransaction = modelStats.map((model) => {
-      if (model.transactionCount === 0) return 0;
-      return Math.round(model.totalAmount / model.transactionCount);
-    });
-
-    // Calculate transactions per user ratio
-    const transactionsPerUser = modelStats.map((model) => {
+    const transactionsPerUser = modelStats.map((model: ModelStats) => {
       if (model.userCount === 0) return 0;
       return parseFloat((model.transactionCount / model.userCount).toFixed(1));
     });
 
-    const modelNames = modelStats.map((model) => model.modelName);
+    const modelNames = modelStats.map((model: ModelStats) => model.modelName);
 
     return {
       labels: modelNames,
@@ -33,14 +23,14 @@ const useBarChartData = (modelStats = []) => {
         },
         {
           label: "Số lượng người dùng",
-          data: modelStats.map((model) => model.userCount),
+          data: modelStats.map((model: any) => model.userCount),
           backgroundColor: CHART_COLORS[1],
           barPercentage: 0.8,
           order: 2,
         },
         {
           label: "Số lượng giao dịch",
-          data: modelStats.map((model) => model.transactionCount),
+          data: modelStats.map((model: any) => model.transactionCount),
           backgroundColor: CHART_COLORS[2],
           barPercentage: 0.8,
           order: 3,

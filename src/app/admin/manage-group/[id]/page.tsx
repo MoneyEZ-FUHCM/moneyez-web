@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import GroupDetailView from "../components/GroupDetailView";
+import { GroupDetailView } from "../components";
 
 export const metadata: Metadata = {
   title: "MoneyEz | Chi tiết danh mục chi tiêu",

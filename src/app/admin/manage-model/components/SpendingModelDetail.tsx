@@ -3,12 +3,6 @@
 import { TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
-import { useGetCategoryListQuery } from "@/services/admin/category";
-import {
-  useGetSpendingModelIdQuery,
-  useUpdateSpendingModelContentMutation,
-  useUpdateSpendingModelMutation,
-} from "@/services/admin/spendingModel";
 import {
   EditOutlined,
   FileTextOutlined,
@@ -28,67 +22,27 @@ import {
   Radio,
   Row,
   Select,
-  Spin,
   Tag,
   Tooltip,
   Typography,
 } from "antd";
 import { motion } from "framer-motion";
 import parse from "html-react-parser";
-import { useParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import { CATEGORY_TYPE_TEXT, TOAST_STATUS } from "@/enums/globals";
-import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { getRandomColor } from "@/helpers/libs/utils";
-import { showToast } from "@/hooks/useShowToast";
+import { CATEGORY_TYPE_TEXT } from "@/enums/globals";
+import { CategoryFormListProps } from "@/types/spendingModel.types";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
-import { MANAGE_MODEL_CONSTANT } from "../model.constant";
 import { TEXT_TRANSLATE } from "../model.translate";
 import { CategoryCard } from "./CategoryCard";
 
 const { Title, Text, Paragraph } = Typography;
 
-interface Category {
-  id: string;
-  name: string;
-  icon: string;
-  type: string;
-}
-
-interface SpendingModelCategory {
-  categoryId: string;
-  percentageAmount: number;
-  category: Category;
-}
-
-interface SpendingModel {
-  id: string;
-  name: string;
-  description: string;
-  isTemplate: boolean;
-  spendingModelCategories: SpendingModelCategory[];
-}
-
-interface BudgetItem {
-  color: string;
-  percent: number;
-  name: string;
-  icon: string;
-}
-
-interface CategoryFormListProps {
-  form: any;
-  availableCategories: Category[];
-  hasExistingCategories?: boolean; // Added the missing property
-}
-
 const CategoryFormList: React.FC<CategoryFormListProps> = ({
   form,
   availableCategories,
-  hasExistingCategories = false, // New prop to check if there are existing categories
+  hasExistingCategories = false,
 }) => {
   return (
     <Form form={form} layout="vertical" name="categoryFormList">
@@ -196,257 +150,8 @@ const CategoryFormList: React.FC<CategoryFormListProps> = ({
 };
 
 const SpendingModelDetail = () => {
-  const { id } = useParams();
   const { TITLE } = TEXT_TRANSLATE;
   const { state, handler } = useSpendingModelManagementPage();
-  const [form] = Form.useForm();
-  const [isEditing, setIsEditing] = useState(false);
-  const [totalPercentage, setTotalPercentage] = useState(0);
-  const [editingPercentages, setEditingPercentages] = useState<
-    Record<string, number>
-  >({});
-  const [isEditingAll, setIsEditingAll] = useState(false);
-  const { SYSTEM_ERROR } = COMMON_CONSTANT;
-  const { ERROR_CODE } = MANAGE_MODEL_CONSTANT;
-
-  const {
-    data: spendingModel,
-    isLoading,
-    refetch,
-  } = useGetSpendingModelIdQuery(id as string);
-  const [updateSpendingModel] = useUpdateSpendingModelMutation();
-  const [updateSpendingModelContent] = useUpdateSpendingModelContentMutation();
-
-  const { data: categories } = useGetCategoryListQuery({
-    PageIndex: 1,
-    PageSize: 50,
-    search: "",
-  });
-
-  useEffect(() => {
-    if (state.isOpen) {
-      state.form.setFieldsValue({
-        categories: [{ categoryId: undefined, percentageAmount: undefined }],
-      });
-    }
-  }, [state.isOpen]);
-
-  useEffect(() => {
-    if (spendingModel?.data?.spendingModelCategories) {
-      const total = spendingModel.data.spendingModelCategories.reduce(
-        (sum, item) => sum + item.percentageAmount,
-        0,
-      );
-      setTotalPercentage(total);
-    }
-  }, [spendingModel?.data?.spendingModelCategories]);
-
-  useEffect(() => {
-    if (isEditingAll) {
-      const total = Object.values(editingPercentages).reduce(
-        (sum, value) => sum + (value || 0),
-        0,
-      );
-      setTotalPercentage(total);
-    }
-  }, [editingPercentages, isEditingAll]);
-
-  const filteredCategories =
-    spendingModel?.data?.spendingModelCategories.filter(
-      (category) =>
-        state.selectedType === "ALL" ||
-        category.category.type === state.selectedType,
-    );
-
-  const availableCategories = useMemo(() => {
-    if (!categories?.items || !spendingModel?.data?.spendingModelCategories)
-      return [];
-
-    const existingCategoryIds = new Set(
-      spendingModel.data.spendingModelCategories.map((item) => item.categoryId),
-    );
-
-    return categories.items.filter(
-      (category) => !existingCategoryIds.has(category.id),
-    );
-  }, [categories?.items, spendingModel?.data?.spendingModelCategories]);
-
-  const categoryFields = [
-    {
-      name: "categoryId",
-      label: "Danh mục",
-      component: (
-        <Select
-          placeholder="Chọn danh mục"
-          optionLabelProp="label"
-          className="w-full"
-          showSearch
-          filterOption={(input, option) =>
-            (option?.label?.props?.children[1]?.props?.children || "")
-              .toLowerCase()
-              .includes(input.toLowerCase())
-          }
-          options={availableCategories.map((cat) => ({
-            label: (
-              <div className="flex items-center gap-2">
-                <span className="flex items-center text-primary">
-                  {renderIcon(cat.icon)}
-                </span>
-                <span>{cat.name}</span>
-                <Tag
-                  color={
-                    cat.type === CATEGORY_TYPE_TEXT.INCOME ? "green" : "red"
-                  }
-                >
-                  {cat.type === CATEGORY_TYPE_TEXT.INCOME
-                    ? "Thu nhập"
-                    : "Chi tiêu"}
-                </Tag>
-              </div>
-            ),
-            value: cat.id,
-          }))}
-          optionRender={(option) => option.label}
-        />
-      ),
-      rules: [{ required: true, message: "Vui lòng chọn danh mục" }],
-    },
-    {
-      name: "percentageAmount",
-      label: "Phần trăm",
-      component: (
-        <InputNumber
-          min={0}
-          max={100}
-          formatter={(value) => `${value}%`}
-          className="w-full"
-          addonAfter={<PercentageOutlined />}
-        />
-      ),
-      rules: [{ required: true, message: "Vui lòng nhập phần trăm" }],
-    },
-  ];
-
-  const breadcrumbItems = [
-    {
-      href: "/admin/manage-model",
-      title: TITLE.MANAGE_MODEL,
-    },
-    {
-      title: TITLE.MANAGE_MODEL_DETAIL,
-    },
-  ];
-
-  useEffect(() => {
-    if (spendingModel?.data) {
-      form.setFieldsValue({
-        name: spendingModel.data.name,
-        description: spendingModel.data.description || "",
-      });
-    }
-  }, [spendingModel?.data, form]);
-
-  const colorMapRef = useRef<Record<string, string>>({});
-
-  const budgets = useMemo(() => {
-    if (isEditingAll) {
-      return (
-        spendingModel?.data?.spendingModelCategories?.map((category) => {
-          if (!colorMapRef.current[category.category.id]) {
-            colorMapRef.current[category.category.id] = getRandomColor();
-          }
-          return {
-            color: colorMapRef.current[category.category.id],
-            percent: editingPercentages[category.categoryId] ?? 0,
-            name: category.category.name,
-            icon: category.category.icon,
-          };
-        }) || []
-      );
-    }
-
-    return (
-      spendingModel?.data?.spendingModelCategories?.map((category) => {
-        if (!colorMapRef.current[category.category.id]) {
-          colorMapRef.current[category.category.id] = getRandomColor();
-        }
-        return {
-          color: colorMapRef.current[category.category.id],
-          percent: category.percentageAmount,
-          name: category.category.name,
-          icon: category.category.icon,
-        };
-      }) || []
-    );
-  }, [
-    spendingModel?.data?.spendingModelCategories,
-    isEditingAll,
-    editingPercentages,
-  ]);
-
-  const handleUpdateModel = async () => {
-    try {
-      const values = await form.validateFields();
-
-      const payload = {
-        id: id as string,
-        name: values.name,
-        description: values.description,
-        isTemplate: true,
-      };
-      await updateSpendingModelContent(payload).unwrap();
-      showToast(
-        TOAST_STATUS.SUCCESS,
-        "Cập nhật nội dung mô hình chi tiêu thành công",
-      );
-      setIsEditing(false);
-    } catch (error) {
-      showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
-    }
-  };
-
-  const handleUpdatePercentage = async () => {
-    try {
-      const categories = Object.entries(editingPercentages)
-        .filter(([categoryId]) => {
-          const category = spendingModel?.data?.spendingModelCategories.find(
-            (item) => item.categoryId === categoryId,
-          );
-          return category?.category.type !== CATEGORY_TYPE_TEXT.INCOME;
-        })
-        .map(([categoryId, percentageAmount]) => ({
-          categoryId,
-          percentageAmount: Number(percentageAmount),
-        }));
-
-      const incomeCategories = spendingModel?.data?.spendingModelCategories
-        .filter((item) => item.category.type === CATEGORY_TYPE_TEXT.INCOME)
-        .map((item) => ({
-          categoryId: item.categoryId,
-          percentageAmount: item.percentageAmount,
-        }));
-
-      if (incomeCategories) {
-        categories.push(...incomeCategories);
-      }
-
-      await updateSpendingModel({
-        spendingModelId: id as string,
-        categories,
-      }).unwrap();
-      showToast(TOAST_STATUS.SUCCESS, "Cập nhật mô hình chi tiêu thành công");
-
-      setIsEditingAll(false);
-      setEditingPercentages({});
-    } catch (err: any) {
-      const error = err?.data;
-      if (error.errorCode === ERROR_CODE.INVALID_TOTAL_PERCENTAGE) {
-        showToast(TOAST_STATUS.ERROR, "Tổng giá trị ngân sách phải bằng 100%");
-        return;
-      }
-      showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
-    }
-  };
 
   const getPercentageText = (percentage: number) => {
     if (percentage === 100) {
@@ -472,24 +177,11 @@ const SpendingModelDetail = () => {
     );
   };
 
-  const getPercentageClass = (percentage: number) => {
-    if (percentage === 100) return "font-medium text-green";
-    if (percentage > 100) return "font-medium text-red";
-    return "font-medium text-yellow-500";
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex h-96 items-center justify-center">
-        <Spin size="large" tip="Đang tải thông tin mô hình..." />
-      </div>
-    );
-  }
-
   return (
     <TableListLayout
       title={state.TITLE.MANAGE_MODEL_DETAIL}
-      breadcrumbItems={breadcrumbItems}
+      breadcrumbItems={state.breadcrumbItems}
+      isLoading={state.isLoading}
     >
       <div className="min-h-screen p-6">
         <motion.div
@@ -503,17 +195,19 @@ const SpendingModelDetail = () => {
               <div className="mb-6 flex items-start justify-between">
                 <div className="flex flex-col gap-2">
                   <Tag
-                    color={spendingModel?.data?.isTemplate ? "green" : "blue"}
+                    color={
+                      state.spendingModel?.data?.isTemplate ? "green" : "blue"
+                    }
                     className="px-3 py-1 text-sm font-medium"
                   >
-                    {spendingModel?.data?.isTemplate
+                    {state.spendingModel?.data?.isTemplate
                       ? "Mẫu mặc định"
                       : "Tùy chỉnh"}
                   </Tag>
                 </div>
-                {!isEditing && (
+                {!state.isEditing && (
                   <ButtonCustom
-                    onClick={() => setIsEditing(true)}
+                    onClick={() => handler.setIsEditing(true)}
                     className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white hover:bg-primary/90 hover:shadow"
                   >
                     <EditOutlined /> Chỉnh sửa
@@ -521,8 +215,12 @@ const SpendingModelDetail = () => {
                 )}
               </div>
               <div>
-                {isEditing ? (
-                  <Form form={form} layout="vertical" className="space-y-6">
+                {state.isEditing ? (
+                  <Form
+                    form={state.form}
+                    layout="vertical"
+                    className="space-y-6"
+                  >
                     <Form.Item
                       name="name"
                       label={<span className="text-sm">Tên mô hình</span>}
@@ -552,9 +250,9 @@ const SpendingModelDetail = () => {
                         theme="snow"
                         className="rounded-md border-gray-300 focus:border-primary"
                         onChange={(content) => {
-                          form.setFieldsValue({ description: content });
+                          state.form.setFieldsValue({ description: content });
                           if (!content.trim()) {
-                            form.setFields([
+                            state.form.setFields([
                               {
                                 name: "description",
                                 errors: ["Vui lòng nhập mô tả"],
@@ -567,13 +265,13 @@ const SpendingModelDetail = () => {
                     </Form.Item>
                     <div className="flex justify-end gap-3">
                       <ButtonCustom
-                        onClick={() => setIsEditing(false)}
+                        onClick={() => handler.setIsEditing(false)}
                         className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
                       >
                         Hủy
                       </ButtonCustom>
                       <ButtonCustom
-                        onClick={handleUpdateModel}
+                        onClick={handler.handleUpdateModel}
                         className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
                       >
                         <SaveOutlined /> Lưu thay đổi
@@ -586,11 +284,11 @@ const SpendingModelDetail = () => {
                       level={2}
                       className="mb-4 bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-3xl font-bold text-transparent"
                     >
-                      {spendingModel?.data?.name}
+                      {state.spendingModel?.data?.name}
                     </Title>
                     <Divider className="my-6" />
                     <div className="mt-6 text-gray-600">
-                      {parse(spendingModel?.data?.description ?? "")}
+                      {parse(state.spendingModel?.data?.description ?? "")}
                     </div>
                   </div>
                 )}
@@ -598,31 +296,31 @@ const SpendingModelDetail = () => {
             </div>
           </div>
           <div className="mb-8 w-full flex-[0.5] rounded-lg border shadow-md transition-shadow duration-500 hover:shadow-lg">
-            {budgets && budgets.length > 0 ? (
+            {state.budgets && state.budgets.length > 0 ? (
               <div className="p-6">
                 <div className="mb-5 flex items-center justify-between">
                   <Title level={4} className="m-0">
                     Phân bổ ngân sách
                   </Title>
                   <div className="flex items-center gap-2">
-                    {isEditingAll ? (
+                    {state.isEditingAll ? (
                       <>
                         <ButtonCustom
-                          onClick={handleUpdatePercentage}
+                          onClick={handler.handleUpdatePercentage}
                           className="flex items-center gap-1 bg-primary text-white"
                         >
                           <SaveOutlined /> Lưu thay đổi
                         </ButtonCustom>
                         <ButtonCustom
                           onClick={() => {
-                            setIsEditingAll(false);
-                            setEditingPercentages({});
+                            handler.setIsEditingAll(false);
+                            handler.setEditingPercentages({});
                             const originalTotal =
-                              spendingModel?.data?.spendingModelCategories.reduce(
+                              state.spendingModel?.data?.spendingModelCategories.reduce(
                                 (sum, item) => sum + item.percentageAmount,
                                 0,
                               );
-                            setTotalPercentage(originalTotal || 0);
+                            handler.setTotalPercentage(originalTotal || 0);
                           }}
                           className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
                         >
@@ -632,15 +330,15 @@ const SpendingModelDetail = () => {
                     ) : (
                       <ButtonCustom
                         onClick={() => {
-                          setIsEditingAll(true);
+                          handler.setIsEditingAll(true);
                           const initialPercentages: Record<string, number> = {};
-                          spendingModel?.data?.spendingModelCategories.forEach(
+                          state.spendingModel?.data?.spendingModelCategories.forEach(
                             (cat) => {
                               initialPercentages[cat.categoryId] =
                                 cat.percentageAmount;
                             },
                           );
-                          setEditingPercentages(initialPercentages);
+                          handler.setEditingPercentages(initialPercentages);
                         }}
                         className="flex items-center gap-1 text-white"
                       >
@@ -650,9 +348,9 @@ const SpendingModelDetail = () => {
                   </div>
                 </div>
                 <div className="flex h-3 w-full overflow-hidden rounded-lg bg-[#eee]">
-                  {budgets &&
-                    budgets.length > 0 &&
-                    budgets?.map((budget, index) => (
+                  {state.budgets &&
+                    state.budgets.length > 0 &&
+                    state.budgets?.map((budget, index) => (
                       <Tooltip
                         key={index}
                         title={
@@ -676,12 +374,12 @@ const SpendingModelDetail = () => {
                 </div>
                 <Text
                   type="secondary"
-                  className={`mb-4 block text-sm ${getPercentageClass(totalPercentage)}`}
+                  className={`mb-4 block text-sm ${handler.getPercentageClass(state.totalPercentage)}`}
                 >
-                  {getPercentageText(totalPercentage)}
+                  {getPercentageText(state.totalPercentage)}
                 </Text>
                 <div className="mt-4 space-y-2">
-                  {spendingModel?.data?.spendingModelCategories.map(
+                  {state.spendingModel?.data?.spendingModelCategories.map(
                     (category) => (
                       <div
                         key={category.categoryId}
@@ -706,14 +404,16 @@ const SpendingModelDetail = () => {
                               : "Chi tiêu"}
                           </Tag>
                         </div>
-                        {isEditingAll ? (
+                        {state.isEditingAll ? (
                           <InputNumber
                             min={0}
                             max={100}
-                            value={editingPercentages[category.categoryId] ?? 0}
+                            value={
+                              state.editingPercentages[category.categoryId] ?? 0
+                            }
                             onChange={(value) => {
-                              setEditingPercentages({
-                                ...editingPercentages,
+                              handler.setEditingPercentages({
+                                ...state.editingPercentages,
                                 [category.categoryId]: value ?? 0,
                               });
                             }}
@@ -783,25 +483,25 @@ const SpendingModelDetail = () => {
               <ButtonCustom
                 className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90 hover:shadow-md"
                 onClick={handler.handleOpenModalAdd}
-                disabled={availableCategories.length === 0}
+                disabled={state.availableCategories?.length === 0}
               >
                 <PlusOutlined /> Thêm danh mục
               </ButtonCustom>
             </Tooltip>
           </div>
           <Row gutter={[16, 16]}>
-            {filteredCategories?.length ? (
-              filteredCategories.map((category) => (
+            {state.filteredCategories?.length ? (
+              state.filteredCategories.map((category) => (
                 <Col key={category.categoryId} xs={24} sm={12} lg={8} xl={6}>
                   <CategoryCard
-                    spendingModelId={id as string}
+                    spendingModelId={state.id as string}
                     category={category.category}
                     percentageAmount={category.percentageAmount}
                     onRemove={() =>
                       handler.handleRemoveSpendingModelCategory(
-                        id as string,
+                        state.id as string,
                         category.categoryId,
-                        refetch,
+                        handler.refetch,
                       )
                     }
                   />
@@ -821,7 +521,7 @@ const SpendingModelDetail = () => {
                   <ButtonCustom
                     className="mt-4 flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90"
                     onClick={handler.handleOpenModalAdd}
-                    disabled={availableCategories.length === 0}
+                    disabled={state.availableCategories?.length === 0}
                   >
                     <PlusOutlined /> Thêm danh mục ngay
                   </ButtonCustom>
@@ -839,7 +539,9 @@ const SpendingModelDetail = () => {
           </div>
         }
         open={state.isOpen}
-        onOk={() => handler.handleAddModelCategory(id as string, refetch)}
+        onOk={() =>
+          handler.handleAddModelCategory(state.id as string, handler.refetch)
+        }
         onCancel={handler.handleCancel}
         okText="Thêm"
         cancelText="Hủy"
@@ -854,9 +556,9 @@ const SpendingModelDetail = () => {
       >
         <CategoryFormList
           form={state.form}
-          availableCategories={availableCategories}
+          availableCategories={state.availableCategories}
           hasExistingCategories={
-            filteredCategories && filteredCategories?.length > 0
+            state.filteredCategories && state.filteredCategories?.length > 0
           }
         />
       </Modal>
