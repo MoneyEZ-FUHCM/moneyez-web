@@ -44,3 +44,29 @@ export interface SpendingModelCategory {
   percentageAmount: number;
   category: Category;
 }
+
+export interface CategoryFormListProps {
+  form: any;
+  availableCategories: Category[];
+  hasExistingCategories?: boolean;
+}
+
+export interface CategoryItem {
+  categoryId: string;
+  percentageAmount: number;
+}
+
+export interface AddCategoryModelRequest {
+  spendingModelId: string;
+  categories: CategoryItem[];
+}
+
+export interface RemoveCategoryRequest {
+  spendingModelId: string;
+  categoryIds: string[];
+}
+
+export interface ModelRecord {
+  id: string;
+  [key: string]: any;
+}

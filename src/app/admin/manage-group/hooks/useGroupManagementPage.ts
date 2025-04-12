@@ -1,4 +1,9 @@
-import { TOAST_STATUS } from "@/enums/globals";
+import {
+  GENDER_INFO,
+  GROUP_MEMBER_STATUS,
+  GROUP_ROLE,
+  TOAST_STATUS,
+} from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
@@ -9,13 +14,13 @@ import {
   useGetGroupDetailQuery,
   useGetGroupListQuery,
 } from "@/services/admin/group";
+import { Group } from "@/types/group.types";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_GROUP_CONSTANT } from "../group.constant";
 import { TEXT_TRANSLATE } from "../group.translate";
-import { Group } from "@/types/group.types";
 
 const useGroupManagementPage = () => {
   const confirm = Modal.confirm;
@@ -126,8 +131,8 @@ const useGroupManagementPage = () => {
 
   const formatRole = (role: string) => {
     const roleMap: Record<string, string> = {
-      LEADER: "Trưởng nhóm",
-      MEMBER: "Thành viên",
+      LEADER: GROUP_ROLE.LEADER,
+      MEMBER: GROUP_ROLE.MEMBER,
     };
     return roleMap[role] || role;
   };
@@ -135,14 +140,17 @@ const useGroupManagementPage = () => {
   const formatStatus = (status: string) => {
     const statusMap: Record<string, { label: string; color: string }> = {
       ACTIVE: {
-        label: "Đang hoạt động",
+        label: GROUP_MEMBER_STATUS.ACTIVE,
         color: "bg-light text-[#389e0d] bg-[#f6ffed] text-green font-medium",
       },
       PENDING: {
-        label: "Chờ xác nhận",
+        label: GROUP_MEMBER_STATUS.PENDING,
         color: "bg-yellow-100 text-yellow-500",
       },
-      INACTIVE: { label: "Không hoạt động", color: "bg-red-100 text-red-800" },
+      INACTIVE: {
+        label: GROUP_MEMBER_STATUS.INACTIVE,
+        color: "bg-red-100 text-red-800",
+      },
     };
     return (
       statusMap[status] || { label: status, color: "bg-gray-100 text-gray-800" }
@@ -151,7 +159,7 @@ const useGroupManagementPage = () => {
 
   const formatGender = (gender: number | null) => {
     if (gender === null) return "N/A";
-    return gender === 0 ? "Nam" : "Nữ";
+    return gender === 0 ? GENDER_INFO.MALE : GENDER_INFO.FEMALE;
   };
 
   return {

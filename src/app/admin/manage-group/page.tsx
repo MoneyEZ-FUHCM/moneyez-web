@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { GroupList } from "./components/GroupList";
+import { GroupList } from "./components";
 
 export const metadata: Metadata = {
   title: "MoneyEz | Quản lý nhóm",

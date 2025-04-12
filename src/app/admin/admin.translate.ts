@@ -2,6 +2,7 @@ export const TEXT_TRANSLATE = {
   SIDE_BAR: {
     STATISTIC: "Thống kê",
     MANAGE_USER: "Người dùng",
+    MANAGE_POST: "Bài viết",
     MANAGE_SPENDING_MODEL: "Mô hình chi tiêu",
     MANAGE_CATEGORY: "Danh mục chi tiêu",
     MANAGE_SUB_CATEGORY: "Danh mục phụ",
@@ -17,6 +18,7 @@ export const TEXT_TRANSLATE = {
     POSITION_6: "6",
     POSITION_7: "7",
     POSITION_8: "8",
+    POSITION_9: "9",
   },
   TITLE: {
     NAME: "ADMIN",

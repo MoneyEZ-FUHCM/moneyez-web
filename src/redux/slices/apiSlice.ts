@@ -100,6 +100,7 @@ const apiSlice = createApi({
     "SubCategory",
     "Group",
     "Quiz",
+    "Post",
   ],
 });
 

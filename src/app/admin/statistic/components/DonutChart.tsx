@@ -1,5 +1,6 @@
+import Chart, { CategoryScale, ChartData } from "chart.js/auto";
 import { Doughnut } from "react-chartjs-2";
-import Chart, { ChartData, CategoryScale } from "chart.js/auto";
+import { TEXT_TRANSLATE } from "../statistic.translate";
 
 Chart.register(CategoryScale);
 
@@ -10,12 +11,19 @@ interface DonutChartProps {
 
 const DonutChart = ({ chartData, options }: DonutChartProps) => {
   return (
-    <section className="w-full p-5">
-      <div className="mb-10">
-        <p className="text-xl font-bold">Loại hũ tiết kiệm được tạo</p>
+    <div className="p-2">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-800">
+          {TEXT_TRANSLATE.DONUT_CHART.TITLE}
+        </h3>
+        <p className="mt-1 text-sm text-gray-500">
+          {TEXT_TRANSLATE.DONUT_CHART.SUB_TITLE}
+        </p>
       </div>
-      <Doughnut data={chartData} options={options} />
-    </section>
+      <div className="flex h-96 w-full items-center justify-center">
+        <Doughnut data={chartData} options={options} />
+      </div>
+    </div>
   );
 };
 

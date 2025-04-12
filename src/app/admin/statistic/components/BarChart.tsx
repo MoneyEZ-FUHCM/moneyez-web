@@ -1,36 +1,35 @@
-import {
-  BarElement,
-  CategoryScale,
-  ChartData,
-  Chart as ChartJS,
-  LinearScale,
-  LineElement,
-  PointElement,
-} from "chart.js";
-import { Chart } from "react-chartjs-2";
+import Chart, { CategoryScale, ChartData } from "chart.js/auto";
+import { Bar } from "react-chartjs-2";
+import { TEXT_TRANSLATE } from "../statistic.translate";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  PointElement,
-  LineElement,
-);
+Chart.register(CategoryScale);
 
 interface BarChartProps {
-  title: string;
-  chartData: ChartData<"line" | "bar", (number | [number, number] | null)[]>;
-  options: any;
+  chartData: ChartData<"bar"> | any;
+  options?: object;
+  title?: string;
+  description?: string;
 }
 
-const BarChart = ({ title, chartData, options }: BarChartProps) => {
+const BarChart = ({
+  chartData,
+  options,
+  title = TEXT_TRANSLATE.BAR_CHART.TITLE,
+  description = TEXT_TRANSLATE.BAR_CHART.SUB_TITLE,
+}: BarChartProps) => {
   return (
-    <section className="w-full p-5">
-      <div className="mb-10">
-        <p className="text-xl font-bold">{title}</p>
+    <div className="px-4 py-2">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-800">{title}</h3>
+        <p className="mt-1 text-sm text-gray-500">{description}</p>
       </div>
-      <Chart type="bar" data={chartData} options={options} />
-    </section>
+      <div className="h-96">
+        <Bar
+          data={chartData}
+          options={{ ...options, maintainAspectRatio: false }}
+        />
+      </div>
+    </div>
   );
 };
 

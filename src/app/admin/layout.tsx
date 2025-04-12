@@ -9,6 +9,7 @@ import {
   BarsOutlined,
   BellOutlined,
   BuildOutlined,
+  ContainerOutlined,
   FileMarkdownOutlined,
   FilePptOutlined,
   PieChartOutlined,
@@ -104,6 +105,13 @@ const items: MenuItem[] = [
     <UserOutlined />,
     undefined,
     PATH_NAME.MANAGE_USER,
+  ),
+  getItem(
+    SIDE_BAR.MANAGE_POST,
+    SIDE_BAR.POSITION_9,
+    <ContainerOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_POST,
   ),
   getItem(
     SIDE_BAR.MANAGE_NOTIFICATION,
