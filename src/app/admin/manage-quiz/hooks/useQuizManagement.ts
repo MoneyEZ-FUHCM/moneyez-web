@@ -17,6 +17,10 @@ export const useQuizManagementPage = () => {
     number | null
   >(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const [createQuiz] = useCreateQuizMutation();
+  const [updateQuizList] = useUpdateQuizMutation();
+  const [activeQuestion] = useActiveQuestionMutation();
+  const [deleteQuizList] = useDeleteQuestionsMutation();
 
   const [quiz, setQuiz] = useState<Quiz>({
     title: "",
@@ -30,15 +34,10 @@ export const useQuizManagementPage = () => {
     answerOptions: [{ content: "" }, { content: "" }],
   });
 
-  const { data: quizList } = useGetQuizListQuery({
+  const { data: quizList, isLoading: isLoadingQuizList } = useGetQuizListQuery({
     PageIndex: 1,
     PageSize: 100,
   });
-
-  const [createQuiz] = useCreateQuizMutation();
-  const [updateQuizList] = useUpdateQuizMutation();
-  const [activeQuestion] = useActiveQuestionMutation();
-  const [deleteQuizList] = useDeleteQuestionsMutation();
 
   useEffect(() => {
     if (editingQuestionIndex !== null && cardRef.current) {
@@ -288,6 +287,7 @@ export const useQuizManagementPage = () => {
       quiz,
       currentQuestion,
       cardRef,
+      isLoadingQuizList,
     },
     handler: {
       handleQuizChange,

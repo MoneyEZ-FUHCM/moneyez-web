@@ -6,7 +6,7 @@ const GroupStats = ({ groupDetail }: { groupDetail: Group }) => {
   const activeMembers = groupDetail?.groupMembers?.filter(
     (m) => m?.status === "ACTIVE",
   ).length;
-  const createdDate = new Date(groupDetail?.createdDate || "2023-01-01");
+  const createdDate = new Date(groupDetail?.createdDate || new Date());
   const activeDays = Math.floor(
     (new Date().getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24),
   );

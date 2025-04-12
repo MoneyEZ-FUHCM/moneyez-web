@@ -4,10 +4,10 @@ import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { clearSystemData, setSystemData } from "@/redux/slices/systemSlice";
 import { RootState } from "@/redux/store";
+import { useGetPostListQuery } from "@/services/admin/post";
 import {
   useCreateSubCategoryMutation,
   useDeleteSubCategoryMutation,
-  useGetSubCategoryListQuery,
   useUpdateSubcategoryMutation,
 } from "@/services/admin/subCategory";
 import { SubCategory } from "@/types/category.types";
@@ -16,23 +16,25 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_POST_CONSTANT } from "../post.constant";
 import { TEXT_TRANSLATE } from "../post.translate";
-import { useGetPostListQuery } from "@/services/admin/post";
 
 const usePostManagementPage = () => {
   const confirm = Modal.confirm;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [pageIndex, setPageIndex] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const { SYSTEM_ERROR } = COMMON_CONSTANT;
+  const { ERROR_CODE, FORM_NAME } = MANAGE_POST_CONSTANT;
+  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
+    TEXT_TRANSLATE;
 
   const [createSubCategory, { isLoading: isCreating }] =
     useCreateSubCategoryMutation();
   const [updateSubCategory, { isLoading: isUpdating }] =
     useUpdateSubcategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [pageIndex, setPageIndex] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
 
   const subCategory = useSelector(
     (state: RootState) => state.system.systemData,
@@ -48,11 +50,6 @@ const usePostManagementPage = () => {
       [pageIndex, pageSize, searchQuery],
     ),
   );
-
-  const { SYSTEM_ERROR } = COMMON_CONSTANT;
-  const { ERROR_CODE, FORM_NAME } = MANAGE_POST_CONSTANT;
-  const { MESSAGE_ERROR, MESSAGE_SUCCESS, MESSAGE_VALIDATE, TITLE, BUTTON } =
-    TEXT_TRANSLATE;
 
   useEffect(() => {
     if (data?.totalPages && pageIndex > data.totalPages) {

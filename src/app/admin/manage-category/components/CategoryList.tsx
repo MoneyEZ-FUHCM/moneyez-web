@@ -3,18 +3,13 @@
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import {
-  BarsOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { formatTimestamp } from "@/helpers/libs/utils";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { useCategoryManagementPage } from "../hooks/useCategoryManagementPage";
 import { FunctionCategoryModal } from "./FunctionCategoryModal";
-import { formatTimestamp } from "@/helpers/libs/utils";
 
 const CategoryList = () => {
   const router = useRouter();

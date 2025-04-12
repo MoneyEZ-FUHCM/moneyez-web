@@ -10,6 +10,7 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
+import { TEXT_TRANSLATE } from "../group.translate";
 import { useGroupManagementPage } from "../hooks/useGroupManagementPage";
 import GroupStats from "./GroupStats";
 
@@ -52,7 +53,7 @@ const GroupDetailView = () => {
                   <div className="flex items-center">
                     <CalendarOutlined className="mr-2 text-gray-400" />
                     <span>
-                      Ngày tạo nhóm:{" "}
+                      {TEXT_TRANSLATE.TITLE.CREATED_DATE_GROUP}{" "}
                       {formatDate(
                         state.groupDetail?.createdDate || "2023-01-01",
                       )}
@@ -61,10 +62,8 @@ const GroupDetailView = () => {
                   <div className="flex items-center">
                     <EditOutlined className="mr-2 text-gray-400" />
                     <span>
-                      Cập nhật lần cuối:{" "}
-                      {formatDate(
-                        state.groupDetail?.createdDate || "2023-01-01",
-                      )}
+                      {TEXT_TRANSLATE.TITLE.UPDATED_DATE_GROUP}{" "}
+                      {formatDate(state.groupDetail?.createdDate || new Date())}
                     </span>
                   </div>
                 </div>
@@ -98,7 +97,7 @@ const GroupDetailView = () => {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <div className="rounded-lg border border-gray-100 bg-gray-50 p-4 shadow-sm transition-all hover:border-gray-200">
                 <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-600">
-                  Số dư hiện tại
+                  {TEXT_TRANSLATE.TITLE.CURRENT_BALANCE}
                 </p>
                 <p className="text-green-600 text-2xl font-bold">
                   {formatCurrency(state.groupDetail?.currentBalance)}
@@ -117,7 +116,7 @@ const GroupDetailView = () => {
         <div className="mb-12">
           <div className="mb-6">
             <h2 className="mb-6 flex items-center text-xl font-semibold">
-              <span>Thành viên nhóm</span>
+              <span>{TEXT_TRANSLATE.TITLE.TEAM_MEMBERS}</span>
               <span className="ml-2 h-px flex-grow bg-gray-200"></span>
             </h2>
           </div>
@@ -129,31 +128,31 @@ const GroupDetailView = () => {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-600"
                   >
-                    Thành viên
+                    {TEXT_TRANSLATE.TITLE.MEMBER}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-600"
                   >
-                    Vai trò
+                    {TEXT_TRANSLATE.TITLE.ROLE}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-600"
                   >
-                    Đóng góp
+                    {TEXT_TRANSLATE.TITLE.CONTRIBUTION}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-600"
                   >
-                    Trạng thái
+                    {TEXT_TRANSLATE.TITLE.GROUP_MEMBER_STATUS}
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-600"
                   >
-                    Ngày tham gia
+                    {TEXT_TRANSLATE.TITLE.PARTICIPATE_DATE}
                   </th>
                 </tr>
               </thead>
@@ -245,7 +244,7 @@ const GroupDetailView = () => {
         </div>
         <div className="mt-8">
           <h2 className="mb-6 flex items-center text-xl font-semibold">
-            <span>Chi tiết thành viên</span>
+            <span>{TEXT_TRANSLATE.TITLE.INFO_DETAIL_MEMBER}</span>
             <span className="ml-2 h-px flex-grow bg-gray-200"></span>
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -308,7 +307,6 @@ const GroupDetailView = () => {
                       </div>
                     </div>
                   </div>
-
                   <div className="space-y-3 text-sm">
                     <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                       <span className="font-medium text-gray-500">Email:</span>
@@ -319,7 +317,7 @@ const GroupDetailView = () => {
                     {member?.userInfo?.phoneNumber && (
                       <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                         <span className="font-medium text-gray-500">
-                          Số điện thoại:
+                          {TEXT_TRANSLATE.TITLE.PHONE_NUMBER}
                         </span>
                         <span className="text-gray-900">
                           {member?.userInfo?.phoneNumber}
@@ -329,7 +327,7 @@ const GroupDetailView = () => {
                     {member?.userInfo?.dob && (
                       <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                         <span className="font-medium text-gray-500">
-                          Ngày sinh:
+                          {TEXT_TRANSLATE.TITLE.DOB}
                         </span>
                         <span className="text-gray-900">
                           {formatDate(member?.userInfo?.dob)}
@@ -339,7 +337,7 @@ const GroupDetailView = () => {
                     {member?.userInfo?.gender !== null && (
                       <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                         <span className="font-medium text-gray-500">
-                          Giới tính:
+                          {TEXT_TRANSLATE.TITLE.GENDER}
                         </span>
                         <span className="text-gray-900">
                           {handler.formatGender(
@@ -351,7 +349,7 @@ const GroupDetailView = () => {
                     {member?.userInfo?.address && (
                       <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                         <span className="font-medium text-gray-500">
-                          Địa chỉ:
+                          {TEXT_TRANSLATE.TITLE.ADDRESS}
                         </span>
                         <span className="text-gray-900">
                           {member?.userInfo?.address}
@@ -360,7 +358,7 @@ const GroupDetailView = () => {
                     )}
                     <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                       <span className="font-medium text-gray-500">
-                        Đóng góp:
+                        {TEXT_TRANSLATE.TITLE.CONTRIBUTION_MEMBER}
                       </span>
                       <div className="flex items-center">
                         <div className="mr-2 h-1.5 w-12 overflow-hidden rounded-full bg-gray-200">
@@ -378,7 +376,7 @@ const GroupDetailView = () => {
                     </div>
                     <div className="grid grid-cols-2 rounded-lg bg-gray-50 p-2">
                       <span className="font-medium text-gray-500">
-                        Ngày tham gia:
+                        {TEXT_TRANSLATE.TITLE.PARTICIPATE_DATE_MEMBER}
                       </span>
                       <span className="text-gray-900">
                         {formatDate(member?.createdDate)}

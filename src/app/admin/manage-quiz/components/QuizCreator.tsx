@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingSectionWrapper } from "@/components";
 import { ButtonCustom } from "@/components/ui/button";
 import { InputCustom } from "@/components/ui/input";
 import { TextareaCustom } from "@/components/ui/textarea";
@@ -24,53 +25,121 @@ import { CardQuestion } from "./CardQuestion";
 
 const QuizCreator = () => {
   const { state, handler } = useQuizManagementPage();
+
   return (
     <div className="flex h-full">
-      <div className="h-[82vh] w-2/5 overflow-hidden border-r border-[#E1EACD] bg-white shadow-sm">
-        <div className="flex h-full flex-col">
-          <div className="sticky top-0 z-10 mb-6 flex items-center justify-between bg-white p-4 pb-4">
-            <h2 className="text-xl font-bold text-primary">
-              Danh sách bộ câu hỏi
-            </h2>
-            <div className="flex space-x-3">
-              <ButtonCustom
-                onClick={handler.createNewQuiz}
-                className="flex h-10 items-center gap-x-2 rounded-lg bg-primary px-4 text-white shadow-sm transition-all hover:bg-[#4d766d]"
-              >
-                <PlusCircleOutlined className="text-lg" />
-                <span className="font-medium">Tạo mới</span>
-              </ButtonCustom>
+      <div className="h-[84vh] w-2/5 overflow-hidden border-r border-[#E1EACD] bg-white shadow-sm">
+        <LoadingSectionWrapper isLoading={state.isLoadingQuizList}>
+          <div className="flex h-full flex-col">
+            <div className="sticky top-0 z-10 mb-6 flex items-center justify-between bg-white p-4 pb-4">
+              <h2 className="text-xl font-bold text-primary">
+                Danh sách bộ câu hỏi
+              </h2>
+              <div className="flex space-x-3">
+                <ButtonCustom
+                  onClick={handler.createNewQuiz}
+                  className="flex h-10 items-center gap-x-2 rounded-lg bg-primary px-4 text-white shadow-sm transition-all hover:bg-[#4d766d]"
+                >
+                  <PlusCircleOutlined className="text-lg" />
+                  <span className="font-medium">Tạo mới</span>
+                </ButtonCustom>
 
-              <ButtonCustom
-                onClick={() =>
-                  state.selectedQuiz && handler.toggleActive(state.selectedQuiz)
-                }
-                className={`flex h-10 items-center gap-x-2 rounded-lg border px-4 shadow-sm transition-all ${
-                  state.selectedQuiz
-                    ? "border-primary bg-transparent text-primary hover:bg-[#E1EACD]"
-                    : "cursor-not-allowed border-gray-300 bg-gray-100 text-gray-400"
-                }`}
-                disabled={!state.selectedQuiz}
-              >
-                <CheckCircleOutlined
-                  className={
-                    state.selectedQuiz
-                      ? "text-lg text-primary"
-                      : "text-lg text-gray-400"
+                <ButtonCustom
+                  onClick={() =>
+                    state.selectedQuiz &&
+                    handler.toggleActive(state.selectedQuiz)
                   }
-                />
-                <span className="font-medium">Áp dụng</span>
-              </ButtonCustom>
+                  className={`flex h-10 items-center gap-x-2 rounded-lg border px-4 shadow-sm transition-all ${
+                    state.selectedQuiz
+                      ? "border-primary bg-transparent text-primary hover:bg-[#E1EACD]"
+                      : "cursor-not-allowed border-gray-300 bg-gray-100 text-gray-400"
+                  }`}
+                  disabled={!state.selectedQuiz}
+                >
+                  <CheckCircleOutlined
+                    className={
+                      state.selectedQuiz
+                        ? "text-lg text-primary"
+                        : "text-lg text-gray-400"
+                    }
+                  />
+                  <span className="font-medium">Áp dụng</span>
+                </ButtonCustom>
+              </div>
             </div>
-          </div>
-          <div className="scrollbar-thin flex-1 overflow-y-auto px-4 pb-4">
-            <div className="space-y-4">
-              {state.quizList &&
-                state.quizList?.items?.length > 0 &&
-                state.quizList?.items?.map((q: any) =>
-                  q?.status === QUIZ_ASSIGN_STATUS.ACTIVE ? (
-                    <Badge.Ribbon key={q.id} text="Đã áp dụng" color="#609084">
+            <div className="scrollbar-thin flex-1 overflow-y-auto px-4 pb-4">
+              <div className="space-y-4">
+                {state.quizList &&
+                  state.quizList?.items?.length > 0 &&
+                  state.quizList?.items?.map((q: any) =>
+                    q?.status === QUIZ_ASSIGN_STATUS.ACTIVE ? (
+                      <Badge.Ribbon
+                        key={q.id}
+                        text="Đã áp dụng"
+                        color="#609084"
+                      >
+                        <div
+                          className={`group relative cursor-pointer rounded-xl border p-5 transition-all hover:border-[#BAD8B6] hover:bg-thirdly/20 ${
+                            state.selectedQuiz === q.id
+                              ? "border-secondary bg-thirdly/20 ring-1 ring-[#BAD8B6]"
+                              : "border-gray-200 bg-white"
+                          }`}
+                        >
+                          <Popconfirm
+                            title="Xóa bộ câu hỏi"
+                            description="Bạn có chắc chắn muốn xóa bộ câu hỏi này?"
+                            onConfirm={(e) => handler.handleDeleteQuiz(q.id, e)}
+                            okText="Xóa"
+                            cancelText="Hủy"
+                            placement="topRight"
+                          >
+                            <Button
+                              type="text"
+                              danger
+                              icon={<DeleteOutlined />}
+                              className="absolute right-2 top-1/3 z-10 flex h-8 w-8 items-center justify-center !border-none !bg-white/80 !p-1 opacity-0 !shadow-none transition-opacity hover:!bg-red/10 group-hover:opacity-100"
+                              onClick={(e) => e.stopPropagation()}
+                            />
+                          </Popconfirm>
+                          <div onClick={() => handler.selectQuiz(q.id)}>
+                            <div className="mb-3 flex items-center justify-between">
+                              <h3
+                                className={`text-lg font-medium ${state.selectedQuiz === q.id ? "text-primary" : "text-gray-800"}`}
+                              >
+                                {q?.title}
+                              </h3>
+                            </div>
+                            <p className="mb-3 line-clamp-2 text-sm text-gray-600">
+                              {q?.description}
+                            </p>
+                            <div className="mt-4 flex items-center justify-between border-t border-[#EBEFD6] pt-3">
+                              <div className="flex flex-col space-y-1">
+                                <p className="flex items-center text-xs font-medium text-gray-500">
+                                  <CalendarOutlined className="mr-2 text-primary/70" />
+                                  <span className="mr-1 text-gray-600">
+                                    Tạo:
+                                  </span>{" "}
+                                  {formatDate(q?.createdDate)}
+                                </p>
+                                <p className="flex items-center text-xs font-medium text-gray-500">
+                                  <ClockCircleOutlined className="mr-2 text-primary/70" />
+                                  <span className="mr-1 text-gray-600">
+                                    Cập nhật:
+                                  </span>{" "}
+                                  {formatDate(q?.updatedDate || q?.createdDate)}
+                                </p>
+                              </div>
+                              <div className="flex items-center gap-1 rounded-full bg-secondary/30 px-3 py-1 text-xs font-medium text-primary">
+                                <SolutionOutlined />
+                                {q?.questions?.length} câu hỏi
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Badge.Ribbon>
+                    ) : (
                       <div
+                        key={q.id}
                         className={`group relative cursor-pointer rounded-xl border p-5 transition-all hover:border-[#BAD8B6] hover:bg-thirdly/20 ${
                           state.selectedQuiz === q.id
                             ? "border-secondary bg-thirdly/20 ring-1 ring-[#BAD8B6]"
@@ -89,7 +158,7 @@ const QuizCreator = () => {
                             type="text"
                             danger
                             icon={<DeleteOutlined />}
-                            className="absolute right-2 top-1/3 z-10 flex h-8 w-8 items-center justify-center !border-none !bg-white/80 !p-1 opacity-0 !shadow-none transition-opacity hover:!bg-red/10 group-hover:opacity-100"
+                            className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center !border-none !bg-white/80 !p-1 opacity-0 !shadow-none transition-opacity hover:!bg-red/10 group-hover:opacity-100"
                             onClick={(e) => e.stopPropagation()}
                           />
                         </Popconfirm>
@@ -101,9 +170,11 @@ const QuizCreator = () => {
                               {q?.title}
                             </h3>
                           </div>
+
                           <p className="mb-3 line-clamp-2 text-sm text-gray-600">
                             {q?.description}
                           </p>
+
                           <div className="mt-4 flex items-center justify-between border-t border-[#EBEFD6] pt-3">
                             <div className="flex flex-col space-y-1">
                               <p className="flex items-center text-xs font-medium text-gray-500">
@@ -119,6 +190,7 @@ const QuizCreator = () => {
                                 {formatDate(q?.updatedDate || q?.createdDate)}
                               </p>
                             </div>
+
                             <div className="flex items-center gap-1 rounded-full bg-secondary/30 px-3 py-1 text-xs font-medium text-primary">
                               <SolutionOutlined />
                               {q?.questions?.length} câu hỏi
@@ -126,76 +198,15 @@ const QuizCreator = () => {
                           </div>
                         </div>
                       </div>
-                    </Badge.Ribbon>
-                  ) : (
-                    <div
-                      key={q.id}
-                      className={`group relative cursor-pointer rounded-xl border p-5 transition-all hover:border-[#BAD8B6] hover:bg-thirdly/20 ${
-                        state.selectedQuiz === q.id
-                          ? "border-secondary bg-thirdly/20 ring-1 ring-[#BAD8B6]"
-                          : "border-gray-200 bg-white"
-                      }`}
-                    >
-                      <Popconfirm
-                        title="Xóa bộ câu hỏi"
-                        description="Bạn có chắc chắn muốn xóa bộ câu hỏi này?"
-                        onConfirm={(e) => handler.handleDeleteQuiz(q.id, e)}
-                        okText="Xóa"
-                        cancelText="Hủy"
-                        placement="topRight"
-                      >
-                        <Button
-                          type="text"
-                          danger
-                          icon={<DeleteOutlined />}
-                          className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center !border-none !bg-white/80 !p-1 opacity-0 !shadow-none transition-opacity hover:!bg-red/10 group-hover:opacity-100"
-                          onClick={(e) => e.stopPropagation()}
-                        />
-                      </Popconfirm>
-                      <div onClick={() => handler.selectQuiz(q.id)}>
-                        <div className="mb-3 flex items-center justify-between">
-                          <h3
-                            className={`text-lg font-medium ${state.selectedQuiz === q.id ? "text-primary" : "text-gray-800"}`}
-                          >
-                            {q?.title}
-                          </h3>
-                        </div>
-
-                        <p className="mb-3 line-clamp-2 text-sm text-gray-600">
-                          {q?.description}
-                        </p>
-
-                        <div className="mt-4 flex items-center justify-between border-t border-[#EBEFD6] pt-3">
-                          <div className="flex flex-col space-y-1">
-                            <p className="flex items-center text-xs font-medium text-gray-500">
-                              <CalendarOutlined className="mr-2 text-primary/70" />
-                              <span className="mr-1 text-gray-600">Tạo:</span>{" "}
-                              {formatDate(q?.createdDate)}
-                            </p>
-                            <p className="flex items-center text-xs font-medium text-gray-500">
-                              <ClockCircleOutlined className="mr-2 text-primary/70" />
-                              <span className="mr-1 text-gray-600">
-                                Cập nhật:
-                              </span>{" "}
-                              {formatDate(q?.updatedDate || q?.createdDate)}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center gap-1 rounded-full bg-secondary/30 px-3 py-1 text-xs font-medium text-primary">
-                            <SolutionOutlined />
-                            {q?.questions?.length} câu hỏi
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ),
-                )}
+                    ),
+                  )}
+              </div>
             </div>
           </div>
-        </div>
+        </LoadingSectionWrapper>
       </div>
 
-      <div className="h-[82vh] w-4/5 overflow-y-auto bg-light/50 p-6">
+      <div className="h-[84vh] w-4/5 overflow-y-auto bg-light/50 p-6">
         <div className="mx-auto max-w-4xl space-y-6">
           <CardQuestion
             className="bg-white"

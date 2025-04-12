@@ -3,6 +3,8 @@
 import { TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
+import { CATEGORY_TYPE_TEXT } from "@/enums/globals";
+import { CategoryFormListProps } from "@/types/spendingModel.types";
 import {
   EditOutlined,
   FileTextOutlined,
@@ -30,14 +32,11 @@ import { motion } from "framer-motion";
 import parse from "html-react-parser";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-
-import { CATEGORY_TYPE_TEXT } from "@/enums/globals";
-import { CategoryFormListProps } from "@/types/spendingModel.types";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
 import { TEXT_TRANSLATE } from "../model.translate";
 import { CategoryCard } from "./CategoryCard";
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Text } = Typography;
 
 const CategoryFormList: React.FC<CategoryFormListProps> = ({
   form,
