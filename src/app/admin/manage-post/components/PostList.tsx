@@ -1,15 +1,15 @@
 "use client";
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
-import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { SubCategory } from "@/types/category.types";
+import { formatTimestamp } from "@/helpers/libs/utils";
+import { Post } from "@/types/post.types";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import Image from "next/image";
 import { useMemo } from "react";
 import { usePostManagementPage } from "../hooks/usePostManagement";
 import { FunctionPostModal } from "./FunctionPostModal";
-import { formatTimestamp } from "@/helpers/libs/utils";
 
 const PostList = () => {
   const { state, handler } = usePostManagementPage();
@@ -33,14 +33,20 @@ const PostList = () => {
         title: state.TITLE.SHORT_CONTENT,
         dataIndex: state.FORM_NAME.SHORT_CONTENT,
         width: "7%",
-        render: (icon: string) => (
-          <div className="text-primary">{renderIcon(icon)}</div>
-        ),
       },
       {
         title: state.TITLE.THUMBNAIL,
         dataIndex: state.FORM_NAME.THUMBNAIL,
         width: "20%",
+        render: (thumbnail: string, record: any) => (
+          <Image
+            src={thumbnail ?? ""}
+            alt="lỗi"
+            width={50}
+            height={50}
+            className="h-28 w-full object-contain transition-transform duration-300 hover:scale-105"
+          />
+        ),
       },
       {
         title: state.TITLE.CREATED_AT,
@@ -53,7 +59,7 @@ const PostList = () => {
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
         width: "10%",
-        render: (_: any, record: SubCategory) => (
+        render: (_: any, record: Post) => (
           <div className="flex items-center justify-center gap-2">
             <Button
               size="small"
@@ -63,7 +69,7 @@ const PostList = () => {
               <EditOutlined className="text-primary" />
             </Button>
             <Button
-              onClick={() => handler.handleDeleteSubCategory(record.id)}
+              onClick={() => handler.handleDeletePost(record.id)}
               danger
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"

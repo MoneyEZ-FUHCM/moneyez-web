@@ -6,6 +6,7 @@ import { PATH_NAME } from "@/helpers/constants/pathname";
 import { useLogout } from "@/hooks/useLogout";
 import { selectUserInfo } from "@/redux/slices/userSlice";
 import {
+  BankOutlined,
   BarsOutlined,
   BellOutlined,
   BuildOutlined,
@@ -50,75 +51,11 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem(
-    SIDE_BAR.STATISTIC,
+    SIDE_BAR.MANAGE_BANK,
     SIDE_BAR.POSITION_1,
-    <PieChartOutlined />,
+    <BankOutlined />,
     undefined,
-    PATH_NAME.STATISTIC,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_SPENDING_MODEL,
-    SIDE_BAR.POSITION_3,
-    <BuildOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_SPENDING_MODEL,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_CATEGORY,
-    SIDE_BAR.POSITION_4,
-    <BarsOutlined />,
-    [
-      getItem(
-        SIDE_BAR.MANAGE_CATEGORY_MANAGE,
-        SIDE_BAR.POSITION_4,
-        <FileMarkdownOutlined />,
-        undefined,
-        PATH_NAME.MANAGE_CATEGORY,
-      ),
-      getItem(
-        SIDE_BAR.MANAGE_SUB_CATEGORY,
-        SIDE_BAR.POSITION_5,
-        <FilePptOutlined />,
-        undefined,
-        PATH_NAME.MANAGE_SUB_CATEGORY,
-      ),
-    ],
-    PATH_NAME.MANAGE_CATEGORY,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_QUIZ,
-    SIDE_BAR.POSITION_8,
-    <QuestionCircleOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_QUIZ,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_GROUP,
-    SIDE_BAR.POSITION_6,
-    <UsergroupAddOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_GROUP,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_USER,
-    SIDE_BAR.POSITION_2,
-    <UserOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_USER,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_POST,
-    SIDE_BAR.POSITION_9,
-    <ContainerOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_POST,
-  ),
-  getItem(
-    SIDE_BAR.MANAGE_NOTIFICATION,
-    SIDE_BAR.POSITION_7,
-    <BellOutlined />,
-    undefined,
-    PATH_NAME.MANAGE_NOTIFICATION,
+    PATH_NAME.MANAGE_BANK,
   ),
 ];
 

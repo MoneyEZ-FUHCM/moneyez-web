@@ -13,7 +13,7 @@ const FunctionPostModal = () => {
   const { TextArea } = Input;
   const { handler, state } = usePostManagementPage();
 
-  const subCategoryFields = [
+  const postFields = [
     {
       name: state.FORM_NAME.TITLE,
       label: state.TITLE.CODE,
@@ -59,8 +59,8 @@ const FunctionPostModal = () => {
       component: (
         <UploadImage
           onFileChange={handler.handleFileChange}
-          initialImage={""}
           titleButton={"Thêm ảnh"}
+          initialImage={state.fileChange}
         />
       ),
     },
@@ -71,7 +71,7 @@ const FunctionPostModal = () => {
       width={800}
       title={
         <p className="text-lg font-bold text-primary">
-          {state.subCategory
+          {state.post
             ? TEXT_TRANSLATE.TITLE.UPDATE_POST
             : TEXT_TRANSLATE.TITLE.ADD_POST}
         </p>
@@ -80,7 +80,7 @@ const FunctionPostModal = () => {
       onOk={handler.handleSubmitForm}
       onCancel={handler.handleCancel}
       okText={
-        state.subCategory
+        state.post
           ? TEXT_TRANSLATE.BUTTON.UPDATE_POST
           : TEXT_TRANSLATE.BUTTON.ADD_POST
       }
@@ -89,7 +89,7 @@ const FunctionPostModal = () => {
       okButtonProps={{ className: "custom-ok-button" }}
       destroyOnClose
     >
-      <CommonForm colSpan={24} form={state.form} fields={subCategoryFields} />
+      <CommonForm colSpan={24} form={state.form} fields={postFields} />
     </Modal>
   );
 };

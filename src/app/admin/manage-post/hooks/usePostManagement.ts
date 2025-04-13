@@ -2,23 +2,26 @@ import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
-import { clearSystemData, setSystemData } from "@/redux/slices/systemSlice";
+import {
+  clearPostData,
+  clearSystemData,
+  setPostData,
+  setSystemData,
+} from "@/redux/slices/systemSlice";
 import { RootState } from "@/redux/store";
 import {
   useCreatePostMutation,
+  useDeletePostMutation,
   useGetPostListQuery,
+  useUpdatePostMutation,
 } from "@/services/admin/post";
-import {
-  useCreateSubCategoryMutation,
-  useDeleteSubCategoryMutation,
-  useUpdateSubcategoryMutation,
-} from "@/services/admin/subCategory";
 import { SubCategory } from "@/types/category.types";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_POST_CONSTANT } from "../post.constant";
 import { TEXT_TRANSLATE } from "../post.translate";
+import { Post } from "@/types/post.types";
 
 const usePostManagementPage = () => {
   const confirm = Modal.confirm;
@@ -34,18 +37,15 @@ const usePostManagementPage = () => {
     TEXT_TRANSLATE;
 
   const [createPost, { isLoading: isCreating }] = useCreatePostMutation();
-  const [updateSubCategory, { isLoading: isUpdating }] =
-    useUpdateSubcategoryMutation();
-  const [deleteSubCategory] = useDeleteSubCategoryMutation();
+  const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
+  const [deletePost] = useDeletePostMutation();
   const [fileChange, setFileChange] = useState<string>("");
 
   const handleFileChange = useCallback((newFileChange: string) => {
     setFileChange(newFileChange);
   }, []);
 
-  const subCategory = useSelector(
-    (state: RootState) => state.system.systemData,
-  );
+  const post = useSelector((state: RootState) => state.system.post);
 
   const { data, isLoading: isLoadingPostList } = useGetPostListQuery(
     useMemo(
@@ -67,17 +67,16 @@ const usePostManagementPage = () => {
   const handleSubmitForm = useCallback(async () => {
     try {
       const values = await form.validateFields();
-      console.log("check values", values);
       try {
-        if (subCategory) {
-          await updateSubCategory({ id: subCategory.id, ...values }).unwrap();
+        if (post) {
+          await updatePost({ id: post.id, ...values }).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.UPDATE_SUCCESSFUL);
         } else {
           await createPost(values).unwrap();
           showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.CREATE_SUCCESSFUL);
         }
         form.resetFields();
-        dispatch(clearSystemData());
+        dispatch(clearPostData());
         dispatch(setIsOpen(false));
       } catch (err: any) {
         const error = err?.data;
@@ -92,22 +91,22 @@ const usePostManagementPage = () => {
     } catch (err: any) {
       dispatch(setIsOpen(true));
     }
-  }, [form, subCategory, updateSubCategory, createPost, dispatch]);
+  }, [form, post, updatePost, createPost, dispatch]);
 
   const handleCancel = useCallback(() => {
     form.resetFields();
-    dispatch(clearSystemData());
+    dispatch(clearPostData());
     dispatch(setIsOpen(false));
   }, [dispatch, form]);
 
   const handleOpenModalAdd = useCallback(() => {
     form.resetFields();
-    dispatch(clearSystemData());
+    dispatch(clearPostData());
     dispatch(setIsOpen(true));
   }, [dispatch, form]);
 
-  const handleOpenModalEdit = (record: SubCategory) => {
-    dispatch(setSystemData(record));
+  const handleOpenModalEdit = (record: Post) => {
+    dispatch(setPostData(record));
     dispatch(setIsOpen(true));
   };
 
@@ -116,7 +115,7 @@ const usePostManagementPage = () => {
     setPageSize(pagination.pageSize ?? 10);
   }, []);
 
-  const handleDeleteSubCategory = useCallback(
+  const handleDeletePost = useCallback(
     (id: string) => {
       confirm({
         title: TITLE.TITLE,
@@ -126,7 +125,7 @@ const usePostManagementPage = () => {
         cancelText: TITLE.CANCEL_TEXT,
         onOk: async () => {
           try {
-            await deleteSubCategory(id).unwrap();
+            await deletePost(id).unwrap();
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
           } catch (err: any) {
             const error = err?.data;
@@ -147,18 +146,18 @@ const usePostManagementPage = () => {
         },
       });
     },
-    [confirm, deleteSubCategory],
+    [confirm, deletePost],
   );
   useEffect(() => {
-    console.log("check fileChange", fileChange);
     form.setFieldsValue({ thumbnail: fileChange });
   }, [fileChange, form]);
 
   useEffect(() => {
-    if (isOpen && subCategory) {
-      form.setFieldsValue(subCategory);
+    if (isOpen && post) {
+      form.setFieldsValue(post);
+      setFileChange(post.thumbnail || "");
     }
-  }, [form, isOpen, subCategory]);
+  }, [form, isOpen, post]);
 
   return {
     state: {
@@ -173,7 +172,8 @@ const usePostManagementPage = () => {
       FORM_NAME,
       TITLE,
       BUTTON,
-      subCategory,
+      post,
+      fileChange,
     },
     handler: {
       handlePageChange,
@@ -181,7 +181,7 @@ const usePostManagementPage = () => {
       handleOpenModalEdit,
       handleSubmitForm,
       handleCancel,
-      handleDeleteSubCategory,
+      handleDeletePost,
       setSearchQuery,
       handleFileChange,
     },
