@@ -3,7 +3,11 @@ import React from "react";
 
 const NotificationView = () => {
   return (
-    <TableListLayout title={"Thông báo"} breadcrumbItems={[]}></TableListLayout>
+    <TableListLayout
+      subTitle={""}
+      title={"Thông báo"}
+      breadcrumbItems={[]}
+    ></TableListLayout>
   );
 };
 

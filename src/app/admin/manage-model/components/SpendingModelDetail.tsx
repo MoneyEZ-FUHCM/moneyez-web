@@ -178,6 +178,7 @@ const SpendingModelDetail = () => {
 
   return (
     <TableListLayout
+      subTitle={""}
       title={state.TITLE.MANAGE_MODEL_DETAIL}
       breadcrumbItems={state.breadcrumbItems}
       isLoading={state.isLoading}

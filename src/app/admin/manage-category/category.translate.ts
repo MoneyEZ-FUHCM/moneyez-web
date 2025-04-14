@@ -15,6 +15,8 @@ export const TEXT_TRANSLATE = {
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
+    SUB_TITLE_DETAIL:
+      "Phân tích chi tiết các mục trong danh mục để đưa ra quyết định chính xác",
     SUB_TITLE: "Dễ dàng kiểm soát ngân sách với danh mục chi tiêu hợp lý",
     CODE: "Mã danh mục",
     ICON: "Ký hiệu",
