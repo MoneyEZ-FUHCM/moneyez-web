@@ -103,7 +103,11 @@ const GroupList = () => {
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_GROUP} breadcrumbItems={[]}>
+    <TableListLayout
+      subTitle={state.TITLE.SUB_TITLE}
+      title={state.TITLE.MANAGE_GROUP}
+      breadcrumbItems={[]}
+    >
       <SearchAndAdd
         isAddButton={false}
         searchPlaceholder={state.TITLE.SEARCH}

@@ -54,6 +54,10 @@ export enum GROUP_ROLE {
   LEADER = "Trưởng nhóm",
   MEMBER = "Thành viên",
 }
+export enum GROUP_ROLE_TEXT_ENG {
+  LEADER = "LEADER",
+  MEMBER = "MEMBER",
+}
 
 export enum QUIZ_ASSIGN_STATUS {
   ACTIVE,

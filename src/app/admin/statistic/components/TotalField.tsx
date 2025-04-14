@@ -53,7 +53,7 @@ const TotalField = ({ data }: TotalFieldProps) => {
                   width={50}
                   height={50}
                   quality={100}
-                  className="h-12 w-12"
+                  className="h-14 w-14"
                 />
               </div>
               <div className="ml-4">

@@ -141,15 +141,15 @@ const useGroupManagementPage = () => {
     const statusMap: Record<string, { label: string; color: string }> = {
       ACTIVE: {
         label: GROUP_MEMBER_STATUS.ACTIVE,
-        color: "bg-light text-[#389e0d] bg-[#f6ffed] text-green font-medium",
+        color: "bg-light text-[#389e0d] text-green font-medium",
       },
       PENDING: {
         label: GROUP_MEMBER_STATUS.PENDING,
-        color: "bg-yellow-100 text-yellow-500",
+        color: "bg-yellow-100 text-yellow-500 font-medium",
       },
       INACTIVE: {
         label: GROUP_MEMBER_STATUS.INACTIVE,
-        color: "bg-red-100 text-red-800",
+        color: "bg-red/10 text-red font-medium",
       },
     };
     return (
