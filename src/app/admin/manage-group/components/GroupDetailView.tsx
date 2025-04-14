@@ -1,5 +1,6 @@
 "use client";
 import { LoadingSectionWrapper } from "@/components";
+import { GROUP_ROLE_TEXT_ENG } from "@/enums/globals";
 import { formatCurrency, formatDate } from "@/helpers/libs/utils";
 import { GroupMembers } from "@/types/group.types";
 import {
@@ -292,7 +293,7 @@ const GroupDetailView = () => {
                       <div className="flex items-center">
                         <span
                           className={`mr-2 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
-                            member?.role === "LEADER"
+                            member?.role === GROUP_ROLE_TEXT_ENG.LEADER
                               ? "bg-indigo-100 text-indigo-800"
                               : "bg-gray-100 text-gray-800"
                           }`}

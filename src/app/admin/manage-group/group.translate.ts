@@ -1,5 +1,6 @@
 export const TEXT_TRANSLATE = {
   TITLE: {
+    SUB_TITLE: "Góp quỹ thông minh – Dự án chung tay phát triển bền vững",
     INDEX: "STT",
     NAME: "Tên nhóm",
     DESCRIPTION: "Mô tả",

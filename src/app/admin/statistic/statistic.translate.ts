@@ -2,7 +2,7 @@ export const TEXT_TRANSLATE = {
   TOTAL_FIELDS: {
     BALANCE: "SỐ DƯ",
     TRANSACTION: "GIAO DỊCH",
-    SPENDING_MODELS: "MÔ HÌNH",
+    SPENDING_MODELS: "MÔ HÌNH CHI TIÊU",
     USER: "NGƯỜI DÙNG",
   },
   LINE_CHART: {

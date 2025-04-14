@@ -1,5 +1,6 @@
 export const TEXT_TRANSLATE = {
   TITLE: {
+    SUB_TITLE: "Quản lý người dùng thông minh, nâng cao hiệu quả sử dụng",
     INDEX: "STT",
     EMAIL: "Email",
     FULLNAME: "Họ và tên",

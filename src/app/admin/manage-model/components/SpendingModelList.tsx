@@ -81,7 +81,11 @@ const SpendingModelList = () => {
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_MODEL} breadcrumbItems={[]}>
+    <TableListLayout
+      subTitle={state.TITLE.SUB_TITLE}
+      title={state.TITLE.MANAGE_MODEL}
+      breadcrumbItems={[]}
+    >
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_MODEL}

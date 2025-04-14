@@ -105,21 +105,18 @@ const UserList = () => {
         width: "2%",
       },
       {
+        width: "10%",
+
         title: state.TITLE.FUNCTIONS,
         dataIndex: COMMON_CONSTANT.EMPTY_STRING,
         render: (record: any) => (
           <div className="flex items-center justify-center gap-2">
             <Button
+              onClick={() => handler.handleViewDetail(record)}
               size="small"
               className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
             >
               <EyeOutlined color="blue" className="text-primary" />
-            </Button>
-            <Button
-              size="small"
-              className="flex items-center justify-center !border-none !bg-transparent !shadow-none"
-            >
-              <EditOutlined color="blue" className="text-primary" />
             </Button>
             <Button
               onClick={() => handler.handleDeleteUser(record.id)}
@@ -137,7 +134,11 @@ const UserList = () => {
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_USER} breadcrumbItems={[]}>
+    <TableListLayout
+      subTitle={state.TITLE.SUB_TITLE}
+      title={state.TITLE.MANAGE_USER}
+      breadcrumbItems={[]}
+    >
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_USER}

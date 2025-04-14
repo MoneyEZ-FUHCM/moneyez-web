@@ -15,9 +15,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_USER_CONSTANT } from "../user.constant";
 import { TEXT_TRANSLATE } from "../user.translate";
+import { useRouter } from "next/navigation";
 
 const useUserManagementPage = () => {
   const confirm = Modal.confirm;
+  const router = useRouter();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
@@ -51,6 +53,10 @@ const useUserManagementPage = () => {
   useEffect(() => {
     form.setFieldsValue({ avatar: fileChange });
   }, [fileChange, form]);
+
+  const handleViewDetail = useCallback((record: any) => {
+    router.push(`/admin/manage-user/${record.id}`);
+  }, []);
 
   const handleAddUser = async () => {
     try {
@@ -150,9 +156,9 @@ const useUserManagementPage = () => {
       handleCancel,
       handleDeleteUser,
       setSearchQuery,
+      handleViewDetail,
     },
   };
 };
 
 export { useUserManagementPage };
-

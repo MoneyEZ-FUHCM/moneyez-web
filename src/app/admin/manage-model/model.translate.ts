@@ -14,6 +14,8 @@ export const TEXT_TRANSLATE = {
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
+    SUB_TITLE:
+      "Theo dõi – Kiểm soát – Tối ưu hóa tài chính cá nhân một cách thông minh",
     MANAGE_MODEL: "Quản lý mô hình chi tiêu",
     MANAGE_MODEL_DETAIL: "Chi tiết mô hình chi tiêu",
     MODEL_LIST: "Danh sách mô hình chi tiêu",

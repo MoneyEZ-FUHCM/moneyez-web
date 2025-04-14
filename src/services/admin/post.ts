@@ -2,20 +2,20 @@ import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import apiSlice from "@/redux/slices/apiSlice";
 import { SubCategory } from "@/types/category.types";
 import { transformCommonResponse } from "@/types/common.type";
+import { Post } from "@/types/post.types";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const postManagementApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPostList: builder.query({
       query: ({ PageIndex, PageSize, search }) => ({
-        url: `/posts?PageIndex=${PageIndex}&PageSize=${PageSize}&search=${search}&is_deleted=true`,
+        url: `/posts?PageIndex=${PageIndex}&PageSize=${PageSize}&search=${search}&is_deleted=false`,
         method: HTTP_METHOD.GET,
       }),
-      transformResponse: (response) =>
-        transformCommonResponse<SubCategory>(response),
+      transformResponse: (response) => transformCommonResponse<Post>(response),
       providesTags: ["Post"],
     }),
-    createSubCategory: builder.mutation({
+    createPost: builder.mutation({
       query: (payload) => ({
         url: "/posts",
         method: HTTP_METHOD.POST,
@@ -43,7 +43,7 @@ const postManagementApi = apiSlice.injectEndpoints({
 
 export const {
   useGetPostListQuery,
-  useCreateSubCategoryMutation,
+  useCreatePostMutation,
   useDeletePostMutation,
   useUpdatePostMutation,
 } = postManagementApi;

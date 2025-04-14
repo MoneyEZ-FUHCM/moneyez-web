@@ -15,6 +15,7 @@ export const TEXT_TRANSLATE = {
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
+    SUB_TITLE: "Dễ dàng kiểm soát ngân sách với danh mục chi tiêu hợp lý",
     CODE: "Mã danh mục",
     ICON: "Ký hiệu",
     MANAGE_CATEGORY: "Quản lý danh mục chi tiêu",
