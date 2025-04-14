@@ -2,12 +2,7 @@ import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
-import {
-  clearPostData,
-  clearSystemData,
-  setPostData,
-  setSystemData,
-} from "@/redux/slices/systemSlice";
+import { clearPostData, setPostData } from "@/redux/slices/systemSlice";
 import { RootState } from "@/redux/store";
 import {
   useCreatePostMutation,
@@ -15,15 +10,16 @@ import {
   useGetPostListQuery,
   useUpdatePostMutation,
 } from "@/services/admin/post";
-import { SubCategory } from "@/types/category.types";
+import { Post } from "@/types/post.types";
 import { Form, Modal, TablePaginationConfig } from "antd";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_POST_CONSTANT } from "../post.constant";
 import { TEXT_TRANSLATE } from "../post.translate";
-import { Post } from "@/types/post.types";
 
 const usePostManagementPage = () => {
+  const { id } = useParams();
   const confirm = Modal.confirm;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -40,6 +36,7 @@ const usePostManagementPage = () => {
   const [updatePost, { isLoading: isUpdating }] = useUpdatePostMutation();
   const [deletePost] = useDeletePostMutation();
   const [fileChange, setFileChange] = useState<string>("");
+  const router = useRouter();
 
   const handleFileChange = useCallback((newFileChange: string) => {
     setFileChange(newFileChange);
@@ -104,6 +101,10 @@ const usePostManagementPage = () => {
     dispatch(clearPostData());
     dispatch(setIsOpen(true));
   }, [dispatch, form]);
+
+  const handleViewDetail = (record: Post) => {
+    router.push(`/admin/manage-post/${record?.id}`);
+  };
 
   const handleOpenModalEdit = (record: Post) => {
     dispatch(setPostData(record));
@@ -179,11 +180,13 @@ const usePostManagementPage = () => {
       handlePageChange,
       handleOpenModalAdd,
       handleOpenModalEdit,
+      handleViewDetail,
       handleSubmitForm,
       handleCancel,
       handleDeletePost,
       setSearchQuery,
       handleFileChange,
+      dispatch,
     },
   };
 };

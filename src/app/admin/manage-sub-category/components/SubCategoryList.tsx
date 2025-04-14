@@ -84,6 +84,7 @@ const SubCategoryList = () => {
 
   return (
     <TableListLayout
+      subTitle={state.TITLE.SUB_TITLE}
       title={state.TITLE.MANAGE_SUB_CATEGORY}
       breadcrumbItems={[]}
     >

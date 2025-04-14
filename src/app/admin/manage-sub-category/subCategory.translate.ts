@@ -13,10 +13,11 @@ export const TEXT_TRANSLATE = {
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
+    SUB_TITLE: "Theo dõi các khoản chi nhỏ – Kiểm soát tài chính lớn",
     CODE: "Mã danh mục",
     ICON: "Ký hiệu",
-    MANAGE_SUB_CATEGORY: "Quản lý danh mục phụ chi tiêu",
-    SUB_CATEGORY_LIST: "Danh sách danh mục phụ chi tiêu",
+    MANAGE_SUB_CATEGORY: "Quản lý danh mục chi tiêu phụ",
+    SUB_CATEGORY_LIST: "Danh sách danh mục chi tiêu phụ",
     INDEX: "STT",
     NAME: "Tên danh mục phụ",
     DESCRIPTION: "Mô tả",

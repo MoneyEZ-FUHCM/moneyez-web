@@ -10,9 +10,11 @@ export const TEXT_TRANSLATE = {
   },
   MESSAGE_VALIDATE: {
     NAME_REQUIRED: "Vui lòng nhập tên bài viết",
+    IMAGE_REQUIRED: "Vui lòng chọn ảnh bìa",
     DESCRIPTION_REQUIRED: "Vui lòng nhập mô tả",
   },
   TITLE: {
+    SUB_TITLE: "Quản lý bài viết thông minh, tối ưu hóa trải nghiệm người đọc",
     CODE: "Tiêu đề",
     SHORT_CONTENT: "Tóm tắt nội dung",
     CONTENT: "Nội dung",

@@ -2,7 +2,7 @@
 
 import { UploadImage } from "@/components";
 import { CommonForm } from "@/components/common/table/CommonForm";
-import { QrcodeOutlined, UnorderedListOutlined } from "@ant-design/icons";
+import { ProfileOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Input, Modal } from "antd";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -31,7 +31,7 @@ const FunctionPostModal = () => {
       name: state.FORM_NAME.SHORT_CONTENT,
       label: state.TITLE.SHORT_CONTENT,
       component: (
-        <Input prefix={<QrcodeOutlined />} placeholder={state.TITLE.CODE} />
+        <Input prefix={<ProfileOutlined />} placeholder={state.TITLE.CODE} />
       ),
       rules: [
         { required: true, message: state.MESSAGE_VALIDATE.NAME_REQUIRED },
@@ -43,13 +43,8 @@ const FunctionPostModal = () => {
       isRequired: true,
       component: (
         <ReactQuill
-          // onChange={(content) => {
-          //   const plainText = removeHtmlTags(content);
-          //   // handler.dispatch(setPlainText(plainText));
-          //   state.form.setFieldsValue({ description: content });
-          // }}
           className="rounded-md border-gray-300 focus:border-primary"
-          placeholder="Nhập mô tả chi tiết về mô hình này..."
+          placeholder="Nhập mô tả chi tiết về bài viết này..."
         />
       ),
     },
@@ -60,9 +55,12 @@ const FunctionPostModal = () => {
         <UploadImage
           onFileChange={handler.handleFileChange}
           titleButton={"Thêm ảnh"}
-          initialImage={state.fileChange}
+          initialImage={state.post ? state.fileChange : ""}
         />
       ),
+      rules: [
+        { required: true, message: state.MESSAGE_VALIDATE.IMAGE_REQUIRED },
+      ],
     },
   ];
 

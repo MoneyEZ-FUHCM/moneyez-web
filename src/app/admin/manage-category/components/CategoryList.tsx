@@ -101,7 +101,11 @@ const CategoryList = () => {
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_CATEGORY} breadcrumbItems={[]}>
+    <TableListLayout
+      subTitle={state.TITLE.SUB_TITLE}
+      title={state.TITLE.MANAGE_CATEGORY}
+      breadcrumbItems={[]}
+    >
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_CATEGORY}

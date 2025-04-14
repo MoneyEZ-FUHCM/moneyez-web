@@ -134,7 +134,11 @@ const UserList = () => {
   );
 
   return (
-    <TableListLayout title={state.TITLE.MANAGE_USER} breadcrumbItems={[]}>
+    <TableListLayout
+      subTitle={state.TITLE.SUB_TITLE}
+      title={state.TITLE.MANAGE_USER}
+      breadcrumbItems={[]}
+    >
       <SearchAndAdd
         searchPlaceholder={state.TITLE.SEARCH}
         addButtonText={state.BUTTON.ADD_USER}

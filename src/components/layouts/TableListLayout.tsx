@@ -9,6 +9,7 @@ interface CommonTableLayoutProps extends TableProps<any> {
   breadcrumbItems: { href?: string; title: ReactNode }[];
   children?: ReactNode;
   isLoading?: boolean;
+  subTitle: any;
 }
 
 const TableListLayout = ({
@@ -16,6 +17,7 @@ const TableListLayout = ({
   breadcrumbItems = [],
   children,
   isLoading = false,
+  subTitle,
   ...tableProps
 }: CommonTableLayoutProps) => {
   const { Title, Text, Paragraph } = Typography;
@@ -32,7 +34,7 @@ const TableListLayout = ({
             <Title level={3} className="mb-1 text-primary">
               {title}
             </Title>
-            <Text type="secondary">{title}</Text>
+            <Text type="secondary">{subTitle}</Text>
           </div>
           <div className="rounded-xl bg-[#fff] p-5">{children}</div>
         </div>
