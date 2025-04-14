@@ -143,6 +143,7 @@ const CategoryDetail = () => {
 
   return (
     <TableListLayout
+      subTitle=""
       title={TITLE.CATEGORY_DETAIL}
       breadcrumbItems={breadcrumbItems}
       isLoading={isLoading}
