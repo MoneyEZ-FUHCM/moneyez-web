@@ -18,7 +18,7 @@ export interface UserInfo {
   nameUnsign: string;
   email: string;
   dob: string | null;
-  gender: string | null;
+  gender: string | number | null;
   address: string | null;
   phoneNumber: string;
   avatarUrl: string | null;
