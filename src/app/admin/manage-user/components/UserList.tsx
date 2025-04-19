@@ -4,12 +4,13 @@ import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { VALID_ROLE } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/helpers/libs/utils";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import Image from "next/image";
 import { useMemo } from "react";
 import { useUserManagementPage } from "../hooks/useUserManagementPage";
 import { AddUserModal } from "./AddUserModal";
+import { UserDetailModal } from "./UserDetailModel";
 
 const UserList = () => {
   const { state, handler } = useUserManagementPage();
@@ -159,6 +160,11 @@ const UserList = () => {
         rowKey={(record: { id: number }) => record.id}
       />
       <AddUserModal />
+      <UserDetailModal
+        visible={state.isDetailModalVisible}
+        onClose={handler.handleCloseDetailModal}
+        userData={state.selectedUser as any}
+      />
     </TableListLayout>
   );
 };

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_USER_CONSTANT } from "../user.constant";
 import { TEXT_TRANSLATE } from "../user.translate";
 import { useRouter } from "next/navigation";
+import { User } from "@/types/user.types";
 
 const useUserManagementPage = () => {
   const confirm = Modal.confirm;
@@ -30,6 +31,8 @@ const useUserManagementPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const { data, isLoading: isLoadingUserList } = useGetUserListQuery({
     PageIndex: pageIndex,
     PageSize: pageSize,
@@ -55,7 +58,8 @@ const useUserManagementPage = () => {
   }, [fileChange, form]);
 
   const handleViewDetail = useCallback((record: any) => {
-    router.push(`/admin/manage-user/${record.id}`);
+    setIsDetailModalVisible(true);
+    setSelectedUser(record);
   }, []);
 
   const handleAddUser = async () => {
@@ -133,6 +137,11 @@ const useUserManagementPage = () => {
     });
   };
 
+  const handleCloseDetailModal = () => {
+    setIsDetailModalVisible(false);
+    setSelectedUser(null);
+  };
+
   return {
     state: {
       data,
@@ -147,6 +156,8 @@ const useUserManagementPage = () => {
       FORM_NAME,
       TITLE,
       BUTTON,
+      selectedUser,
+      isDetailModalVisible,
     },
     handler: {
       handlePageChange,
@@ -157,6 +168,7 @@ const useUserManagementPage = () => {
       handleDeleteUser,
       setSearchQuery,
       handleViewDetail,
+      handleCloseDetailModal,
     },
   };
 };
