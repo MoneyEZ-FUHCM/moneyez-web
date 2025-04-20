@@ -29,8 +29,11 @@ const axiosBaseQuery = async (
 
   const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
-    prepareHeaders: (headers) => {
-      headers.set("Content-Type", "application/json");
+    prepareHeaders: (headers, { getState, endpoint }) => {
+      if (!headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json");
+      }
+      const token = Cookies.get("accessToken");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -101,6 +104,7 @@ const apiSlice = createApi({
     "Group",
     "Quiz",
     "Post",
+    "Knowledge",
   ],
 });
 
