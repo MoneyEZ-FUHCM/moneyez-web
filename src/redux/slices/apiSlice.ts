@@ -30,9 +30,13 @@ const axiosBaseQuery = async (
   const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, { getState, endpoint }) => {
-      if (!headers.has("Content-Type")) {
+      const isFormData =
+        typeof args === "object" && args.body instanceof FormData;
+
+      if (!isFormData && !headers.has("Content-Type")) {
         headers.set("Content-Type", "application/json");
       }
+
       const token = Cookies.get("accessToken");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

@@ -18,7 +18,8 @@ const knowledgeApi = apiSlice.injectEndpoints({
     uploadKnowledge: builder.mutation({
       query: (formData: FormData) => ({
         url: "/knowledges",
-        method: "POST",
+        method: HTTP_METHOD.POST,
+
         body: formData,
       }),
       invalidatesTags: ["Knowledge"],
@@ -26,7 +27,7 @@ const knowledgeApi = apiSlice.injectEndpoints({
     deleteKnowledge: builder.mutation({
       query: (id) => ({
         url: `/knowledges/${id}`,
-        method: "POST",
+        method: HTTP_METHOD.DELETE,
       }),
       invalidatesTags: ["Knowledge"],
     }),

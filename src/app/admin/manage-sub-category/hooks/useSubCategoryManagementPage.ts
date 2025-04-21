@@ -9,7 +9,7 @@ import {
   useDeleteSubCategoryMutation,
   useGetSubCategoryListQuery,
   useUpdateSubcategoryMutation,
-} from "@/services/admin/subCategory";
+} from "@/services/admin/sub-category";
 import { SubCategory } from "@/types/category.types";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";

@@ -7,7 +7,7 @@ import { ButtonCustom } from "@/components/ui/button";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/helpers/libs/utils";
 import { useGetCategoryByIdQuery } from "@/services/admin/category";
-import { useGetSubCategoryListQuery } from "@/services/admin/subCategory";
+import { useGetSubCategoryListQuery } from "@/services/admin/sub-category";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Descriptions, Modal, Select, Table, Tag } from "antd";
 import { useParams } from "next/navigation";
