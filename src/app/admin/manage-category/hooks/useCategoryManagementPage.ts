@@ -13,7 +13,7 @@ import {
 import {
   useAssignSubcategoriesMutation,
   useUnAssignSubcategoriesMutation,
-} from "@/services/admin/subCategory";
+} from "@/services/admin/sub-category";
 import { Category } from "@/types/category.types";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useRouter } from "next/navigation";
