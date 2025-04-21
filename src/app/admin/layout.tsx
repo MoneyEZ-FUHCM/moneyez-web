@@ -12,6 +12,7 @@ import {
   ContainerOutlined,
   FileMarkdownOutlined,
   FilePptOutlined,
+  FileWordOutlined,
   PieChartOutlined,
   QuestionCircleOutlined,
   UsergroupAddOutlined,
@@ -93,6 +94,13 @@ const items: MenuItem[] = [
     PATH_NAME.MANAGE_QUIZ,
   ),
   getItem(
+    SIDE_BAR.MANAGE_KNOWLEDGE,
+    SIDE_BAR.POSITION_7,
+    <FileWordOutlined />,
+    undefined,
+    PATH_NAME.MANAGE_KNOWLEDGE,
+  ),
+  getItem(
     SIDE_BAR.MANAGE_GROUP,
     SIDE_BAR.POSITION_6,
     <UsergroupAddOutlined />,
@@ -113,13 +121,6 @@ const items: MenuItem[] = [
     undefined,
     PATH_NAME.MANAGE_POST,
   ),
-  // getItem(
-  //   SIDE_BAR.MANAGE_NOTIFICATION,
-  //   SIDE_BAR.POSITION_7,
-  //   <BellOutlined />,
-  //   undefined,
-  //   PATH_NAME.MANAGE_NOTIFICATION,
-  // ),
 ];
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {

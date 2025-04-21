@@ -14,7 +14,7 @@ import {
   useRemovecategoryFromSpendingModelMutation,
   useUpdateSpendingModelContentMutation,
   useUpdateSpendingModelMutation,
-} from "@/services/admin/spendingModel";
+} from "@/services/admin/spending-model";
 import {
   AddCategoryModelRequest,
   CategoryItem,

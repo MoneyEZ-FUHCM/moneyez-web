@@ -1,7 +1,7 @@
 import {
   useGetModelUsageQuery,
   useGetStatisticsQuery,
-} from "@/services/admin/adminDashboard";
+} from "@/services/admin/admin-dashboard";
 import { ModelStats } from "@/types/dashboard.type";
 import { useEffect, useMemo, useState } from "react";
 
