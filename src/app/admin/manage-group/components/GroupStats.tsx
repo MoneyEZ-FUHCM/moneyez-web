@@ -1,5 +1,5 @@
 import { CountupCustom } from "@/components";
-import { Group } from "@/types/group.types";
+import { Group } from "@/helpers/types/group.types";
 
 const GroupStats = ({ groupDetail }: { groupDetail: Group }) => {
   const totalMembers = groupDetail?.groupMembers?.length || 0;

@@ -1,7 +1,7 @@
+import { UserInfo } from "@/helpers/types/user.types";
 import authApi from "@/services/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { UserInfo } from "@/types/user.types";
 
 interface UserState {
   userInfo: UserInfo | null;

@@ -1,7 +1,7 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { SubCategory } from "@/helpers/types/category.types";
+import { transformCommonResponse } from "@/helpers/types/common.type";
 import apiSlice from "@/redux/slices/apiSlice";
-import { SubCategory } from "@/types/category.types";
-import { transformCommonResponse } from "@/types/common.type";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const subSubCategoryManagementApi = apiSlice.injectEndpoints({

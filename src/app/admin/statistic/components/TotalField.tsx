@@ -2,7 +2,7 @@ import Bag from "@/assets/images/icons/ic_glass_bag.png";
 import Cart from "@/assets/images/icons/ic_glass_buy.png";
 import User from "@/assets/images/icons/ic_glass_users.png";
 import Revenue from "@/assets/images/icons/revenue.png";
-import { AdminDashboardInfo } from "@/types/dashboard.type";
+import { AdminDashboardInfo } from "@/helpers/types/dashboard.type";
 import Image from "next/image";
 import CountUp from "react-countup";
 import { TEXT_TRANSLATE } from "../statistic.translate";

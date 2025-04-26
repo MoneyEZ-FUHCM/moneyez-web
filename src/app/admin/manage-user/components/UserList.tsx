@@ -1,8 +1,8 @@
 "use client";
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
-import { VALID_ROLE } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { VALID_ROLE } from "@/helpers/enums/globals";
 import { formatTimestamp } from "@/helpers/libs/utils";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";

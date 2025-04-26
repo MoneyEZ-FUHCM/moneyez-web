@@ -1,8 +1,8 @@
+import { ModelStats } from "@/helpers/types/dashboard.type";
 import {
   useGetModelUsageQuery,
   useGetStatisticsQuery,
 } from "@/services/admin/admin-dashboard";
-import { ModelStats } from "@/types/dashboard.type";
 import { useEffect, useMemo, useState } from "react";
 
 const useChartView = () => {

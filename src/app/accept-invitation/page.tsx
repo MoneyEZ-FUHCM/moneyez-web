@@ -2,9 +2,9 @@
 
 import LogoWeb from "@/assets/images/logo/logo_web.png";
 import { ButtonCustom } from "@/components/ui/button";
-import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import { showToast } from "@/hooks/useShowToast";
+import { TOAST_STATUS } from "@/helpers/enums/globals";
+import { showToast } from "@/helpers/hooks/useShowToast";
 import { useAcceptInvitationMutation } from "@/services/group";
 import { Card, Divider, Spin, Typography } from "antd";
 import Image from "next/image";

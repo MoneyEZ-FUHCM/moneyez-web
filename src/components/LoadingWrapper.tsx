@@ -1,8 +1,8 @@
 "use client";
 
-import { VALID_ROLE } from "@/enums/globals";
 import { PATH_NAME } from "@/helpers/constants/pathname";
-import useUserInfo from "@/hooks/useUserInfo";
+import { VALID_ROLE } from "@/helpers/enums/globals";
+import useUserInfo from "@/helpers/hooks/useUserInfo";
 import { selectUserInfo } from "@/redux/slices/userSlice";
 import Cookies from "js-cookie";
 import { usePathname, useRouter } from "next/navigation";
