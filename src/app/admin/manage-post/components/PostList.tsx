@@ -3,7 +3,7 @@
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/helpers/libs/utils";
-import { Post } from "@/types/post.types";
+import { Post } from "@/helpers/types/post.types";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Tooltip } from "antd";
 import parse from "html-react-parser";

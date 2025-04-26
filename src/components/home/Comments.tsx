@@ -47,6 +47,15 @@ const Comments = () => {
         "Điều mình thích nhất là tính năng chatbot nhập chi tiêu siêu nhanh. Chỉ cần gõ 'ăn trưa 45k', không cần chọn danh mục hay ngày giờ gì cả, quá tiện!",
       rating: Rating,
     },
+    {
+      id: 5,
+      name: "Nhật Linh",
+      role: "Kỹ sư",
+      avatar: Tri,
+      feedback:
+        "Điều mình thích nhất là tính năng chatbot nhập chi tiêu siêu nhanh. Chỉ cần gõ 'ăn trưa 45k', không cần chọn danh mục hay ngày giờ gì cả, quá tiện!",
+      rating: Rating,
+    },
   ];
 
   return (

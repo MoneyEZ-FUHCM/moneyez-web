@@ -1,8 +1,7 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { transformCommonResponse } from "@/helpers/types/common.type";
+import { Post } from "@/helpers/types/post.types";
 import apiSlice from "@/redux/slices/apiSlice";
-import { SubCategory } from "@/types/category.types";
-import { transformCommonResponse } from "@/types/common.type";
-import { Post } from "@/types/post.types";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const postManagementApi = apiSlice.injectEndpoints({

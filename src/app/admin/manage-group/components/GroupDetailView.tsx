@@ -1,8 +1,8 @@
 "use client";
 import { LoadingSectionWrapper } from "@/components";
-import { GROUP_ROLE_TEXT_ENG } from "@/enums/globals";
+import { GROUP_ROLE_TEXT_ENG } from "@/helpers/enums/globals";
 import { formatCurrency, formatDate } from "@/helpers/libs/utils";
-import { GroupMembers } from "@/types/group.types";
+import { GroupMembers } from "@/helpers/types/group.types";
 import {
   CalendarOutlined,
   CloseCircleOutlined,

@@ -3,8 +3,8 @@
 import { TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
-import { CATEGORY_TYPE_TEXT } from "@/enums/globals";
-import { CategoryFormListProps } from "@/types/spendingModel.types";
+import { CATEGORY_TYPE_TEXT } from "@/helpers/enums/globals";
+import { CategoryFormListProps } from "@/helpers/types/spendingModel.types";
 import {
   EditOutlined,
   FileTextOutlined,

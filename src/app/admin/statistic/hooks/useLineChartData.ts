@@ -1,4 +1,4 @@
-import { ModelStats } from "@/types/dashboard.type";
+import { ModelStats } from "@/helpers/types/dashboard.type";
 import { useMemo } from "react";
 
 const useLineChartData = (modelStats: ModelStats[]) => {

@@ -1,7 +1,7 @@
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
 import { Colors } from "@/helpers/constants/color";
-import { CategoryCardProps } from "@/types/spendingModel.types";
+import { CategoryCardProps } from "@/helpers/types/spendingModel.types";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Card, List, Progress, Tag, Typography } from "antd";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";

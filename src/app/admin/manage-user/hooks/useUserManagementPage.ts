@@ -1,7 +1,7 @@
-import { TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { TOAST_STATUS } from "@/helpers/enums/globals";
+import { showToast } from "@/helpers/hooks/useShowToast";
 import { formatDateRequest } from "@/helpers/libs/utils";
-import { showToast } from "@/hooks/useShowToast";
 import { setIsOpen } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
 import {
@@ -11,12 +11,11 @@ import {
 } from "@/services/admin/user";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MANAGE_USER_CONSTANT } from "../user.constant";
 import { TEXT_TRANSLATE } from "../user.translate";
-import { useRouter } from "next/navigation";
-import { User } from "@/types/user.types";
 
 const useUserManagementPage = () => {
   const confirm = Modal.confirm;
