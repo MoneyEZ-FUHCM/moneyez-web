@@ -11,12 +11,13 @@ export const MANAGE_USER_CONSTANT = {
     CREATED_DATE: "createdDate",
     CREATED_BY: "createdBy",
     UPDATED_BY: "updatedBy",
+    IS_VERIFIED: "isVerified",
     ID: "id",
     UNSIGN_NAME: "unsignFullName",
     CONFIRM_EMAIL: "confirmEmail",
     FULLNAME: "fullName",
     INDEX: "index",
-    STATUS: "status"
+    STATUS: "status",
   },
 
   // Error code
@@ -25,5 +26,6 @@ export const MANAGE_USER_CONSTANT = {
     ACCOUNT_VERIFIED: "AccountVerified",
     DUPLICATE_PHONE_NUMBER: "DuplicatePhoneNumber",
     ACCOUNT_NOT_EXIST: "AccountNotExist",
+    IS_CURRENT_USER: "AccountIsCurrentUser",
   },
 };

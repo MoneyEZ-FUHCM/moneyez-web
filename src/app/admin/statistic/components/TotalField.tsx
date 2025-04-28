@@ -1,7 +1,7 @@
-import Bag from "@/assets/images/icons/ic_glass_bag.png";
-import Cart from "@/assets/images/icons/ic_glass_buy.png";
+import Category from "@/assets/images/icons/copy.png";
 import User from "@/assets/images/icons/ic_glass_users.png";
-import Revenue from "@/assets/images/icons/revenue.png";
+import Group from "@/assets/images/icons/identity.png";
+import Model from "@/assets/images/icons/tag.png";
 import { AdminDashboardInfo } from "@/helpers/types/dashboard.type";
 import Image from "next/image";
 import CountUp from "react-countup";
@@ -14,25 +14,24 @@ interface TotalFieldProps {
 const TotalField = ({ data }: TotalFieldProps) => {
   const fields = [
     {
-      icon: Cart,
-      label: TEXT_TRANSLATE.TOTAL_FIELDS.BALANCE,
-      value: data.revenue,
-      suffix: "đ",
-    },
-    {
-      icon: Revenue,
-      label: TEXT_TRANSLATE.TOTAL_FIELDS.TRANSACTION,
-      value: data.numOfOrders ?? 0,
-    },
-    {
-      icon: Bag,
-      label: TEXT_TRANSLATE.TOTAL_FIELDS.SPENDING_MODELS,
-      value: data.numOfStores,
+      icon: Group,
+      label: TEXT_TRANSLATE.TOTAL_FIELDS.USER,
+      value: data.numOfUsers,
     },
     {
       icon: User,
-      label: TEXT_TRANSLATE.TOTAL_FIELDS.USER,
-      value: data.numOfUsers,
+      label: TEXT_TRANSLATE.TOTAL_FIELDS.GROUP,
+      value: data.numOfGroups ?? 0,
+    },
+    {
+      icon: Model,
+      label: TEXT_TRANSLATE.TOTAL_FIELDS.SPENDING_MODELS,
+      value: data.numOfModels ?? 0,
+    },
+    {
+      icon: Category,
+      label: TEXT_TRANSLATE.TOTAL_FIELDS.CATEGORY,
+      value: data.numberOfCategories ?? 0,
     },
   ];
 
@@ -63,7 +62,6 @@ const TotalField = ({ data }: TotalFieldProps) => {
                 <div className="flex items-baseline">
                   <p className="text-2xl font-bold text-gray-800">
                     <CountUp end={field.value} duration={2} separator="." />
-                    {field.suffix && <span>{field.suffix}</span>}
                   </p>
                 </div>
               </div>

@@ -106,6 +106,18 @@ const UserList = () => {
         width: "2%",
       },
       {
+        title: state.TITLE.IS_VERIFIED,
+        dataIndex: state.FORM_NAME.IS_VERIFIED,
+        render: (status: boolean) => {
+          let statusText = status
+            ? state.TITLE.IS_VERIFIED_ACTIVE
+            : state.TITLE.IS_VERIFIED_UNACTIVE;
+          let tagColor = status ? "green" : "red";
+          return <Tag color={tagColor}>{statusText}</Tag>;
+        },
+        width: "2%",
+      },
+      {
         width: "10%",
 
         title: state.TITLE.FUNCTIONS,

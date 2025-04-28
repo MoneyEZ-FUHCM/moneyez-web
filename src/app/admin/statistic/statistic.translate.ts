@@ -1,9 +1,10 @@
 export const TEXT_TRANSLATE = {
   TOTAL_FIELDS: {
-    BALANCE: "SỐ DƯ",
+    GROUP: "NHÓM",
     TRANSACTION: "GIAO DỊCH",
     SPENDING_MODELS: "MÔ HÌNH CHI TIÊU",
     USER: "NGƯỜI DÙNG",
+    CATEGORY: "DANH MỤC",
   },
   LINE_CHART: {
     TITLE: "Giao dịch và số dư theo mô hình",

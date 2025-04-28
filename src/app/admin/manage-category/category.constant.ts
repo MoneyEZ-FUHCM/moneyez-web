@@ -8,6 +8,7 @@ export const MANAGE_CATEGORY_CONSTANT = {
     INDEX: "index",
     NAME: "name",
     DESCRIPTION: "description",
+    IS_SAVING: "isSaving",
     TYPE: "type",
     CODE: "code",
     ICON: "icon",

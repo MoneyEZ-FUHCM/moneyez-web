@@ -1,13 +1,12 @@
 "use client";
 
+import MobilePart from "@/assets/images/home-screen-4.png";
 import Star from "@/assets/images/icons/star.png";
-import MobilePart from "@/assets/images/mobile-part.png";
 import {
   BackgroundIntro,
   BackToTop,
   Comments,
   Functions,
-  Packages,
   Reasons,
   ScrollReveal,
   Statistic,
@@ -72,7 +71,7 @@ export default function Home() {
                 <Image
                   src={MobilePart}
                   alt="mockup"
-                  width={550}
+                  width={500}
                   height={400}
                   quality={100}
                 />

@@ -1,6 +1,7 @@
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
 import { Colors } from "@/helpers/constants/color";
+import { CATEGORY_TYPE_TEXT } from "@/helpers/enums/globals";
 import { CategoryCardProps } from "@/helpers/types/spendingModel.types";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Card, List, Progress, Tag, Typography } from "antd";
@@ -69,15 +70,17 @@ const CategoryCard = ({
         )}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 mt-10 p-4">
-        <ButtonCustom
-          className="w-full bg-primary text-white"
-          onClick={onRemove}
-        >
-          <DeleteOutlined className="mr-1" />
-          {state.BUTTON.DELETE_SPENDING_MODEL_CATEGORY}
-        </ButtonCustom>
-      </div>
+      {state.spendingModel?.data?.isTemplate === false && (
+        <div className="absolute bottom-0 left-0 right-0 mt-10 p-4">
+          <ButtonCustom
+            className="w-full bg-primary text-white"
+            onClick={onRemove}
+          >
+            <DeleteOutlined className="mr-1" />
+            {state.BUTTON.DELETE_SPENDING_MODEL_CATEGORY}
+          </ButtonCustom>
+        </div>
+      )}
     </Card>
   );
 };

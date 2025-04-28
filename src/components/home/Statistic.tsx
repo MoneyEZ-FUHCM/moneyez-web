@@ -8,18 +8,18 @@ const Statistic = () => {
   const stats = [
     {
       id: 1,
-      value: <CountupCustom value={6} />,
+      value: <CountupCustom value={20} />,
       label: "Người dùng",
     },
     {
       id: 2,
-      value: <CountupCustom value={1000000} />,
-      label: "Tiền tiết kiệm (VNĐ)",
+      value: <CountupCustom value={10} />,
+      label: "NHÓM",
     },
     {
       id: 3,
-      value: <CountupCustom value={20} />,
-      label: "HŨ ĐÃ TẠO",
+      value: <CountupCustom value={2} />,
+      label: "MÔ HÌNH CHI TIÊU",
     },
     {
       id: 4,

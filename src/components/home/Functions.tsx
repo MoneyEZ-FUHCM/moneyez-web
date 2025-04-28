@@ -3,7 +3,8 @@ import Price from "@/assets/images/icons/price.png";
 import Secure from "@/assets/images/icons/secure.png";
 import Star from "@/assets/images/icons/star.png";
 import Statistic from "@/assets/images/icons/statistic.png";
-import MobileFull from "@/assets/images/mobile-full.png";
+// import MobileFull from "@/assets/images/mobile-full.png";
+import MobileFull from "@/assets/images/main-screen.png";
 import Image from "next/image";
 
 const features = [

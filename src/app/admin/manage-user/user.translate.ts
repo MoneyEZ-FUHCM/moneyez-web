@@ -9,6 +9,9 @@ export const TEXT_TRANSLATE = {
     PHONE_NUMBER: "Số điện thoại",
     ROLE: "Vai trò",
     STATUS: "Trạng thái",
+    IS_VERIFIED: "Xác thực",
+    IS_VERIFIED_ACTIVE: "ĐÃ XÁC THỰC",
+    IS_VERIFIED_UNACTIVE: "CHƯA XÁC THỰC",
     FUNCTIONS: "Chức năng",
     USER: "Người dùng",
     ADMIN: "Quản lý",
@@ -65,6 +68,7 @@ export const TEXT_TRANSLATE = {
     ACCOUNT_DOES_NOT_EXIST: "Tài khoản không tồn tại",
     MUST_BE_16: "Người dùng phải từ 16 tuổi trở lên mới dược vào hệ thống",
     ACCOUNT_NOT_EXISTS: "Tài khoản không tồn tài",
+    IS_CURRENT_USER: "Không thể xóa bản thân khỏi hệ thống",
   },
 
   MESSAGE_SUCCESS: {
