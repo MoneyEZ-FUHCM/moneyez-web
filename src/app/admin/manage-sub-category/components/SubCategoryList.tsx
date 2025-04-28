@@ -4,7 +4,7 @@ import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/helpers/libs/utils";
-import { SubCategory } from "@/types/category.types";
+import { SubCategory } from "@/helpers/types/category.types";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useMemo } from "react";

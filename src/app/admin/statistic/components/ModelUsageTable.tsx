@@ -28,12 +28,6 @@ const ModelUsageTable = ({ modelStats }: { modelStats: any }) => {
               scope="col"
               className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"
             >
-              Tổng số tiền
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-600"
-            >
               Trung bình/GD
             </th>
           </tr>
@@ -60,17 +54,10 @@ const ModelUsageTable = ({ modelStats }: { modelStats: any }) => {
                 <div className="text-gray-700">{model.transactionCount}</div>
               </td>
               <td className="whitespace-nowrap px-6 py-4">
-                <div className="font-medium text-gray-900">
-                  {formatCurrency(model.totalAmount)}
-                </div>
-              </td>
-              <td className="whitespace-nowrap px-6 py-4">
                 <div className="text-gray-700">
-                  {model.transactionCount > 0
-                    ? formatCurrency(
-                        Math.round(model.totalAmount / model.transactionCount),
-                      )
-                    : formatCurrency(0)}
+                  {model.transactionCount && model.userCount > 0
+                    ? Math.round(model.transactionCount / model.userCount)
+                    : 0}
                 </div>
               </td>
             </tr>

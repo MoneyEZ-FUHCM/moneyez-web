@@ -4,7 +4,13 @@ import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import { formatTimestamp } from "@/helpers/libs/utils";
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import { Button, Tag } from "antd";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
@@ -51,12 +57,24 @@ const CategoryList = () => {
       {
         title: state.TITLE.NAME,
         dataIndex: state.FORM_NAME.NAME,
-        width: "23%",
+        width: "20%",
       },
       {
         title: state.TITLE.DESCRIPTION,
         dataIndex: state.FORM_NAME.DESCRIPTION,
-        width: "30%",
+        width: "20%",
+      },
+      {
+        title: state.TITLE.IS_SAVING,
+        dataIndex: state.FORM_NAME.IS_SAVING,
+        width: "13%",
+        align: "center",
+        render: (isSaving: boolean) =>
+          isSaving ? (
+            <CheckCircleOutlined className="text-lg text-green" />
+          ) : (
+            <CloseCircleOutlined className="text-lg text-red" />
+          ),
       },
       {
         title: state.TITLE.CREATED_AT,
@@ -114,7 +132,7 @@ const CategoryList = () => {
       />
       <TableCustom
         title={state.TITLE.CATEGORY_LIST}
-        columns={columns}
+        columns={columns as any}
         dataSource={state.data?.items}
         pagination={{
           current: state.pageIndex,

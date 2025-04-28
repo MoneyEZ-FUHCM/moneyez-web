@@ -1,6 +1,6 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { transformCommonResponse } from "@/helpers/types/common.type";
 import apiSlice from "@/redux/slices/apiSlice";
-import { transformCommonResponse } from "@/types/common.type";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const quizManagementApi = apiSlice.injectEndpoints({

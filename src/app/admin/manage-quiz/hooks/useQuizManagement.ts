@@ -1,5 +1,6 @@
-import { QUIZ_ASSIGN_STATUS, TOAST_STATUS } from "@/enums/globals";
-import { showToast } from "@/hooks/useShowToast";
+import { QUIZ_ASSIGN_STATUS, TOAST_STATUS } from "@/helpers/enums/globals";
+import { showToast } from "@/helpers/hooks/useShowToast";
+import { Quiz } from "@/helpers/types/quiz.types";
 import {
   useActiveQuestionMutation,
   useCreateQuizMutation,
@@ -7,7 +8,6 @@ import {
   useGetQuizListQuery,
   useUpdateQuizMutation,
 } from "@/services/admin/quiz";
-import { Quiz } from "@/types/quiz.types";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 export const useQuizManagementPage = () => {

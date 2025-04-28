@@ -1,7 +1,13 @@
-import { CATEGORY_TYPE_TEXT, TOAST_STATUS } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { CATEGORY_TYPE_TEXT, TOAST_STATUS } from "@/helpers/enums/globals";
+import { showToast } from "@/helpers/hooks/useShowToast";
 import { getRandomColor } from "@/helpers/libs/utils";
-import { showToast } from "@/hooks/useShowToast";
+import {
+  AddCategoryModelRequest,
+  CategoryItem,
+  ModelRecord,
+  RemoveCategoryRequest,
+} from "@/helpers/types/spendingModel.types";
 import { setIsOpen, setPlainText } from "@/redux/slices/modalSlice";
 import { RootState } from "@/redux/store";
 import { useGetCategoryListQuery } from "@/services/admin/category";
@@ -15,12 +21,6 @@ import {
   useUpdateSpendingModelContentMutation,
   useUpdateSpendingModelMutation,
 } from "@/services/admin/spending-model";
-import {
-  AddCategoryModelRequest,
-  CategoryItem,
-  ModelRecord,
-  RemoveCategoryRequest,
-} from "@/types/spendingModel.types";
 import { Form, Modal, TablePaginationConfig } from "antd";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -190,7 +190,7 @@ const useSpendingModelManagementPage = () => {
   const handleAddModel = async (): Promise<void> => {
     try {
       const values = await form.validateFields();
-      const updateValue = [{ ...values, isTemplate: CONDITION.TRUE }];
+      const updateValue = [{ ...values, isTemplate: CONDITION.FALSE }];
       if (!plainText.trim()) {
         showToast(TOAST_STATUS.INFO, "Vui lòng nhập mô tả");
         return;
@@ -264,53 +264,77 @@ const useSpendingModelManagementPage = () => {
     });
   };
 
-  const handleAddModelCategory = useCallback(
-    async (spendingModelId: string, refetch: () => void): Promise<void> => {
-      try {
-        const values = await form.validateFields();
+  const handleAddModelCategory = async (
+    spendingModelId: string,
+    refetch: () => void,
+  ): Promise<void> => {
+    try {
+      const values = await form.validateFields();
 
-        try {
-          const existingCategories =
-            data?.items?.find((model) => model.id === spendingModelId)
-              ?.spendingModelCategories || [];
+      const model = data?.items?.find((model) => model.id === spendingModelId);
 
-          const hasExistingCategories = existingCategories.length > 0;
+      if (!model) {
+        showToast(TOAST_STATUS.ERROR, "Không tìm thấy mô hình chi tiêu.");
+        return;
+      }
 
-          const payload: AddCategoryModelRequest = {
-            spendingModelId: spendingModelId,
-            categories:
-              values.categories?.length > 0 &&
-              values.categories?.map((category: CategoryItem) => ({
-                categoryId: category?.categoryId,
-                percentageAmount: hasExistingCategories
-                  ? category?.percentageAmount || 0
-                  : category?.percentageAmount,
-              })),
-          };
+      const existingCategories = model.spendingModelCategories || [];
+      const hasExistingCategories = existingCategories.length > 0;
 
-          await addCategoryModalToSpendingModel(payload).unwrap();
-          showToast(
-            TOAST_STATUS.SUCCESS,
-            "Thêm danh mục vào mô hình thành công",
-          );
-          handleCancel();
-
-          refetch();
-        } catch (err: any) {
-          const error = err?.data;
-          if (error?.errorCode === ERROR_CODE.INVALID_TOTAL_PERCENTAGE) {
-            showToast(
-              TOAST_STATUS.ERROR,
-              "Tổng giá trị ngân sách phải bằng 100%",
+      if (!hasExistingCategories) {
+        const hasIncomeCategory = values?.categories?.some(
+          (cat: { categoryId: string; percentageAmount: number }) => {
+            const category = availableCategories.find(
+              (item) => item.id === cat.categoryId,
             );
-            return;
-          }
-          showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
+            return (
+              category?.type === CATEGORY_TYPE_TEXT.INCOME &&
+              cat.percentageAmount === 0
+            );
+          },
+        );
+
+        if (!hasIncomeCategory) {
+          showToast(
+            TOAST_STATUS.ERROR,
+            "Mô hình phải có ít nhất một danh mục loại thu nhập với 0%",
+          );
+          return;
         }
-      } catch (err: any) {}
-    },
-    [data?.items, form, addCategoryModalToSpendingModel],
-  );
+      }
+
+      try {
+        const payload: AddCategoryModelRequest = {
+          spendingModelId: spendingModelId,
+          categories:
+            values.categories?.length > 0 &&
+            values.categories?.map((category: CategoryItem) => ({
+              categoryId: category?.categoryId,
+              percentageAmount: hasExistingCategories
+                ? category?.percentageAmount || 0
+                : category?.percentageAmount,
+            })),
+        };
+
+        await addCategoryModalToSpendingModel(payload).unwrap();
+        showToast(TOAST_STATUS.SUCCESS, "Thêm danh mục vào mô hình thành công");
+        handleCancel();
+        refetch();
+      } catch (err: any) {
+        const error = err?.data;
+        if (error?.errorCode === ERROR_CODE.INVALID_TOTAL_PERCENTAGE) {
+          showToast(
+            TOAST_STATUS.ERROR,
+            "Tổng giá trị ngân sách phải bằng 100%",
+          );
+          return;
+        }
+        showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
+      }
+    } catch (err: any) {}
+  };
+  // [data?.items, form, addCategoryModalToSpendingModel],
+  // );
 
   const handleRemoveSpendingModelCategory = useCallback(
     async (

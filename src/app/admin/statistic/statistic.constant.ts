@@ -73,7 +73,7 @@ export const lineOptions = {
       },
       title: {
         display: true,
-        text: "Số dư (triệu đồng)",
+        text: "Người dùng",
         font: {
           size: 12,
           weight: "normal",

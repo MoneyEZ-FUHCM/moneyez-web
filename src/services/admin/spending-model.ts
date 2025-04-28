@@ -1,10 +1,10 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
-import apiSlice from "@/redux/slices/apiSlice";
 import {
   transformBaseResponse,
   transformCommonResponse,
-} from "@/types/common.type";
-import { SpendingModel } from "@/types/spendingModel.types";
+} from "@/helpers/types/common.type";
+import { SpendingModel } from "@/helpers/types/spendingModel.types";
+import apiSlice from "@/redux/slices/apiSlice";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const spendingModelManagementApi = apiSlice.injectEndpoints({

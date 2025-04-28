@@ -1,5 +1,5 @@
-import { SubCategory } from "@/types/category.types";
-import { Post } from "@/types/post.types";
+import { SubCategory } from "@/helpers/types/category.types";
+import { Post } from "@/helpers/types/post.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface SystemData {

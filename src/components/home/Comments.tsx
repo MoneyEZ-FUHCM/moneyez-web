@@ -1,12 +1,13 @@
 "use client";
 
+import Duc from "@/assets/images/avatar/duc_avatar.jpg";
+import Huyen from "@/assets/images/avatar/huyen_avatar.jpg";
+import Linh from "@/assets/images/avatar/linh_avatar.jpg";
+import Tri from "@/assets/images/avatar/tri_avatar.jpg";
 import Rating4 from "@/assets/images/icons/4star.png";
 import Rating from "@/assets/images/icons/rating.png";
 import Star from "@/assets/images/icons/star.png";
 import Admin from "@/assets/images/logo/avatar_admin.jpg";
-import Huyen from "@/assets/images/avatar/huyen_avatar.jpg";
-import Tri from "@/assets/images/avatar/tri_avatar.jpg";
-import Duc from "@/assets/images/avatar/duc_avatar.jpg";
 import Image from "next/image";
 
 const Comments = () => {
@@ -45,6 +46,15 @@ const Comments = () => {
       avatar: Tri,
       feedback:
         "Điều mình thích nhất là tính năng chatbot nhập chi tiêu siêu nhanh. Chỉ cần gõ 'ăn trưa 45k', không cần chọn danh mục hay ngày giờ gì cả, quá tiện!",
+      rating: Rating,
+    },
+    {
+      id: 5,
+      name: "Nhật Linh",
+      role: "Kỹ sư",
+      avatar: Linh,
+      feedback:
+        "App ghi chi tiêu cực nhanh bằng cách nhắn tin, hỗ trợ tạo giao dịch định kỳ cho các khoản cố định và có thống kê chi tiết giúp theo dõi chi tiêu rõ ràng, dễ dàng.",
       rating: Rating,
     },
   ];

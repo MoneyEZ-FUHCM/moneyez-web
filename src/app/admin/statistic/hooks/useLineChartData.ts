@@ -1,4 +1,4 @@
-import { ModelStats } from "@/types/dashboard.type";
+import { ModelStats } from "@/helpers/types/dashboard.type";
 import { useMemo } from "react";
 
 const useLineChartData = (modelStats: ModelStats[]) => {
@@ -20,10 +20,8 @@ const useLineChartData = (modelStats: ModelStats[]) => {
           barThickness: 30,
         },
         {
-          label: "Số dư",
-          data: modelStats.map(
-            (model: ModelStats) => model.totalAmount / 1000000,
-          ),
+          label: "Người dùng",
+          data: modelStats.map((model: ModelStats) => model.userCount),
           borderColor: "rgb(0, 227, 150)",
           pointBorderWidth: 1,
           pointBackgroundColor: "rgb(0, 227, 150)",

@@ -4,7 +4,7 @@ import { LoadingSectionWrapper } from "@/components";
 import { ButtonCustom } from "@/components/ui/button";
 import { InputCustom } from "@/components/ui/input";
 import { TextareaCustom } from "@/components/ui/textarea";
-import { QUIZ_ASSIGN_STATUS } from "@/enums/globals";
+import { QUIZ_ASSIGN_STATUS } from "@/helpers/enums/globals";
 import { formatDate } from "@/helpers/libs/utils";
 import {
   CalendarOutlined,

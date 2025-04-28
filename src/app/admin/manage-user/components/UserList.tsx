@@ -1,8 +1,8 @@
 "use client";
 
 import { SearchAndAdd, TableCustom, TableListLayout } from "@/components";
-import { VALID_ROLE } from "@/enums/globals";
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
+import { VALID_ROLE } from "@/helpers/enums/globals";
 import { formatTimestamp } from "@/helpers/libs/utils";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Tag } from "antd";
@@ -100,6 +100,18 @@ const UserList = () => {
         dataIndex: state.FORM_NAME.STATUS,
         render: (status: boolean) => {
           let statusText = status ? state.TITLE.ACTIVE : state.TITLE.BLOCKED;
+          let tagColor = status ? "green" : "red";
+          return <Tag color={tagColor}>{statusText}</Tag>;
+        },
+        width: "2%",
+      },
+      {
+        title: state.TITLE.IS_VERIFIED,
+        dataIndex: state.FORM_NAME.IS_VERIFIED,
+        render: (status: boolean) => {
+          let statusText = status
+            ? state.TITLE.IS_VERIFIED_ACTIVE
+            : state.TITLE.IS_VERIFIED_UNACTIVE;
           let tagColor = status ? "green" : "red";
           return <Tag color={tagColor}>{statusText}</Tag>;
         },

@@ -1,11 +1,13 @@
 "use client";
 
 import { CommonForm } from "@/components/common/table/CommonForm";
-import { CATEGORY_TYPE } from "@/enums/globals";
+import { CATEGORY_TYPE } from "@/helpers/enums/globals";
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
   BorderlessTableOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
   QrcodeOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
@@ -58,19 +60,46 @@ const FunctionCategoryModal = () => {
       name: state.FORM_NAME.TYPE,
       label: state.TITLE.TYPE,
       component: (
-        <Select
-          placeholder="Chọn loại hình danh mục"
-          defaultValue={state.category?.type}
-        >
-          <Select.Option value={CATEGORY_TYPE.INCOME}>
-            <ArrowUpOutlined className="mr-2 text-green" />
-            Khoản thu
-          </Select.Option>
-          <Select.Option value={CATEGORY_TYPE.EXPENSE}>
-            <ArrowDownOutlined className="mr-2 text-red" />
-            Chi tiêu
-          </Select.Option>
-        </Select>
+        <>
+          <Select
+            placeholder="Chọn loại hình danh mục"
+            defaultValue={state.category?.type}
+          >
+            <Select.Option value={CATEGORY_TYPE.INCOME}>
+              <ArrowUpOutlined className="mr-2 text-green" />
+              Khoản thu
+            </Select.Option>
+            <Select.Option value={CATEGORY_TYPE.EXPENSE}>
+              <ArrowDownOutlined className="mr-2 text-red" />
+              Chi tiêu
+            </Select.Option>
+          </Select>
+        </>
+      ),
+      rules: [
+        {
+          required: true,
+          message: state.MESSAGE_VALIDATE.DESCRIPTION_REQUIRED,
+        },
+      ],
+    },
+    {
+      name: state.FORM_NAME.IS_SAVING,
+      label: state.TITLE.IS_SAVING,
+      component: (
+        <>
+          <Select
+            placeholder="Chọn loại hình danh mục"
+            defaultValue={state.category?.isSaving}
+          >
+            <Select.Option value={true}>
+              <CheckCircleOutlined className="text-lg text-green" /> Có
+            </Select.Option>
+            <Select.Option value={false}>
+              <CloseCircleOutlined className="text-lg text-red" /> Không
+            </Select.Option>
+          </Select>
+        </>
       ),
       rules: [
         {

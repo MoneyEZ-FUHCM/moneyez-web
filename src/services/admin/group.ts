@@ -1,7 +1,7 @@
 import { COMMON_CONSTANT } from "@/helpers/constants/common";
 import apiSlice from "@/redux/slices/apiSlice";
-import { transformCommonResponse } from "@/types/common.type";
-import { Group } from "@/types/group.types";
+import { transformCommonResponse } from "@/helpers/types/common.type";
+import { Group } from "@/helpers/types/group.types";
 
 const { HTTP_METHOD } = COMMON_CONSTANT;
 const groupManagementApi = apiSlice.injectEndpoints({
