@@ -31,21 +31,11 @@ const useChartView = () => {
   }, [statistics, modelUsage]);
 
   const dashboardData = useMemo(() => {
-    const revenue = modelStats?.reduce(
-      (sum, model) => sum + model?.totalAmount,
-      0,
-    );
-    const numOfOrders = modelStats?.reduce(
-      (sum, model) => sum + model?.transactionCount,
-      0,
-    );
-
     return {
-      revenue,
-      numOfProducts: dashboardStats?.totalCategories,
-      numOfStores: dashboardStats?.totalModels,
-      numOfOrders,
+      numberOfCategories: dashboardStats?.totalCategories,
+      numOfGroups: dashboardStats?.totalGroups,
       numOfUsers: dashboardStats?.users?.total,
+      numOfModels: dashboardStats?.totalModels,
       lastUpdated: new Date().toISOString(),
     };
   }, [isLoading, modelStats, dashboardStats]);

@@ -25,6 +25,7 @@ export const TEXT_TRANSLATE = {
     INDEX: "STT",
     NAME: "Tên danh mục",
     DESCRIPTION: "Mô tả",
+    IS_SAVING: "Khoản tiết kiệm",
     TYPE: "Loại",
     STATUS: "Trạng thái",
     ACTIVE: "Hoạt động",

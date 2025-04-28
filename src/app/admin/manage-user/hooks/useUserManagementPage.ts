@@ -130,6 +130,10 @@ const useUserManagementPage = () => {
             showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.ACCOUNT_NOT_EXISTS);
             return;
           }
+          if (error?.errorCode === ERROR_CODE.IS_CURRENT_USER) {
+            showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.IS_CURRENT_USER);
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },

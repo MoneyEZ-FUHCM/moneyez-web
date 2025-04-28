@@ -86,7 +86,6 @@ const useCategoryManagementPage = () => {
       const formattedValues = {
         ...values,
         type: values.type,
-        isSaving: true,
       };
 
       try {

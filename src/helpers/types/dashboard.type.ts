@@ -1,10 +1,9 @@
 export interface AdminDashboardInfo {
-  revenue: number;
-  numOfProducts: number;
-  numOfStores: number;
-  numOfOrders?: number;
+  numberOfCategories: number;
+  numOfGroups: number;
   numOfUsers: number;
-  lastUpdated?: string;
+  numOfModels: number;
+  lastUpdated: string;
 }
 
 export interface AdminDashboardRevenueCategory {

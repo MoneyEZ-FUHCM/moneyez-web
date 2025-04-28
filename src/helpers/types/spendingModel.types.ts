@@ -39,6 +39,7 @@ export interface Subcategory {
 }
 
 export interface SpendingModelCategory {
+  type: string;
   categoryId: string;
   spendingModelId: string;
   percentageAmount: number;

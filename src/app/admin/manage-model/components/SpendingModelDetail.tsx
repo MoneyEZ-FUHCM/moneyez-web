@@ -4,7 +4,10 @@ import { TableListLayout } from "@/components";
 import { renderIcon } from "@/components/common/IconRender";
 import { ButtonCustom } from "@/components/ui/button";
 import { CATEGORY_TYPE_TEXT } from "@/helpers/enums/globals";
-import { CategoryFormListProps } from "@/helpers/types/spendingModel.types";
+import {
+  CategoryFormListProps,
+  SpendingModel,
+} from "@/helpers/types/spendingModel.types";
 import {
   EditOutlined,
   FileTextOutlined,
@@ -35,6 +38,7 @@ import "react-quill/dist/quill.snow.css";
 import { useSpendingModelManagementPage } from "../hooks/useSpendingModelManagementPage";
 import { TEXT_TRANSLATE } from "../model.translate";
 import { CategoryCard } from "./CategoryCard";
+import { stat } from "fs";
 
 const { Title, Text } = Typography;
 
@@ -81,7 +85,7 @@ const CategoryFormList: React.FC<CategoryFormListProps> = ({
                             <span className="flex items-center text-primary">
                               {renderIcon(cat.icon)}
                             </span>
-                            <span>{cat.name}</span>
+                            <span>{cat?.name}</span>
                             <Tag
                               color={
                                 cat.type === CATEGORY_TYPE_TEXT.INCOME
@@ -302,50 +306,53 @@ const SpendingModelDetail = () => {
                   <Title level={4} className="m-0">
                     Phân bổ ngân sách
                   </Title>
-                  <div className="flex items-center gap-2">
-                    {state.isEditingAll ? (
-                      <>
-                        <ButtonCustom
-                          onClick={handler.handleUpdatePercentage}
-                          className="flex items-center gap-1 bg-primary text-white"
-                        >
-                          <SaveOutlined /> Lưu thay đổi
-                        </ButtonCustom>
+                  {!state.spendingModel?.data?.isTemplate && (
+                    <div className="flex items-center gap-2">
+                      {state.isEditingAll ? (
+                        <>
+                          <ButtonCustom
+                            onClick={handler.handleUpdatePercentage}
+                            className="flex items-center gap-1 bg-primary text-white"
+                          >
+                            <SaveOutlined /> Lưu thay đổi
+                          </ButtonCustom>
+                          <ButtonCustom
+                            onClick={() => {
+                              handler.setIsEditingAll(false);
+                              handler.setEditingPercentages({});
+                              const originalTotal =
+                                state.spendingModel?.data?.spendingModelCategories.reduce(
+                                  (sum, item) => sum + item.percentageAmount,
+                                  0,
+                                );
+                              handler.setTotalPercentage(originalTotal || 0);
+                            }}
+                            className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
+                          >
+                            Hủy
+                          </ButtonCustom>
+                        </>
+                      ) : (
                         <ButtonCustom
                           onClick={() => {
-                            handler.setIsEditingAll(false);
-                            handler.setEditingPercentages({});
-                            const originalTotal =
-                              state.spendingModel?.data?.spendingModelCategories.reduce(
-                                (sum, item) => sum + item.percentageAmount,
-                                0,
-                              );
-                            handler.setTotalPercentage(originalTotal || 0);
+                            handler.setIsEditingAll(true);
+                            const initialPercentages: Record<string, number> =
+                              {};
+                            state.spendingModel?.data?.spendingModelCategories.forEach(
+                              (cat) => {
+                                initialPercentages[cat.categoryId] =
+                                  cat.percentageAmount;
+                              },
+                            );
+                            handler.setEditingPercentages(initialPercentages);
                           }}
-                          className="rounded-md !border !border-red !bg-white px-4 py-2 text-red transition-all"
+                          className="flex items-center gap-1 text-white"
                         >
-                          Hủy
+                          <EditOutlined /> Chỉnh sửa tất cả
                         </ButtonCustom>
-                      </>
-                    ) : (
-                      <ButtonCustom
-                        onClick={() => {
-                          handler.setIsEditingAll(true);
-                          const initialPercentages: Record<string, number> = {};
-                          state.spendingModel?.data?.spendingModelCategories.forEach(
-                            (cat) => {
-                              initialPercentages[cat.categoryId] =
-                                cat.percentageAmount;
-                            },
-                          );
-                          handler.setEditingPercentages(initialPercentages);
-                        }}
-                        className="flex items-center gap-1 text-white"
-                      >
-                        <EditOutlined /> Chỉnh sửa tất cả
-                      </ButtonCustom>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="flex h-3 w-full overflow-hidden rounded-lg bg-[#eee]">
                   {state.budgets &&
@@ -479,15 +486,17 @@ const SpendingModelDetail = () => {
               </Radio.Group>
             </div>
 
-            <Tooltip title="Thêm danh mục vào mô hình">
-              <ButtonCustom
-                className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90 hover:shadow-md"
-                onClick={handler.handleOpenModalAdd}
-                disabled={state.availableCategories?.length === 0}
-              >
-                <PlusOutlined /> Thêm danh mục
-              </ButtonCustom>
-            </Tooltip>
+            {!state.spendingModel?.data?.isTemplate && (
+              <Tooltip title="Thêm danh mục vào mô hình">
+                <ButtonCustom
+                  className="flex items-center gap-1 rounded-md bg-primary px-4 py-2 text-white transition-all hover:bg-primary/90 hover:shadow-md"
+                  onClick={handler.handleOpenModalAdd}
+                  disabled={state.availableCategories?.length === 0}
+                >
+                  <PlusOutlined /> Thêm danh mục
+                </ButtonCustom>
+              </Tooltip>
+            )}
           </div>
           <Row gutter={[16, 16]}>
             {state.filteredCategories?.length ? (
