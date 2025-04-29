@@ -7,8 +7,8 @@ export const TEXT_TRANSLATE = {
     CATEGORY: "DANH MỤC",
   },
   LINE_CHART: {
-    TITLE: "Giao dịch và số dư theo mô hình",
-    SUB_TITLE: "Biểu đồ thể hiện số dư và số lượng giao dịch của từng mô hình",
+    TITLE: "Giao dịch và người dùng theo mô hình",
+    SUB_TITLE: "Biểu đồ thể hiện người dùng và số lượng giao dịch của từng mô hình",
   },
   DONUT_CHART: {
     TITLE: "Người dùng theo mô hình",
