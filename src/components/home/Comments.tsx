@@ -1,22 +1,34 @@
 "use client";
 
 import Duc from "@/assets/images/avatar/duc_avatar.jpg";
+import Sang from "@/assets/images/avatar/sang_avatar.jpg";
+import An from "@/assets/images/avatar/an_avatar.jpg";
+import Hieu from "@/assets/images/avatar/hieu_avatar.jpg";
 import Huyen from "@/assets/images/avatar/huyen_avatar.jpg";
 import Linh from "@/assets/images/avatar/linh_avatar.jpg";
 import Tri from "@/assets/images/avatar/tri_avatar.jpg";
 import Rating4 from "@/assets/images/icons/4star.png";
 import Rating from "@/assets/images/icons/rating.png";
 import Star from "@/assets/images/icons/star.png";
-import Admin from "@/assets/images/logo/avatar_admin.jpg";
+import Bao from "@/assets/images/avatar/bao_avatar.png";
 import Image from "next/image";
 
 const Comments = () => {
   const feedbacks = [
     {
+      id: 3,
+      name: "Gia Đức",
+      role: "Quản lý",
+      avatar: Duc,
+      feedback:
+        "Mình hay dùng hũ tiết kiệm trong app để dành tiền mua laptop. Nhìn số tiền tăng dần mỗi tuần cảm giác rất có động lực để góp quỹ nhiều hơn!",
+      rating: Rating4,
+    },
+    {
       id: 1,
       name: "Tôn Bảo",
       role: "Công nhân",
-      avatar: Admin,
+      avatar: Bao,
       feedback:
         "Tính năng góp quỹ nhóm quá tiện! Mình và bạn bè cùng tiết kiệm cho chuyến du lịch hè, giờ ai đóng bao nhiêu đều rõ ràng minh bạch.",
       rating: Rating4,
@@ -29,15 +41,6 @@ const Comments = () => {
       feedback:
         "Ứng dụng rất dễ dùng, có thể phân loại chi tiêu theo từng nhóm như ăn uống, mua sắm, học hành... Nhờ vậy mình kiểm soát được ngân sách tốt hơn.",
       rating: Rating,
-    },
-    {
-      id: 3,
-      name: "Gia Đức",
-      role: "Quản lý",
-      avatar: Duc,
-      feedback:
-        "Mình hay dùng hũ tiết kiệm trong app để dành tiền mua laptop. Nhìn số tiền tăng dần mỗi tuần cảm giác rất có động lực để góp quỹ nhiều hơn!",
-      rating: Rating4,
     },
     {
       id: 4,
@@ -57,6 +60,33 @@ const Comments = () => {
         "App ghi chi tiêu cực nhanh bằng cách nhắn tin, hỗ trợ tạo giao dịch định kỳ cho các khoản cố định và có thống kê chi tiết giúp theo dõi chi tiêu rõ ràng, dễ dàng.",
       rating: Rating,
     },
+    {
+      id: 6,
+      name: "Nhật Sang",
+      role: "Sinh viên",
+      avatar: Sang,
+      feedback:
+        "Tính năng tạo giao dịch định kỳ cho các khoản chi cố định thật sự rất hữu ích cho mình. Giờ mình không còn lo lắng về việc bỏ sót chi phí hàng tháng.",
+      rating: Rating,
+    },
+    {
+      id: 7,
+      name: "Tuấn Hiếu",
+      role: "Bác sĩ",
+      avatar: Hieu,
+      feedback:
+        "Ứng dụng cho phép theo dõi chi tiêu và tiết kiệm một cách hiệu quả. Tính năng thông báo nhắc nhở mỗi tuần giúp mình không bỏ lỡ bất kỳ mục chi tiêu nào.",
+      rating: Rating,
+    },
+    {
+      id: 8,
+      name: "Minh An",
+      role: "Streamer",
+      avatar: An,
+      feedback:
+        "Ứng dụng này rất phù hợp với công việc của mình. Mình có thể theo dõi chi tiêu và thu nhập từ các nguồn khác nhau một cách dễ dàng, giúp mình quản lý tài chính tốt hơn.",
+      rating: Rating,
+    },
   ];
 
   return (
@@ -74,13 +104,13 @@ const Comments = () => {
         {feedbacks.map((feedback) => (
           <div
             key={feedback.id}
-            className="relative my-5 flex flex-col items-center rounded-3xl p-6 shadow-soft-green transition-all duration-300 md:p-8"
+            className="relative my-5 flex min-h-80 flex-col items-center rounded-3xl p-6 shadow-soft-green transition-all duration-300 md:p-8"
           >
             <Image
               src={feedback.avatar}
               alt={feedback.name}
               quality={100}
-              className="absolute -top-6 size-16 rounded-full border object-cover"
+              className="absolute -top-6 size-16 rounded-full bg-white object-cover"
             />
             <h2 className="text-[#4d4d4d]md:text-xl mt-4 text-lg font-semibold">
               {feedback.name}
@@ -88,14 +118,14 @@ const Comments = () => {
             <p className="text-[12px] text-gray-500 md:text-sm">
               {feedback.role}
             </p>
-            <p className="my-5 text-sm italic text-gray-500 md:text-base">
+            <p className="my-5 break-words text-sm italic text-gray-500 md:text-base">
               "{feedback.feedback}"
             </p>
             <Image
               src={feedback.rating}
               alt="star"
               quality={100}
-              className="mt-5 w-40 lg:w-56 2xl:w-60"
+              className="absolute bottom-5 mt-5 w-40 lg:w-56 2xl:w-60"
             />
           </div>
         ))}

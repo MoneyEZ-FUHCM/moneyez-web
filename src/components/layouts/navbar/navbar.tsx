@@ -2,11 +2,13 @@
 
 import LogoWeb from "@/assets/images/logo/logo_web.png";
 import { PATH_NAME } from "@/helpers/constants/pathname";
+import useDownloadApk from "@/helpers/hooks/useDownloadAPK";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const { handleDownload } = useDownloadApk();
   const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -40,7 +42,10 @@ const Navbar = () => {
           >
             Đăng nhập
           </Link>
-          <button className="translate hidden transform rounded-xl bg-[#009379] px-10 py-4 text-sm font-semibold text-white transition-all duration-200 active:scale-95 lg:block">
+          <button
+            onClick={handleDownload}
+            className="translate hidden transform rounded-xl bg-[#009379] px-10 py-4 text-sm font-semibold text-white transition-all duration-200 active:scale-95 lg:block"
+          >
             🚀 Trải nghiệm ngay
           </button>
         </div>

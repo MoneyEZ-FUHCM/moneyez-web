@@ -14,10 +14,13 @@ import {
 } from "@/components";
 import Footer from "@/components/layouts/footer/footer";
 import { Navbar } from "@/components/layouts/navbar/navbar";
+import useDownloadApk from "@/helpers/hooks/useDownloadAPK";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
 
 export default function Home() {
+  const { handleDownload } = useDownloadApk();
+
   return (
     <main className="transition-all duration-500">
       <div className="relative select-none overflow-hidden bg-yellow-100 transition-all duration-500">
@@ -61,7 +64,10 @@ export default function Home() {
                     tiêu tài chính một cách nhanh chóng và hiệu quả!
                   </h5>
                   <div className="flex justify-center transition-all duration-500 lg:justify-start">
-                    <button className="translate max-w-60 transform rounded-xl bg-[#009379] px-10 py-4 text-sm font-semibold text-superlight outline-none transition-all duration-200 active:scale-95">
+                    <button
+                      onClick={handleDownload}
+                      className="translate max-w-60 transform rounded-xl bg-[#009379] px-10 py-4 text-sm font-semibold text-superlight outline-none transition-all duration-200 active:scale-95"
+                    >
                       🚀 Trải nghiệm ngay
                     </button>
                   </div>
@@ -83,22 +89,22 @@ export default function Home() {
       </div>
       <section className="container mx-auto select-none transition-all duration-500">
         <Supporter />
-        <ScrollReveal>
+        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
           <Reasons />
         </ScrollReveal>
-        <ScrollReveal>
+        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
           <Functions />
         </ScrollReveal>
-        <ScrollReveal>
+        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
           <Statistic />
         </ScrollReveal>
-        <ScrollReveal>
+        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
           <Comments />
         </ScrollReveal>
         {/* <ScrollReveal>
           <Packages />
         </ScrollReveal> */}
-        <ScrollReveal>
+        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
           <BackgroundIntro />
         </ScrollReveal>
         <BackToTop />
