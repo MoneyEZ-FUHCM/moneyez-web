@@ -3,9 +3,9 @@ import Price from "@/assets/images/icons/price.png";
 import Secure from "@/assets/images/icons/secure.png";
 import Star from "@/assets/images/icons/star.png";
 import Statistic from "@/assets/images/icons/statistic.png";
-// import MobileFull from "@/assets/images/mobile-full.png";
 import MobileFull from "@/assets/images/main-screen.png";
 import Image from "next/image";
+import { ScrollReveal } from "../ScrollReveal";
 
 const features = [
   { id: 1, src: Contact, label: "Trợ lý AI" },
@@ -17,15 +17,23 @@ const features = [
 const Functions = () => {
   return (
     <section className="my-32 flex flex-col-reverse items-center lg:flex-row">
-      <div className="mt-10 flex-1 lg:mt-0">
+      <ScrollReveal
+        type="fadeLeft"
+        duration={0.8}
+        className="mt-10 flex-1 lg:mt-0"
+      >
         <Image
           src={MobileFull}
           alt="Mobile view"
           quality={100}
           className="w-[93%]"
         />
-      </div>
-      <div className="h-full w-full flex-1">
+      </ScrollReveal>
+      <ScrollReveal
+        type="fadeRight"
+        duration={0.8}
+        className="h-full w-full flex-1"
+      >
         <div className="flex flex-col items-start justify-start gap-5">
           <div className="flex w-full flex-col items-center justify-center gap-3 lg:items-start">
             <div className="w-fit">
@@ -45,13 +53,20 @@ const Functions = () => {
               Tính Năng
             </h1>
           </div>
+
           <p className="w-full text-center text-gray-500 lg:w-[90%] lg:text-left">
-            Đây là một vài tính năng chính của app xịn nhất FPTU 2025
+            Đây là một vài tính năng chính của{" "}
+            <span className="font-bold text-primary">MoneyEZ</span>
           </p>
+
           <div className="mt-7 grid w-full grid-cols-1 gap-5 sm:grid-cols-2">
             {features.map((feature, index) => (
-              <div
+              <ScrollReveal
                 key={feature.id}
+                type="fadeUp"
+                delay={index * 0.2}
+                distance={50}
+                duration={1}
                 className="col-span-1 flex w-full flex-col gap-5"
               >
                 <button className="button-hire flex !w-full cursor-default items-center gap-7 rounded-[20px] border-[0.5px] !p-3 text-[#4d4d4d] shadow-soft-green">
@@ -68,11 +83,11 @@ const Functions = () => {
                   <span></span>
                   <span></span>
                 </button>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 };

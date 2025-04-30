@@ -89,22 +89,11 @@ export default function Home() {
       </div>
       <section className="container mx-auto select-none transition-all duration-500">
         <Supporter />
-        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
-          <Reasons />
-        </ScrollReveal>
-        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
-          <Functions />
-        </ScrollReveal>
-        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
-          <Statistic />
-        </ScrollReveal>
-        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
-          <Comments />
-        </ScrollReveal>
-        {/* <ScrollReveal>
-          <Packages />
-        </ScrollReveal> */}
-        <ScrollReveal type="zoom" duration={0.9} delay={0.25}>
+        <Reasons />
+        <Functions />
+        <Statistic />
+        <Comments />
+        <ScrollReveal type="zoom" duration={0.8} delay={0.3}>
           <BackgroundIntro />
         </ScrollReveal>
         <BackToTop />

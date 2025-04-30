@@ -5,8 +5,10 @@ import { useCallback } from "react";
 const useDownloadApk = () => {
   const handleDownload = useCallback(() => {
     const link = document.createElement("a");
-    link.href = "/moneyez-web/apk/moneyez.apk";
-    link.download = "moneyez.apk";
+    link.href =
+      "https://drive.google.com/drive/folders/17IxEvarY0fXSZOz3JWJUKUUX-_XxTmfu?usp=sharing";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

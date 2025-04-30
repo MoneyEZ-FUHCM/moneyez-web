@@ -6,15 +6,12 @@ const Footer = () => {
     <footer className="bg-gray-100 dark:bg-gray-900">
       <div className="container mx-auto px-4 py-5 text-center sm:flex sm:items-center sm:justify-between">
         <span className="text-sm text-gray-500 sm:text-center">
-          © 2025{" "}
-          <a href="https://www.facebook.com/Fricks.BuildingService">
-            MoneyEz™
-          </a>
-          . All Rights Reserved.
+          © 2025 <a href="https://www.facebook.com/duongbao0803">MoneyEz™</a>.
+          All Rights Reserved.
         </span>
         <div className="hidden space-x-5 sm:flex md:mt-0 rtl:space-x-reverse">
           <a
-            href="https://www.facebook.com/Fricks.BuildingService"
+            href="https://www.facebook.com/duongbao0803"
             target="_blank"
             className="text-gray-400 hover:text-primary"
           >
@@ -62,7 +59,7 @@ const Footer = () => {
             <span className="sr-only">Twitter page</span>
           </Link>
           <a
-            href="https://fricks.vercel.app/"
+            href="https://easymoney.anttravel.online/moneyez-web"
             target="_blank"
             className="text-gray-400 hover:text-primary"
           >
