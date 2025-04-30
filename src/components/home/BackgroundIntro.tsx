@@ -1,8 +1,11 @@
 import Background from "@/assets/images/background-home.png";
 import Star from "@/assets/images/icons/star.png";
+import useDownloadApk from "@/helpers/hooks/useDownloadAPK";
 import Image from "next/image";
 
 const BackgroundIntro = () => {
+  const { handleDownload } = useDownloadApk();
+
   return (
     <section className="my-32 mb-10 mt-36 w-full px-5">
       <div
@@ -38,7 +41,10 @@ const BackgroundIntro = () => {
                   </h1>
                 </h1>
                 <div className="flex justify-center transition-all duration-500 lg:justify-start">
-                  <button className="group relative flex h-[2.8em] cursor-pointer items-center overflow-hidden rounded-3xl border border-solid bg-primary p-[0.35em] pl-[1em] pr-[3.3em] text-[17px] font-medium tracking-wider text-[#4d4d4d]">
+                  <button
+                    onClick={handleDownload}
+                    className="group relative flex h-[2.8em] cursor-pointer items-center overflow-hidden rounded-3xl border border-solid bg-primary p-[0.35em] pl-[1em] pr-[3.3em] text-[17px] font-medium tracking-wider text-[#4d4d4d]"
+                  >
                     <span className="text-sm text-superlight">
                       🚀 Tải xuống
                     </span>
