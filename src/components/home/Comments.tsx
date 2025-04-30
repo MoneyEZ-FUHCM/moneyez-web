@@ -51,7 +51,7 @@ const Comments = () => {
     {
       id: 5,
       name: "Nhật Linh",
-      role: "Kỹ sư",
+      role: "Giáo viên",
       avatar: Linh,
       feedback:
         "App ghi chi tiêu cực nhanh bằng cách nhắn tin, hỗ trợ tạo giao dịch định kỳ cho các khoản cố định và có thống kê chi tiết giúp theo dõi chi tiêu rõ ràng, dễ dàng.",
@@ -80,7 +80,7 @@ const Comments = () => {
               src={feedback.avatar}
               alt={feedback.name}
               quality={100}
-              className="absolute -top-6 size-16 rounded-full border"
+              className="absolute -top-6 size-16 rounded-full border object-cover"
             />
             <h2 className="text-[#4d4d4d]md:text-xl mt-4 text-lg font-semibold">
               {feedback.name}
