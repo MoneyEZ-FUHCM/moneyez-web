@@ -8,7 +8,6 @@ import {
   Comments,
   Functions,
   Reasons,
-  ScrollReveal,
   Statistic,
   Supporter,
 } from "@/components";
@@ -93,9 +92,7 @@ export default function Home() {
         <Functions />
         <Statistic />
         <Comments />
-        <ScrollReveal type="zoom" duration={0.8} delay={0.3}>
-          <BackgroundIntro />
-        </ScrollReveal>
+        <BackgroundIntro />
         <BackToTop />
         <Footer />
       </section>

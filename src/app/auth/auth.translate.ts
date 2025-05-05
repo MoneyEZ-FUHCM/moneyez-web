@@ -6,7 +6,7 @@ export const TEXT_TRANSLATE = {
     FORGOT_PASSWORD: "Quên mật khẩu",
     WELCOME_BACK: "Chào mừng trở lại",
     SUB_GREETING: "Quản lý chi tiêu thông minh, tối ưu ngân sách với",
-    WEB_NAME: "MoneyEz",
+    WEB_NAME: "MoneyEZ",
     START: "Bắt đầu ngay",
     DOB: "Ngày sinh",
     PHONE_NUMBER: "Số điện thoại",
@@ -90,6 +90,7 @@ export const TEXT_TRANSLATE = {
       "Mã OTP đã được gửi. Vui lòng kiểm tra hòm thư (hoặc Thư rác) để lấy mã OTP",
     OTP_INVALID: "Mã OTP đã hết hạn hoặc không hợp lệ",
     ACCOUNT_DOES_NOT_EXIST: "Tài khoản không tồn tại",
+    NOT_PERMISSION: "Bạn không có quyền truy cập vào trang này",
   },
 
   MESSAGE_SUCCESS: {
