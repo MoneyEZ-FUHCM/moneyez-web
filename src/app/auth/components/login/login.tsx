@@ -296,7 +296,7 @@ const LoginForm = () => {
                 </div>
               )}
             </ButtonCustom>
-            <div className="mt-3 text-center text-sm">
+            {/* <div className="mt-3 text-center text-sm">
               <span className="text-[#4d4d4d]">{TITLE.DONOT_HAVE_ACCOUNT}</span>{" "}
               <Link
                 href="#"
@@ -306,7 +306,7 @@ const LoginForm = () => {
                 {BUTTON.REGISTER}
                 <span className="absolute bottom-[-3px] left-0 h-0.5 w-full scale-x-0 transform bg-primary transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
-            </div>
+            </div> */}
           </motion.div>
         </section>
       ) : (

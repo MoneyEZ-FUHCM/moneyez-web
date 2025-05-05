@@ -31,7 +31,7 @@ const Statistic = () => {
 
   return (
     <section className="my-32 px-5 text-center">
-      <ScrollReveal type="fadeUp" duration={0.8} distance={50}>
+      <ScrollReveal type="zoom" duration={0.8} distance={50}>
         <div className="mb-3 flex justify-center">
           <div className="flex items-center gap-2 rounded-3xl bg-[#FFF9F1] px-5 py-2">
             <Image src={Star} alt="star" quality={100} width={20} height={20} />
@@ -48,10 +48,10 @@ const Statistic = () => {
         {stats.map((stat, index) => (
           <ScrollReveal
             key={stat.id}
-            type="fadeUp"
-            delay={index * 0.1}
-            distance={90}
-            duration={1}
+            type="zoom"
+            delay={index * 0.3}
+            distance={50}
+            duration={0.8}
           >
             <div className="group relative flex flex-col items-center overflow-hidden rounded-t-[30px] p-8 shadow-soft-green transition-all duration-300 before:absolute before:inset-0 before:origin-left before:scale-y-0 before:bg-primary before:transition-transform before:duration-500 hover:before:scale-y-100 md:p-12">
               <div className="relative z-10 mb-4 flex flex-col items-center gap-3 md:mb-0">

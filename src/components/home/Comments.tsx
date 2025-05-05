@@ -92,7 +92,7 @@ const Comments = () => {
 
   return (
     <section className="my-32 px-5 text-center">
-      <ScrollReveal type="fadeUp" duration={0.8} distance={50}>
+      <ScrollReveal type="zoom" duration={0.8} distance={50}>
         <div className="mb-3 flex justify-center">
           <div className="flex items-center gap-2 rounded-3xl bg-[#FFF9F1] px-5 py-2">
             <Image src={Star} alt="star" quality={100} width={20} height={20} />
@@ -107,10 +107,11 @@ const Comments = () => {
         {feedbacks.map((feedback, index) => (
           <ScrollReveal
             key={feedback.id}
-            type="fadeUp"
-            delay={index * 0.1}
+            type="zoom"
+            delay={index * 0.3}
             duration={0.8}
-            distance={90}
+            distance={50}
+            stagger
           >
             <div className="relative my-5 flex min-h-80 flex-col items-center rounded-3xl p-6 shadow-soft-green transition-all duration-300 md:p-8">
               <Image
