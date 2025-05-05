@@ -36,7 +36,7 @@ const reasons = [
 const Reasons = () => {
   return (
     <section className="my-32 flex flex-col items-center px-5 sm:px-8">
-      <ScrollReveal type="fadeUp" duration={0.8} distance={50}>
+      <ScrollReveal type="zoom" duration={0.8} distance={50}>
         <div className="mb-3 flex justify-center">
           <div className="flex items-center gap-2 rounded-3xl bg-[#FFF9F1] px-5 py-2">
             <Image src={Star} alt="star" quality={100} width={20} height={20} />
@@ -53,10 +53,11 @@ const Reasons = () => {
         {reasons.map((reason, index) => (
           <ScrollReveal
             key={index}
-            type="fadeUp"
-            delay={index * 0.1}
-            distance={90}
-            duration={1}
+            type="zoom"
+            delay={index * 0.3}
+            distance={50}
+            duration={0.8}
+            stagger
           >
             <div className="flex flex-col items-start">
               <Image

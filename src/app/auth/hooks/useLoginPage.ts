@@ -49,9 +49,7 @@ const useLoginPage = (form: FormInstance) => {
         password: values.password,
       }).unwrap();
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
-        Cookies.set("accessToken", res.data.accessToken);
-        Cookies.set("refreshToken", res.data.refreshToken);
-        const accessToken = res.data.accessToken;
+        const accessToken = res?.data?.accessToken;
         if (accessToken) {
           const decoded: any = jwtDecode(accessToken);
           const role =
@@ -66,9 +64,12 @@ const useLoginPage = (form: FormInstance) => {
             Cookies.set("password", encryptedPassword);
           }
 
-          if (role === VALID_ROLE.USER) {
-            router.replace(PATH_NAME.CHART);
+          if (role !== VALID_ROLE.ADMIN) {
+            showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.NOT_PERMISSION);
+            return;
           } else {
+            Cookies.set("accessToken", res.data.accessToken);
+            Cookies.set("refreshToken", res.data.refreshToken);
             router.replace(PATH_NAME.STATISTIC);
           }
 
@@ -124,18 +125,18 @@ const useLoginPage = (form: FormInstance) => {
       if (res && res.status === HTTP_STATUS.SUCCESS.OK) {
         const accessToken = res.data.accessToken;
         if (accessToken) {
-          Cookies.set("accessToken", res.data.accessToken);
-          Cookies.set("refreshToken", res.data.refreshToken);
           const decoded: any = jwtDecode(accessToken);
           const role =
             decoded[
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ];
-          if (role !== VALID_ROLE.USER) {
-            router.replace(PATH_NAME.STATISTIC);
+          if (role !== VALID_ROLE.ADMIN) {
+            showToast(TOAST_STATUS.ERROR, MESSAGE_ERROR.NOT_PERMISSION);
             return;
           } else {
-            router.replace(PATH_NAME.CHART);
+            Cookies.set("accessToken", res.data.accessToken);
+            Cookies.set("refreshToken", res.data.refreshToken);
+            router.replace(PATH_NAME.STATISTIC);
             showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.LOGIN_SUCCESSFUL);
           }
         }
