@@ -8,6 +8,7 @@ export const TEXT_TRANSLATE = {
     CREATE_SUCCESSFUL: "Tạo mô hình thành công",
     UPDATE_SUCCESSFUL: "Cập nhật mô hình thành công",
     DELETE_SUCCESSFUL: "Xóa mô hình thành công",
+    DELETE_CATE_SUCCESSFUL: "Xóa danh mục thành công",
   },
   MESSAGE_VALIDATE: {
     NAME_REQUIRED: "Vui lòng nhập tên mô hình",
@@ -28,6 +29,7 @@ export const TEXT_TRANSLATE = {
     UPDATED_AT: "Ngày cập nhật",
     TITLE: "Xác nhận",
     CONTENT: "Bạn có chắc chắn muốn xóa mô hình này?",
+    CONTENT_CATE: "Bạn có chắc chắn muốn xóa danh mục này?",
     OK_TEXT: "Đồng ý",
     CANCEL_TEXT: "Hủy",
     SEARCH: "Tìm kiếm mô hình",
