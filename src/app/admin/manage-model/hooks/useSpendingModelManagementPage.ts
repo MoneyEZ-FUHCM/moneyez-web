@@ -258,6 +258,13 @@ const useSpendingModelManagementPage = () => {
             );
             return;
           }
+          if (error?.errorCode === ERROR_CODE.MODEL_CURRENT_USE) {
+            showToast(
+              TOAST_STATUS.ERROR,
+              "Mô hình đang được sử dụng. Không thể xóa ở thời điểm hiện tại",
+            );
+            return;
+          }
           showToast(TOAST_STATUS.ERROR, SYSTEM_ERROR.SERVER_ERROR);
         }
       },
@@ -333,8 +340,6 @@ const useSpendingModelManagementPage = () => {
       }
     } catch (err: any) {}
   };
-  // [data?.items, form, addCategoryModalToSpendingModel],
-  // );
 
   const handleRemoveSpendingModelCategory = useCallback(
     async (
@@ -344,19 +349,22 @@ const useSpendingModelManagementPage = () => {
     ): Promise<void> => {
       confirm({
         title: TITLE.TITLE,
-        content: TITLE.CONTENT,
+        content: TITLE.CONTENT_CATE,
         okText: TITLE.OK_TEXT,
         okType: "danger",
         cancelText: TITLE.CANCEL_TEXT,
         onOk: async () => {
           try {
-            const requestData: RemoveCategoryRequest = {
+            const payload: RemoveCategoryRequest = {
               spendingModelId: modelId,
               categoryIds: [categoryId],
             };
-            await removecategoryFromSpendingModel(requestData).unwrap();
+            await removecategoryFromSpendingModel(payload).unwrap();
             refetch();
-            showToast(TOAST_STATUS.SUCCESS, MESSAGE_SUCCESS.DELETE_SUCCESSFUL);
+            showToast(
+              TOAST_STATUS.SUCCESS,
+              MESSAGE_SUCCESS.DELETE_CATE_SUCCESSFUL,
+            );
           } catch (err: any) {
             const error = err?.data;
             if (error?.errorCode === ERROR_CODE.MODEL_NOT_FOUND) {
@@ -395,8 +403,11 @@ const useSpendingModelManagementPage = () => {
         id: id as string,
         name: values.name,
         description: values.description,
-        isTemplate: true,
+        isTemplate: spendingModel?.data?.isTemplate,
       };
+
+      console.log("check payload", payload);
+
       await updateSpendingModelContent(payload).unwrap();
       showToast(
         TOAST_STATUS.SUCCESS,
