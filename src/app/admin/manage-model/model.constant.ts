@@ -6,6 +6,7 @@ export const MANAGE_MODEL_CONSTANT = {
     MODEL_CATE_ALREADY_ADDED: "CategoriesAlreadyAdded",
     INVALID_TOTAL_PERCENTAGE: "InvalidTotalPercentage",
     MODEL_HAS_DEPENDENCIES: "SpendingModelHasDependencies",
+    MODEL_CURRENT_USE: "SpendingModelIsCurrentlyUsed",
   },
   FORM_NAME: {
     INDEX: "index",
