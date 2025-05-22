@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/moneyez-web",
   env: {
     NEXT_PUBLIC_API_KEY: "AIzaSyBjF8jvekmTSJ4us7PiI0GTJbNzR06z5lY",
     NEXT_PUBLIC_AUTH_DOMAIN: "exe201-9459a.firebaseapp.com",
@@ -13,7 +12,7 @@ const nextConfig = {
     NEXT_PUBLIC_RECAPTCHA_SECRET_KEY:
       "6LfWakkqAAAAAID4QJwk3_gSy2FclYio3WmzDYWp",
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: "6LfWakkqAAAAABKFbRZGqp9i_aYrEu9YwDqVWfsT",
-    NEXT_PUBLIC_BASE_URL: "https://easymoney.anttravel.online/api/v1",
+    NEXT_PUBLIC_BASE_URL: "http://139.59.226.1:8080/api/v1",
   },
   images: {
     unoptimized: true,

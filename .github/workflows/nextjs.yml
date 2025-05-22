@@ -33,24 +33,24 @@ jobs:
           tags: |
             ducdang03/moneyez-web:latest
 
-  deploy:
-    runs-on: self-hosted
-    needs: docker-build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          clean: false
+  # deploy:
+  #   runs-on: self-hosted
+  #   needs: docker-build
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         clean: false
 
-      - name: Clean up old Docker resources
-        run: |
-          docker stop moneyez-web || true
-          docker rm moneyez-web || true
+  #     - name: Clean up old Docker resources
+  #       run: |
+  #         docker stop moneyez-web || true
+  #         docker rm moneyez-web || true
     
-      - name: Deploy to VPS
-        run: |
-          docker pull ducdang03/moneyez-web:latest
-          docker run -d --name moneyez-web -p 3000:3000 ducdang03/moneyez-web:latest
+  #     - name: Deploy to VPS
+  #       run: |
+  #         docker pull ducdang03/moneyez-web:latest
+  #         docker run -d --name moneyez-web -p 3000:3000 ducdang03/moneyez-web:latest
   
-      - name: Verify running containers
-        run: docker ps -a
+  #     - name: Verify running containers
+  #       run: docker ps -a
