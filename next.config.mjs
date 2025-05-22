@@ -12,7 +12,7 @@ const nextConfig = {
     NEXT_PUBLIC_RECAPTCHA_SECRET_KEY:
       "6LfWakkqAAAAAID4QJwk3_gSy2FclYio3WmzDYWp",
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: "6LfWakkqAAAAABKFbRZGqp9i_aYrEu9YwDqVWfsT",
-    NEXT_PUBLIC_BASE_URL: "http://139.59.226.1:8080/api/v1",
+    NEXT_PUBLIC_BASE_URL: "http://160.191.88.194:8080/api/v1",
   },
   images: {
     unoptimized: true,
