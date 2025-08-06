@@ -1,5 +1,6 @@
 import { LoadingWrapper, NextProgressBar, ProgressBar } from "@/components";
 import { Providers } from "@/redux/provider";
+import { Analytics } from "@vercel/analytics/next";
 import { Metadata } from "next";
 import { Roboto_Slab } from "next/font/google";
 import { Toaster } from "sonner";
@@ -34,6 +35,7 @@ export default function RootLayout({
           <LoadingWrapper>
             <NextProgressBar />
             {children}
+            <Analytics />
             <ProgressBar />
             <Toaster position="top-right" richColors />
           </LoadingWrapper>
