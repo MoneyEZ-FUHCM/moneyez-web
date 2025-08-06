@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://moneyez-web.vercel.app/user</loc><lastmod>2025-08-06T06:27:49.281Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-quiz</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-category</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/accept-invitation</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-sub-category</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/statistic</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-group</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/notfound</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/auth</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-user</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-knowledge</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-post</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-notification</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://moneyez-web.vercel.app/admin/manage-model</loc><lastmod>2025-08-06T06:27:49.283Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+</urlset>
